@@ -1,27 +1,61 @@
-import React from 'react'
-import { StatusBar, TouchableOpacity, ImageBackground } from 'react-native'
-import { Container, View, Text } from 'native-base'
+// import React from 'react'
+// import { StatusBar, TouchableOpacity, ImageBackground } from 'react-native'
+// import { Container, View, Text } from 'native-base'
 
-import NavigationService from '@Service/Navigation'
+// import NavigationService from '@Service/Navigation'
 
-import Styles from '@Screen/Public/Intro/Style'
+// import Styles from '@Screen/Public/Intro/Style'
 
-export default class extends React.Component {
-  render () {
-    return (
-      <Container>
-        <StatusBar backgroundColor='#111' animated barStyle='light-content' />
-        <ImageBackground source={{ uri: 'https://images.pexels.com/photos/1667274/pexels-photo-1667274.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260' }} style={Styles.introImg}>
-          <View style={Styles.introView}>
-            <Text style={Styles.introText}>CineGo</Text>
-          </View>
-          <TouchableOpacity style={Styles.introBtn} onPress={() => {
-            NavigationService.navigate('PublicHome')
-          }}>
-            <Text style={Styles.introBtnText}>Book Now</Text>
-          </TouchableOpacity>
-        </ImageBackground>
-      </Container>
-    )
-  }
+// export default class extends React.Component {
+//   render () {
+//     return (
+//       <Container>
+//         <StatusBar backgroundColor='#111' animated barStyle='light-content' />
+//         <ImageBackground source={{ uri: 'https://images.pexels.com/photos/1667274/pexels-photo-1667274.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260' }} style={Styles.introImg}>
+//           <View style={Styles.introView}>
+//             <Text style={Styles.introText}>CineGo</Text>
+//           </View>
+//           <TouchableOpacity style={Styles.introBtn} onPress={() => {
+//             NavigationService.navigate('PublicHome')
+//           }}>
+//             <Text style={Styles.introBtnText}>Book Now</Text>
+//           </TouchableOpacity>
+//         </ImageBackground>
+//       </Container>
+//     )
+//   }
+// }
+
+import React from 'react';
+import {StatusBar, TouchableOpacity, ImageBackground,View, Text} from 'react-native';
+// import {Container, View, Text} from 'native-base';
+import NavigationService from '@Service/Navigation';
+import Styles from './Style';
+
+function Intro({navigation}) {
+  return (
+    // <Container>
+    //   <StatusBar backgroundColor="#111" animated barStyle="light-content" />
+    //   <ImageBackground
+    //     source={{
+    //       uri: 'https://images.pexels.com/photos/1667274/pexels-photo-1667274.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
+    //     }}
+    //     style={Styles.introImg}>
+    //     <View style={Styles.introView}>
+    //       <Text style={Styles.introText}>CineGo</Text>
+    //     </View>
+    //     <TouchableOpacity
+    //       style={Styles.introBtn}
+    //       onPress={() => {
+    //         navigation.navigate('PublicHome');
+    //       }}
+    //       >
+    //       <Text style={Styles.introBtnText}>Book Now</Text>
+    //     </TouchableOpacity>
+    //   </ImageBackground>
+    // </Container>
+    <View><Text>Hello</Text></View>
+  );
 }
+
+export default Intro;
