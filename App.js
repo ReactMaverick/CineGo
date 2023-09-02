@@ -4,34 +4,34 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {createDrawerNavigator} from '@react-navigation/drawer';
 
-import DrawerContent from '@Component/Menu/Left';
+import DrawerContent from './app/Component/Menu/Left';
 
 import PublicIntro from './app/Screen/Public/Intro';
 import PublicHome from './app/Screen/Public/Home';
-import PublicSearch from '@Screen/Public/Search';
-import PublicSelectCity from '@Screen/Public/SelectCity';
-import PublicDetail from '@Screen/Public/Detail';
-import PublicBooking from '@Screen/Public/Booking';
-import PublicSelectSeat from '@Screen/Public/SelectSeat';
-import PublicReserve from '@Screen/Public/Reserve';
-import PublicPaymentDetail from '@Screen/Public/PaymentDetail';
-import PublicPayment from '@Screen/Public/Payment';
-import PublicConfirmation from '@Screen/Public/Confirmation';
-import PublicFilter from '@Screen/Public/Filter';
-import PublicBuzz from '@Screen/Public/Buzz';
-import PublicProfile from '@Screen/Public/Profile';
-import PublicEditProfile from '@Screen/Public/EditProfile';
-import PublicSettings from '@Screen/Public/Settings';
-import PublicSignIn from '@Screen/Public/SignIn';
-import PublicSignUp from '@Screen/Public/SignUp';
-import PublicVerifyOtp from '@Screen/Public/VerifyOtp';
-import PublicForgotPswd from '@Screen/Public/ForgotPswd';
-import PublicEvents from '@Screen/Public/Events';
-import PublicListing from '@Screen/Public/Listing';
-import PublicAddons from '@Screen/Public/Addons';
-import PublicChangePassword from '@Screen/Public/ChangePassword';
+import PublicSearch from './app/Screen/Public/Search';
+import PublicSelectCity from './app/Screen/Public/SelectCity';
+import PublicDetail from './app/Screen/Public/Detail';
+import PublicBooking from './app/Screen/Public/Booking';
+import PublicSelectSeat from './app/Screen/Public/SelectSeat';
+import PublicReserve from './app/Screen/Public/Reserve';
+import PublicPaymentDetail from './app/Screen/Public/PaymentDetail';
+import PublicPayment from './app/Screen/Public/Payment';
+import PublicConfirmation from './app/Screen/Public/Confirmation';
+import PublicFilter from './app/Screen/Public/Filter';
+import PublicBuzz from './app/Screen/Public/Buzz';
+import PublicProfile from './app/Screen/Public/Profile';
+import PublicEditProfile from './app/Screen/Public/EditProfile';
+import PublicSettings from './app/Screen/Public/Settings';
+import PublicSignIn from './app/Screen/Public/SignIn';
+import PublicSignUp from './app/Screen/Public/SignUp';
+import PublicVerifyOtp from './app/Screen/Public/VerifyOtp';
+import PublicForgotPswd from './app/Screen/Public/ForgotPswd';
+import PublicEvents from './app/Screen/Public/Events';
+import PublicListing from './app/Screen/Public/Listing';
+import PublicAddons from './app/Screen/Public/Addons';
+import PublicChangePassword from './app/Screen/Public/ChangePassword';
 
-import NavigationService from '@Service/Navigation';
+// import NavigationService from '@Service/Navigation';
 
 const deviceWidth = Dimensions.get('window').width;
 
@@ -61,31 +61,27 @@ const deviceWidth = Dimensions.get('window').width;
 //   },
 // );
 
-
-
+const Drawer = createDrawerNavigator();
+function MyDrawer() {
+  return (
+    <Drawer.Navigator 
+    // initialRouteName="PublicHome"
+    screenOptions={{
+      headerShown: false,
+      drawerType: deviceWidth.width >= 768 ? 'permanent' : 'front',
+      drawerStyle: deviceWidth.width >= 768 ? null : {width: '80%'},
+    }}
+    contentComponent={DrawerContent}
+    >
+      <Drawer.Screen name="Home" component={PublicHome} />
+      <Drawer.Screen name="Events" component={PublicEvents} />
+      <Drawer.Screen name="Listing" component={PublicListing} />
+      <Drawer.Screen name="Addons" component={PublicAddons} />
+    </Drawer.Navigator>
+  );
+}
 
 const Stack = createNativeStackNavigator();
-// const AppNav = createNativeStackNavigator(
-//   {
-//     PublicVerifyOtp: {
-//       screen: PublicVerifyOtp,
-//     },
-//     PublicForgotPswd: {
-//       screen: PublicForgotPswd,
-//     },
-//     PublicChangePassword: {
-//       screen: PublicChangePassword,
-//     },
-
-//     Drawer: {
-//       screen: Drawer,
-//     },
-//   },
-//   {
-//     headerMode: 'none',
-//     initialRouteName: 'Drawer',
-//   },
-// );
 function AppNav() {
   return (
     <Stack.Navigator>
@@ -94,7 +90,7 @@ function AppNav() {
         component={PublicIntro}
         options={{headerShown: false}}
       />
-      {/* <Stack.Screen
+      <Stack.Screen
         name="PublicSelectCity"
         component={PublicSelectCity}
         options={{headerShown: false}}
@@ -188,7 +184,12 @@ function AppNav() {
         name="PublicChangePassword"
         component={PublicChangePassword}
         options={{headerShown: false}}
-      /> */}
+      />
+      <Stack.Screen
+        name="PublicHome"
+        component={MyDrawer}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }

@@ -1,6 +1,6 @@
 import React from 'react'
-import { StatusBar, TouchableOpacity, Image, ImageBackground, FlatList } from 'react-native'
-import { Container, Header, Content, Icon, Text, View, Tab, Tabs, ScrollableTab } from 'native-base'
+import { StatusBar, TouchableOpacity, Image, ImageBackground, FlatList,Text, View } from 'react-native'
+import { Container, Header, Content, Icon,  Tab, Tabs, ScrollableTab } from 'native-base'
 import Spinner from "react-native-loading-spinner-overlay";
 import NavigationService from '@Service/Navigation'
 
@@ -16,7 +16,7 @@ import SHOWS from './Shows'
 // import Advent from './Advent'
 
 import Style from '@Theme/Style'
-import Styles from '@Screen/Public/Home/Style'
+import Styles from './Style'
 import { EVENT_LIST } from '../../../api/ApiConfig';
 export default class extends React.Component {
   constructor(props) {
