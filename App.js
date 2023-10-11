@@ -34,33 +34,6 @@ import PublicChangePassword from './app/Screen/Public/ChangePassword';
 // import NavigationService from '@Service/Navigation';
 
 const deviceWidth = Dimensions.get('window').width;
-
-// const Drawer = createDrawerNavigator(
-//   {
-//     PublicHome: {
-//       screen: PublicHome,
-//     },
-//     PublicEvents: {
-//       screen: PublicEvents,
-//     },
-//     PublicListing: {
-//       screen: PublicListing,
-//     },
-//     PublicAddons: {
-//       screen: PublicAddons,
-//     },
-//   },
-//   {
-//     contentComponent: DrawerContent,
-//     contentOptions: {
-//       activeTintColor: '#e91e63',
-//     },
-//     headerMode: 'none',
-//     initialRouteName: 'PublicHome',
-//     drawerWidth: deviceWidth - 50,
-//   },
-// );
-
 const Drawer = createDrawerNavigator();
 function MyDrawer() {
   return (
@@ -193,17 +166,12 @@ function AppNav() {
     </Stack.Navigator>
   );
 }
-// const AppContainer = NavigationContainer(AppNav);
 
 export default class App extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <AppNav
-        // ref={r => {
-        //   NavigationService.setTopLevelNavigator(r);
-        // }}
-        />
+        <AppNav/>
       </NavigationContainer>
     );
   }

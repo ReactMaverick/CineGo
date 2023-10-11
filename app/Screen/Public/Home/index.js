@@ -15,7 +15,7 @@ import SHOWS from './Shows'
 
 // import Advent from './Advent'
 
-import Style from '@Theme/Style'
+import Style from '../../../Theme/Style'
 import Styles from './Style'
 import { EVENT_LIST } from '../../../api/ApiConfig';
 export default class extends React.Component {
@@ -158,7 +158,7 @@ export default class extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={Style.navMiddle}>
-            <Text style={Style.navMiddleText}>CineGo</Text>
+            <Text style={Style.navMiddleText}>cinegorntheme</Text>
           </View>
           <View style={Style.navRight} />
         </ImageBackground>
@@ -288,6 +288,7 @@ export default class extends React.Component {
                     textStyle={Styles.movietextStyle}
                     activeTabStyle={Styles.movieactiveTabStyle}
                     activeTextStyle={Styles.movieactiveTextStyle}
+                    key={index}
                   >
 
 

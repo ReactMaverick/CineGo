@@ -1,4 +1,4 @@
-package com.cinego.newarchitecture;
+package com.cinegorntheme.newarchitecture;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -19,9 +19,9 @@ import com.facebook.react.fabric.CoreComponentsRegistry;
 import com.facebook.react.fabric.EmptyReactNativeConfig;
 import com.facebook.react.fabric.FabricJSIModuleProvider;
 import com.facebook.react.uimanager.ViewManagerRegistry;
-import com.cinego.BuildConfig;
-import com.cinego.newarchitecture.components.MainComponentsRegistry;
-import com.cinego.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
+import com.cinegorntheme.BuildConfig;
+import com.cinegorntheme.newarchitecture.components.MainComponentsRegistry;
+import com.cinegorntheme.newarchitecture.modules.MainApplicationTurboModuleManagerDelegate;
 import java.util.ArrayList;
 import java.util.List;
 

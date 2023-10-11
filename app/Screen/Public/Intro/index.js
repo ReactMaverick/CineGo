@@ -13,7 +13,7 @@
 //         <StatusBar backgroundColor='#111' animated barStyle='light-content' />
 //         <ImageBackground source={{ uri: 'https://images.pexels.com/photos/1667274/pexels-photo-1667274.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260' }} style={Styles.introImg}>
 //           <View style={Styles.introView}>
-//             <Text style={Styles.introText}>CineGo</Text>
+//             <Text style={Styles.introText}>cinegorntheme</Text>
 //           </View>
 //           <TouchableOpacity style={Styles.introBtn} onPress={() => {
 //             NavigationService.navigate('PublicHome')
@@ -42,7 +42,7 @@ function Intro({navigation}) {
         }}
         style={Styles.introImg}>
         <View style={Styles.introView}>
-          <Text style={Styles.introText}>CineGo</Text>
+          <Text style={Styles.introText}>cinegorntheme</Text>
         </View>
         <TouchableOpacity
           style={Styles.introBtn}

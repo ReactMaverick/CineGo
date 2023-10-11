@@ -1,4 +1,4 @@
-package com.cinego.newarchitecture.components;
+package com.cinegorntheme.newarchitecture.components;
 
 import com.facebook.jni.HybridData;
 import com.facebook.proguard.annotations.DoNotStrip;

@@ -7,11 +7,11 @@
 #define TIMEOUT_SECONDS 600
 #define TEXT_TO_LOOK_FOR @"Welcome to React"
 
-@interface CineGoTests : XCTestCase
+@interface cinegornthemeTests : XCTestCase
 
 @end
 
-@implementation CineGoTests
+@implementation cinegornthemeTests
 
 - (BOOL)findSubviewInView:(UIView *)view matching:(BOOL (^)(UIView *view))test
 {

@@ -1,5 +1,5 @@
-export const BASE_URL = "https://demo.ticketstake.com/api/"
-
+// export const BASE_URL = "https://demo.ticketstake.com/api/"
+export const BASE_URL = "https://www.ticketsat.com/api/"
 
 export const SIGNUP_API = BASE_URL + "register";
 export const SIGNIN_API = BASE_URL + "login";

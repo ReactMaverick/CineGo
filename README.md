@@ -1,2 +1,2 @@
-# CineGo
- CineGo React Native 
+# cinegorntheme
+ cinegorntheme React Native 

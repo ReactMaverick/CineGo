@@ -159,7 +159,7 @@ export default class extends React.Component {
         <View style={Styles.formLayout}>
           <View style={Styles.form}>
             <View>
-              <Text style={Styles.title}>CineGo</Text>
+              <Text style={Styles.title}>cinegorntheme</Text>
               <Text style={Styles.desc}>Sign Up</Text>
             </View>
             <View style={Styles.fRow}>
