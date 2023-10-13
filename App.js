@@ -31,7 +31,6 @@ import PublicListing from './app/Screen/Public/Listing';
 import PublicAddons from './app/Screen/Public/Addons';
 import PublicChangePassword from './app/Screen/Public/ChangePassword';
 
-// import NavigationService from '@Service/Navigation';
 
 const deviceWidth = Dimensions.get('window').width;
 const Drawer = createDrawerNavigator();
@@ -161,6 +160,16 @@ function AppNav() {
       <Stack.Screen
         name="PublicHome"
         component={MyDrawer}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PublicEvents"
+        component={PublicEvents}
+        options={{headerShown: false}}
+      />
+      <Stack.Screen
+        name="PublicListing"
+        component={PublicListing}
         options={{headerShown: false}}
       />
     </Stack.Navigator>

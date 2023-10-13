@@ -3,7 +3,7 @@ import { StatusBar, TouchableOpacity, Image, ImageBackground, FlatList,Text, Vie
 import { Container, Header, Content, Icon,  Tab, Tabs, ScrollableTab } from 'native-base'
 import Spinner from "react-native-loading-spinner-overlay";
 import NavigationService from '@Service/Navigation'
-
+import { useNavigation } from '@react-navigation/native';
 import SHOWS from './Shows'
 // import FUN from './Fun'
 // import EVENTS from './Events'
@@ -145,13 +145,14 @@ export default class extends React.Component {
 
 
   render() {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
           <View style={Style.navLeft}>
             <TouchableOpacity onPress={() => {
-              NavigationService.openDrawer()
+              navigation.openDrawer()
             }}
             >
               <Image source={require('@Asset/images/menu.png')} />
@@ -208,7 +209,7 @@ export default class extends React.Component {
               <View style={Styles.entertainment}>
                 <View style={Styles.caption}>
                   <Text style={Styles.captionDesc}>Events</Text>
-                  <TouchableOpacity style={Styles.captionBtn} onPress={() => { NavigationService.navigate('PublicEvents') }}>
+                  <TouchableOpacity style={Styles.captionBtn} onPress={() => { navigation.navigate('PublicEvents') }}>
                     <Text style={Styles.captionDescAll}>VIEW ALL</Text>
                   </TouchableOpacity>
                 </View>
@@ -221,7 +222,7 @@ export default class extends React.Component {
                       <TouchableOpacity onPress={() => {
                         NavigationService.navigate('PublicDetail', { item: item, redirect: 'Home' })
                       }}
-                      >
+                      >{console.log(item)}
                         {/* <Image source={{ uri: item.image }} style={Styles.funImg} /> */}
                         <EventImage ImageData={item.logo} />
                       </TouchableOpacity>
@@ -238,7 +239,7 @@ export default class extends React.Component {
               <View style={Styles.entertainment}>
                 <View style={Styles.caption}>
                   <Text style={Styles.captionDesc}>Listings</Text>
-                  <TouchableOpacity style={Styles.captionBtn} onPress={() => { NavigationService.navigate('PublicListing') }}>
+                  <TouchableOpacity style={Styles.captionBtn} onPress={() => { navigation.navigate('PublicListing') }}>
                     <Text style={Styles.captionDescAll}>VIEW ALL</Text>
                   </TouchableOpacity>
                 </View>
@@ -424,14 +425,14 @@ export default class extends React.Component {
         <View style={Style.fTab}>
           <TouchableOpacity
             style={Style.fIcons} onPress={() => {
-              NavigationService.navigate('PublicHome')
+              navigation.navigate('PublicHome')
             }}
           >
             <Icon name='home' type='FontAwesome' style={Style.iconActive} />
           </TouchableOpacity>
           <TouchableOpacity
             style={Style.fIcons} onPress={() => {
-              NavigationService.navigate('PublicSearch')
+              navigation.navigate('PublicSearch')
             }}
           >
             <Icon name='search' type='MaterialIcons' style={Style.iconInactive} />
@@ -439,21 +440,21 @@ export default class extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={Style.fIcons} onPress={() => {
-              NavigationService.navigate('PublicBooking')
+              navigation.navigate('PublicBooking')
             }}
           >
             <Icon name='headphones' type='MaterialCommunityIcons' style={Style.iconInactive} />
           </TouchableOpacity>
           <TouchableOpacity
             style={Style.fIcons} onPress={() => {
-              NavigationService.navigate('PublicBuzz')
+              navigation.navigate('PublicBuzz')
             }}
           >
             <Icon name='flame' type='Octicons' style={Style.iconInactive} />
           </TouchableOpacity>
           <TouchableOpacity
             style={Style.fIcons} onPress={() => {
-              NavigationService.navigate('PublicProfile')
+              navigation.navigate('PublicProfile')
             }}
           >
             <Icon name='user-o' type='FontAwesome' style={Style.iconInactive} />
