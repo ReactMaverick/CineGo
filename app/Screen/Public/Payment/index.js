@@ -13,7 +13,9 @@ export default class extends React.Component {
   }
 
   render () {
-    const totalAmount = this.props.navigation.getParam('totalAmt')
+    const { navigation } = this.props;
+    // const totalAmount = this.props.navigation.getParam('totalAmt')
+    const totalAmount = this.props.route.params.totalAmt
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
@@ -21,7 +23,7 @@ export default class extends React.Component {
           <View style={Style.navLeft}>
             <Button
               transparent onPress={() => {
-                NavigationService.navigate('PublicReserve')
+                navigation.navigate('PublicReserve')
               }}
             >
               <Icon name='arrow-left' type='MaterialCommunityIcons' style={Style.navLeftIcon} />
@@ -37,34 +39,35 @@ export default class extends React.Component {
       <Content contentContainerStyle={Style.layoutDefault}>
         <View style={Styles.paymentInfo}>
           <Text style={Styles.amountDesc}>Amount Payable</Text>
-          <Text style={Styles.amount}>Pay $ {this.props.navigation.getParam('totalAmt')}</Text>
+          {/* <Text style={Styles.amount}>Pay $ {this.props.navigation.getParam('totalAmt')}</Text> */}
+          <Text style={Styles.amount}>Pay $ {this.props.route.params.totalAmt}</Text>
         </View>
         <View style={Styles.paymentDetails}>
           <Text style={Styles.amountDesc}>Other Payment Options</Text>
         </View>
         <View style={Styles.cardDetails}>
-          <TouchableOpacity style={Styles.reserveForm} onPress={() => { NavigationService.navigate('PublicPaymentDetail', { data: totalAmount }) }}>
+          <TouchableOpacity style={Styles.reserveForm} onPress={() => { navigation.navigate('PublicPaymentDetail', { data: totalAmount }) }}>
             <View style={Styles.cardPayment}>
               <Icon name='credit-card' type='FontAwesome' style={Styles.cardIcon} />
               <Text style={Styles.paymentMode}>Debit/Credit Card</Text>
             </View>
             <Icon name='keyboard-arrow-right' type='MaterialIcons' style={Styles.cardIcon} />
           </TouchableOpacity>
-          <TouchableOpacity style={Styles.reserveForm} onPress={() => { NavigationService.navigate('PublicPaymentDetail', { data: totalAmount }) }}>
+          <TouchableOpacity style={Styles.reserveForm} onPress={() => { navigation.navigate('PublicPaymentDetail', { data: totalAmount }) }}>
             <View style={Styles.cardPayment}>
               <Icon name='credit-card' type='FontAwesome' style={Styles.cardIcon} />
               <Text style={Styles.paymentMode}>Net Banking</Text>
             </View>
             <Icon name='keyboard-arrow-right' type='MaterialIcons' style={Styles.cardIcon} />
           </TouchableOpacity>
-          <TouchableOpacity style={Styles.reserveForm} onPress={() => { NavigationService.navigate('PublicPaymentDetail', { data: totalAmount }) }}>
+          <TouchableOpacity style={Styles.reserveForm} onPress={() => { navigation.navigate('PublicPaymentDetail', { data: totalAmount }) }}>
             <View style={Styles.cardPayment}>
               <Icon name='credit-card' type='FontAwesome' style={Styles.cardIcon} />
               <Text style={Styles.paymentMode}>UPI</Text>
             </View>
             <Icon name='keyboard-arrow-right' type='MaterialIcons' style={Styles.cardIcon} />
           </TouchableOpacity>
-          <TouchableOpacity style={Styles.reserveForm} onPress={() => { NavigationService.navigate('PublicPaymentDetail', { data: totalAmount }) }}>
+          <TouchableOpacity style={Styles.reserveForm} onPress={() => { navigation.navigate('PublicPaymentDetail', { data: totalAmount }) }}>
             <View style={Styles.cardPayment}>
               <Icon name='credit-card' type='FontAwesome' style={Styles.cardIcon} />
               <Text style={Styles.paymentMode}>More Payment Options</Text>

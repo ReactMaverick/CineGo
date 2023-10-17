@@ -1,6 +1,6 @@
 import React from 'react'
-import { StatusBar, TouchableOpacity, Image, ImageBackground, FlatList,Text, View } from 'react-native'
-import { Container, Header, Content, Icon,  Tab, Tabs, ScrollableTab } from 'native-base'
+import { StatusBar, TouchableOpacity, Image, ImageBackground, FlatList, Text, View } from 'react-native'
+import { Container, Header, Content, Icon, Tab, Tabs, ScrollableTab } from 'native-base'
 import Spinner from "react-native-loading-spinner-overlay";
 import NavigationService from '@Service/Navigation'
 import { useNavigation } from '@react-navigation/native';
@@ -29,14 +29,14 @@ export default class extends React.Component {
       eventCategoryList: [],
       listingCategory: [],
       listingCategoryList: [],
-      
+
     }
   }
 
   componentDidMount() {
     this._getEventDetails();
     this._getEventPageList();
-    
+
   }
 
   _getEventDetails = async () => {
@@ -194,6 +194,9 @@ export default class extends React.Component {
                     // >
                     <TouchableOpacity
                       style={Styles.myShows}
+                      onPress={() => {
+                        navigation.navigate('PublicDetail')
+                      }}
                     >
                       <Image source={{ uri: item.image }} style={Styles.showImg} />
                       <View style={Styles.showBgMain} />
@@ -220,9 +223,9 @@ export default class extends React.Component {
                   renderItem={({ item, separators }) => (
                     <View style={Styles.funGroup}>
                       <TouchableOpacity onPress={() => {
-                        NavigationService.navigate('PublicDetail', { item: item, redirect: 'Home' })
+                        navigation.navigate('PublicDetail', { item: item, redirect: 'Home' })
                       }}
-                      >{console.log(item)}
+                      >
                         {/* <Image source={{ uri: item.image }} style={Styles.funImg} /> */}
                         <EventImage ImageData={item.logo} />
                       </TouchableOpacity>
@@ -250,7 +253,7 @@ export default class extends React.Component {
                   renderItem={({ item, separators }) => (
                     <TouchableOpacity
                       style={Styles.funGroup} onPress={() => {
-                        NavigationService.navigate('PublicDetail', { item: item, redirect: 'Home' })
+                        navigation.navigate('PublicDetail', { item: item, redirect: 'Home' })
                       }}
                     >
                       {/* <Image source={{ uri: item.image }} style={Styles.funImg} /> */}
@@ -300,7 +303,7 @@ export default class extends React.Component {
                         <View style={Styles.movieLayout}>
                           <TouchableOpacity
                             style={Styles.movieGroup} onPress={() => {
-                              NavigationService.navigate('PublicDetail', { item: item, redirect: 'Home' })
+                              navigation.navigate('PublicDetail', { item: item, redirect: 'Home' })
                             }}
                           >
 
@@ -375,7 +378,7 @@ export default class extends React.Component {
                         <View style={Styles.movieLayout}>
                           <TouchableOpacity
                             style={Styles.movieGroup} onPress={() => {
-                              NavigationService.navigate('PublicDetail', { item: item, redirect: 'Home' })
+                              navigation.navigate('PublicDetail', { item: item, redirect: 'Home' })
                             }}
                           >
 

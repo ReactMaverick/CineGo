@@ -9,6 +9,7 @@ import Styles from '@Screen/Public/Confirmation/Style'
 
 export default class extends React.Component {
   render () {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
@@ -16,7 +17,7 @@ export default class extends React.Component {
           <View style={Style.navLeft}>
             <Button
               transparent onPress={() => {
-                NavigationService.navigate('PublicPayment')
+                navigation.navigate('PublicPayment')
               }}
             >
               <Icon name='close' type='MaterialIcons' style={Style.navLeftIcon} />

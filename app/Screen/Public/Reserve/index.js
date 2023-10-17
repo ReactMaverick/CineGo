@@ -13,7 +13,9 @@ export default class extends React.Component {
   }
 
   render () {
-    const total = this.props.navigation.getParam('ticket') + this.props.navigation.getParam('bite')
+    const { navigation } = this.props;
+    // const total = this.props.navigation.getParam('ticket') + this.props.navigation.getParam('bite')
+    const total = this.props.route.params.ticket+ this.props.route.params.bite;
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
@@ -21,7 +23,7 @@ export default class extends React.Component {
           <View style={Style.navLeft}>
             <Button
               transparent onPress={() => {
-                NavigationService.navigate('PublicHome')
+                navigation.navigate('PublicHome')
               }}
             >
               <Icon name='arrow-left' type='MaterialCommunityIcons' style={Style.navLeftIcon} />
@@ -50,11 +52,13 @@ export default class extends React.Component {
           <View style={Styles.paymentDetail}>
             <View style={Styles.paymentInfo}>
               <Text style={Styles.paymentDesc}>Sub-Total</Text>
-              <Text style={Styles.paymentDesc}>${this.props.navigation.getParam('ticket')}</Text>
+              {/* <Text style={Styles.paymentDesc}>${this.props.navigation.getParam('ticket')}</Text> */}
+              <Text style={Styles.paymentDesc}>${this.props.route.params.ticket}</Text>
             </View>
             <View style={Styles.paymentInfo}>
               <Text style={Styles.paymentDesc}>Bite-Total</Text>
-              <Text style={Styles.paymentDesc}>$ {this.props.navigation.getParam('bite')}</Text>
+              {/* <Text style={Styles.paymentDesc}>$ {this.props.navigation.getParam('bite')}</Text> */}
+              <Text style={Styles.paymentDesc}>$ {this.props.route.params.bite}</Text>
             </View>
             <View style={Styles.paymentInfo}>
               <Text style={Styles.paymentTotal}>Total Payable Amount</Text>
@@ -62,28 +66,28 @@ export default class extends React.Component {
             </View>
           </View>
           <View style={{ display: 'none' }}>
-            <TouchableOpacity style={Styles.reserveForm} onPress={() => { NavigationService.navigate('PublicPaymentDetail') }}>
+            <TouchableOpacity style={Styles.reserveForm} onPress={() => { navigation.navigate('PublicPaymentDetail') }}>
               <View style={Styles.cardPayment}>
                 <Icon name='credit-card' type='FontAwesome' style={Styles.cardIcon} />
                 <Text style={Styles.paymentMode}>Debit/Credit Card</Text>
               </View>
               <Icon name='keyboard-arrow-right' type='MaterialIcons' style={Styles.cardIcon} />
             </TouchableOpacity>
-            <TouchableOpacity style={Styles.reserveForm} onPress={() => { NavigationService.navigate('PublicPaymentDetail') }}>
+            <TouchableOpacity style={Styles.reserveForm} onPress={() => { navigation.navigate('PublicPaymentDetail') }}>
               <View style={Styles.cardPayment}>
                 <Icon name='credit-card' type='FontAwesome' style={Styles.cardIcon} />
                 <Text style={Styles.paymentMode}>Net Banking</Text>
               </View>
               <Icon name='keyboard-arrow-right' type='MaterialIcons' style={Styles.cardIcon} />
             </TouchableOpacity>
-            <TouchableOpacity style={Styles.reserveForm} onPress={() => { NavigationService.navigate('PublicPaymentDetail') }}>
+            <TouchableOpacity style={Styles.reserveForm} onPress={() => { navigation.navigate('PublicPaymentDetail') }}>
               <View style={Styles.cardPayment}>
                 <Icon name='credit-card' type='FontAwesome' style={Styles.cardIcon} />
                 <Text style={Styles.paymentMode}>UPI</Text>
               </View>
               <Icon name='keyboard-arrow-right' type='MaterialIcons' style={Styles.cardIcon} />
             </TouchableOpacity>
-            <TouchableOpacity style={Styles.reserveForm} onPress={() => { NavigationService.navigate('PublicPaymentDetail') }}>
+            <TouchableOpacity style={Styles.reserveForm} onPress={() => { navigation.navigate('PublicPaymentDetail') }}>
               <View style={Styles.cardPayment}>
                 <Icon name='credit-card' type='FontAwesome' style={Styles.cardIcon} />
                 <Text style={Styles.paymentMode}>More Payment Options</Text>
@@ -93,7 +97,7 @@ export default class extends React.Component {
           </View>
         </View>
       </Content>
-      <TouchableOpacity style={Styles.payBtn} onPress={() => { NavigationService.navigate('PublicPayment', { totalAmt: total }) }}>
+      <TouchableOpacity style={Styles.payBtn} onPress={() => { navigation.navigate('PublicPayment', { totalAmt: total }) }}>
         <Text style={Styles.payBtnText}>Pay $ {total}</Text>
       </TouchableOpacity>
     </Container>

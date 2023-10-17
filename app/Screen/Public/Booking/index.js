@@ -26,6 +26,7 @@ export default class extends React.Component {
   }
 
   render () {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
@@ -33,7 +34,7 @@ export default class extends React.Component {
           <View style={Style.navLeft}>
             <Button
               transparent onPress={() => {
-                NavigationService.navigate('PublicDetail')
+                navigation.navigate('PublicDetail')
               }}
             >
               <Icon name='arrow-left' type='MaterialCommunityIcons' style={Style.navLeftIcon} />
@@ -45,7 +46,7 @@ export default class extends React.Component {
           <View style={Style.navRight}>
             <Button
               transparent onPress={() => {
-                NavigationService.navigate('PublicFilter')
+                navigation.navigate('PublicFilter')
               }}
             >
               <Icon name='ios-options' type='Ionicons' style={Style.navLeftIcon} />
@@ -139,7 +140,7 @@ export default class extends React.Component {
           </View>
         </View>
         <TouchableOpacity onPress={() => {
-          NavigationService.navigate('PublicSelectSeat', { data: this.state.name, seat: this.state.seatNo })
+          navigation.navigate('PublicSelectSeat', { data: this.state.name, seat: this.state.seatNo })
         }}
         >
           <Text style={Styles.seatBtn}>Select Seats</Text>

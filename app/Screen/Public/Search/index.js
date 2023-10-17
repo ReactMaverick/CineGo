@@ -11,7 +11,8 @@ import SEARCH from './Search'
 import TRENDING from './Trending'
 
 export default class extends React.Component {
-  render () {
+  render() {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
@@ -19,7 +20,7 @@ export default class extends React.Component {
           <View style={Style.navLeft}>
             <Button
               transparent onPress={() => {
-                NavigationService.navigate('PublicHome')
+                navigation.navigate('PublicHome')
               }}
             >
               <Icon name='arrow-left' type='MaterialCommunityIcons' style={Style.navLeftIcon} />
@@ -44,7 +45,7 @@ export default class extends React.Component {
           renderItem={({ item, separators }) => (
             <TouchableHighlight
               style={Styles.searchBtn} underlayColor='#4A90E2' onPress={() => {
-                NavigationService.navigate('')
+                navigation.navigate('')
               }}
             >
               <Text style={Styles.searchList}>{item.list}</Text>
@@ -60,7 +61,9 @@ export default class extends React.Component {
           renderItem={({ item, separators }) => (
             <TouchableOpacity
               style={Styles.trends} onPress={() => {
-                NavigationService.navigate('PublicDetail')
+                navigation.navigate('PublicDetail', {
+                  item: item
+                })
               }}
             >
               <Icon name='search' type='MaterialIcons' style={Styles.trendIcon} />
@@ -69,6 +72,6 @@ export default class extends React.Component {
           )}
         />
       </Content>
-           </Container>
+    </Container>
   }
 }

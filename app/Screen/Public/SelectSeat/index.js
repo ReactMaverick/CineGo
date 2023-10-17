@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar, TouchableOpacity, TextInput, Image, ScrollView, ImageBackground, FlatList,Dimensions, Alert } from 'react-native'
+import { StatusBar, TouchableOpacity, TextInput, Image, ScrollView, ImageBackground, FlatList, Dimensions, Alert } from 'react-native'
 import { Container, Header, Content, Footer, Icon, Text, View, Card, Picker } from 'native-base'
 import NavigationService from '@Service/Navigation'
 
@@ -37,15 +37,22 @@ export default class extends React.Component {
     }
   }
 
+  // componentDidMount() {
+  //   // const seatNo = this.props.navigation.getParam('seat')
+  //   const seatNo: this.props.route.params.seat,
+  //   this.setState({ grandTotal: seatNo * 150 })
+  //   this._getProducts();
+  // }
   componentDidMount() {
-    const seatNo = this.props.navigation.getParam('seat')
-    this.setState({ grandTotal: seatNo * 150 })
+    const seatNo = this.props.route.params.seat;
+    if (!isNaN(seatNo)) {
+      const grandTotal = seatNo * 150;
+      this.setState({ grandTotal });
+    } else {
+      console.error('Invalid seat number');
+    }
     this._getProducts();
   }
-
-  // componentDidMount() {
-    
-  // }
 
   _getProducts = async () => {
     await this.setState({ isLoading: true });
@@ -119,8 +126,9 @@ export default class extends React.Component {
   }
 
   render() {
-    const name = this.props.navigation.getParam('data')
-
+    const { navigation } = this.props;
+    // const name = this.props.navigation.getParam('data')
+    const name = this.props.route.params.data;
     let layoutType = 0
     if (name === 'AGS Cinemas OMR: New York') {
       layoutType = 1
@@ -138,7 +146,7 @@ export default class extends React.Component {
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
           <TouchableOpacity
             style={Styles.navLeft} onPress={() => {
-              NavigationService.navigate('PublicBooking')
+              navigation.navigate('PublicBooking')
             }}
           >
             <Icon name='arrow-left' type='MaterialCommunityIcons' style={Styles.navLeftIcon} />
@@ -149,7 +157,7 @@ export default class extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={Styles.navRight} onPress={() => {
-              NavigationService.navigate('PublicHome')
+              navigation.navigate('PublicHome')
             }}
           >
             <Text style={Styles.rightDesc}>4 Tickets</Text>
@@ -336,7 +344,7 @@ export default class extends React.Component {
           <TextInput placeholder='Phone' style={Styles.inputDesc} />
         </View>
         <TouchableOpacity onPress={() => {
-          NavigationService.navigate('PublicReserve', { ticket: this.state.grandTotal, bite: this.state.total })
+          navigation.navigate('PublicReserve', { ticket: this.state.grandTotal, bite: this.state.total })
         }}
         >
           <Text style={Styles.doneBtn}>Done</Text>

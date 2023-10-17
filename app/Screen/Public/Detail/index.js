@@ -11,13 +11,21 @@ import Style from '@Theme/Style'
 import Styles from '@Screen/Public/Detail/Style'
 
 export default class extends React.Component {
-    constructor(props){
+    // constructor(props){
+    //     super(props);
+    //     this.state = {
+    //         item: this.props.navigation.getParam('item'),
+    //         redirect: this.props.navigation.getParam('redirect')
+
+    //     }
+    //     console.log(this.state.item);
+    // }
+    constructor(props) {
         super(props);
         this.state = {
-            item: this.props.navigation.getParam('item'),
-            redirect: this.props.navigation.getParam('redirect')
-         
-        }
+            item: this.props.route.params.item,
+            redirect: this.props.route.params.redirect
+        };
         console.log(this.state.item);
     }
     onShare = () => {
@@ -31,28 +39,29 @@ export default class extends React.Component {
             text: `Selected index: ${index} , value: ${value}`
         })
     }
-    _goBack(){
-        if(this.state.redirect=="Home"){
-            NavigationService.navigate('PublicHome')
-        }if(this.state.redirect=="Event"){
-            NavigationService.navigate('PublicEvents')
+    _goBack() {
+        if (this.state.redirect == "Home") {
+            navigation.navigate('PublicHome')
+        } if (this.state.redirect == "Event") {
+            navigation.navigate('PublicEvents')
         }
-        if(this.state.redirect=="Listing"){
-            NavigationService.navigate('PublicListing')
+        if (this.state.redirect == "Listing") {
+            navigation.navigate('PublicListing')
         }
     }
     render() {
-        var imgUrl ="https://demo.ticketstake.com/img/default.jpg";
-        if(this.state.item.logo!=null){
-            imgUrl = "https://demo.ticketstake.com"+this.state.item.logo.url;
+        const { navigation } = this.props;
+        var imgUrl = "https://demo.ticketstake.com/img/default.jpg";
+        if (this.state.item.logo != null) {
+            imgUrl = "https://demo.ticketstake.com" + this.state.item.logo.url;
         }
         return <Container>
             <StatusBar backgroundColor="#9013FE" animated barStyle="light-content" />
             <ImageBackground source={{ uri: imgUrl }} style={Styles.detailImg} >
                 <View style={Styles.navigation}>
                     <Icon name='ios-arrow-back' type="Ionicons" style={Styles.navLeftIcon} onPress={() => {
-                    //    this.state.redirect=="Home"? NavigationService.navigate('PublicHome'):NavigationService.navigate('PublicEvents')
-                    this._goBack();
+                        //    this.state.redirect=="Home"? NavigationService.navigate('PublicHome'):NavigationService.navigate('PublicEvents')
+                        this._goBack();
                     }} />
                     <Text style={Styles.navRightDesc} onPress={this.onShare}>SHARE</Text>
                 </View>
@@ -60,7 +69,7 @@ export default class extends React.Component {
             <Content contentContainerStyle={Style.layoutDefault}>
                 <View style={Styles.detail}>
                     <View style={Styles.detailMain}>
-                <Text style={Styles.detailTitle}>{this.state.item.name}</Text>
+                        <Text style={Styles.detailTitle}>{this.state.item.name}</Text>
                         <View>
                             <View style={Styles.detailRow}>
                                 <Icon name="favorite" type="MaterialIcons" style={Styles.detailIcon} />
@@ -70,21 +79,20 @@ export default class extends React.Component {
                         </View>
                     </View>
                     <View>
-                    <View style={Styles.movieDate}>
-                    <DateFormat startDate={this.state.item.start_date} />
+                        <View style={Styles.movieDate}>
+                            <DateFormat startDate={this.state.item.start_date} />
+                        </View>
                     </View>
-                    </View>
-                   
-                {/* <Text style={Styles.detailDesc}>{this.state.item.start_date+" "+this.state.item.start_time}</Text> */}
+
+                    {/* <Text style={Styles.detailDesc}>{this.state.item.start_date+" "+this.state.item.start_time}</Text> */}
                     {/* <Text style={Styles.detailTime}>2h 18 min | Crime,Suspense,Thriller</Text>
                     <Text style={Styles.detailLang}>English, Tamil & Hindi</Text> */}
-                    <View style={Styles.detailDimensRow}>
-                    {this.state.item.categories.map((mapItem, key) => (
-                      <Text key={key} style={Styles.detailDimens}>{mapItem.name}</Text>
-                    ))}
-                        
+                    {this.state.item.categories != undefined ? <View style={Styles.detailDimensRow}>
+                        {this.state.item.categories.map((mapItem, key) => (
+                            <Text key={key} style={Styles.detailDimens}>{mapItem.name}</Text>
+                        ))}
                         {/* <Text style={Styles.detailDimens}>2D</Text> */}
-                    </View>
+                    </View> : <></>}
                     {/* <View>
                         <Text style={Styles.offer}>Applicable Offers</Text>
                         <View style={Styles.offerDetail}>
@@ -108,7 +116,7 @@ export default class extends React.Component {
                         </TouchableOpacity>
                     </View> */}
                     <View>
-                <Text style={Styles.movieDesc}>{this.state.item.description}</Text>
+                        <Text style={Styles.movieDesc}>{this.state.item.description}</Text>
                     </View>
                     {/* <View>
                         <Text style={Styles.offer}>Cast</Text>
@@ -143,10 +151,10 @@ export default class extends React.Component {
                             </TouchableOpacity>
                         )}
                     /> */}
-                
+
                 </View>
             </Content>
-            <TouchableOpacity onPress={() => { NavigationService.navigate('PublicBooking') }}>
+            <TouchableOpacity onPress={() => { navigation.navigate('PublicBooking') }}>
                 <Footer style={Styles.ftrTab}>
                     <Icon name="ticket" type="Entypo" style={Styles.ftrIcon} />
                     <Text style={Styles.ftrDesc}>Book Tickets</Text>
@@ -160,25 +168,24 @@ export default class extends React.Component {
 
 
 
-class DateFormat extends React.Component{
- 
-    render(){
-     var startDate = this.props.startDate;
-     var newDate = startDate.split("-");
-   
-     var monthArr = {'01':'Jan','02':'Feb','03':'Mar','04':'Apr','05':'May','06':'June','07':'July','08':'Aug','09':'Sept','10':'Oct','11':'Nov','12':'Dec'};
-     var Day = newDate[2];
-     var Month = monthArr[ newDate[1]];
-     var Year = newDate[0];
-     return(
-       <View>
-          <Text style={Styles.eventDate}>{Day}</Text>
-     <Text style={[Styles.eventMonth,{textAlign:'center'}]}>{Month}</Text>
-          <Text style={Styles.eventDate}>{Year}</Text>
-       </View>
-     )
-     
+class DateFormat extends React.Component {
+
+    render() {
+        // var startDate = this.props.startDate;
+        // var newDate = startDate.split("-");
+
+        // var monthArr = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'June', '07': 'July', '08': 'Aug', '09': 'Sept', '10': 'Oct', '11': 'Nov', '12': 'Dec' };
+        // var Day = newDate[2];
+        // var Month = monthArr[newDate[1]];
+        // var Year = newDate[0];
+        return (
+            <View>
+                <Text style={Styles.eventDate}>01</Text>
+                <Text style={[Styles.eventMonth, { textAlign: 'center' }]}>Apr</Text>
+                <Text style={Styles.eventDate}>2023</Text>
+            </View>
+        )
+
     }
-     
-  }
-  
+
+}

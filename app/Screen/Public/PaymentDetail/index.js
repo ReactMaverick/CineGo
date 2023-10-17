@@ -13,6 +13,7 @@ export default class extends React.Component {
   }
 
   render () {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
@@ -20,7 +21,7 @@ export default class extends React.Component {
           <View style={Style.navLeft}>
             <Button
               transparent onPress={() => {
-                NavigationService.navigate('PublicPayment')
+                navigation.navigate('PublicPayment')
               }}
             >
               <Icon name='arrow-left' type='MaterialCommunityIcons' style={Style.navLeftIcon} />
@@ -45,7 +46,7 @@ export default class extends React.Component {
           </View>
           <TextInput placeholder='Card Holder Name' placeholderTextColor='#999' style={Styles.paymentInput} />
           <View style={Styles.paymentRow}>
-            <CheckBox />
+            {/* <CheckBox /> */}
             <View style={Styles.paymentDetail}>
               <Text style={Styles.paymentDesc}>QuikPay</Text>
               <Text style={Styles.paymentCheck}>Save this card information to my BookMyTickets account and make faster payments</Text>
@@ -53,8 +54,9 @@ export default class extends React.Component {
           </View>
         </View>
       </Content>
-      <TouchableOpacity style={Styles.payBtn} onPress={() => { NavigationService.navigate('PublicConfirmation') }}>
-        <Text style={Styles.payBtnText}>Pay $ {this.props.navigation.getParam('data')}</Text>
+      <TouchableOpacity style={Styles.payBtn} onPress={() => { navigation.navigate('PublicConfirmation') }}>
+        {/* <Text style={Styles.payBtnText}>Pay $ {this.props.navigation.getParam('data')}</Text> */}
+        <Text style={Styles.payBtnText}>Pay $ {this.props.route.params.data}</Text>
       </TouchableOpacity>
            </Container>
   }

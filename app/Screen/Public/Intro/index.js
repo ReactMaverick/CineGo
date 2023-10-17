@@ -37,8 +37,7 @@ function Intro({ navigation }) {
       <StatusBar backgroundColor="#111" animated barStyle="light-content" />
       <ImageBackground
         source={{
-          // uri: 'https://images.pexels.com/photos/1667274/pexels-photo-1667274.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
-          uri: 'https://previews.123rf.com/images/artemfurman/artemfurman1501/artemfurman150100033/35185955-empty-cinema-auditorium-with-screen-and-seats.jpg'
+          uri: 'https://images.pexels.com/photos/1667274/pexels-photo-1667274.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=750&w=1260',
         }}
         style={Styles.introImg}>
         <View style={Styles.introView}>
