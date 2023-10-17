@@ -18,6 +18,7 @@ import SHOWS from './Shows'
 import Style from '../../../Theme/Style'
 import Styles from './Style'
 import { EVENT_LIST } from '../../../api/ApiConfig';
+import { FEATURED_LIST } from '../../../api/ApiConfig';
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -25,6 +26,7 @@ export default class extends React.Component {
       isLoading: false,
       events: [],
       listings: [],
+      featured: [],
       eventCategory: [],
       eventCategoryList: [],
       listingCategory: [],
@@ -36,9 +38,39 @@ export default class extends React.Component {
   componentDidMount() {
     this._getEventDetails();
     this._getEventPageList();
-
+    this._getFeaturedDetails();
   }
 
+  _getFeaturedDetails = async () => {
+    if(this.state.refreshing==false){
+      await this.setState({ isLoading: true });
+    }
+    
+
+    fetch(FEATURED_LIST, {
+      method: "GET",
+      headers: {
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+    .then((response) => response.json())
+    .then((responseJson) => {
+      var data = [];
+      var eventCount = 1;
+      console.log(responseJson.featured);          
+      for (i = 0; i < responseJson.featured.length; i++) {
+          data.push(responseJson.featured[i])
+          eventCount++;
+      }
+      this.setState({ featured: data });
+      })
+      .catch((error) => console.log(error))
+      .finally(() => {
+        this.setState({ isLoading: false });
+        this.setState({refreshing: false});
+      });
+  }
+  
   _getEventDetails = async () => {
 
     await this.setState({ isLoading: true });
@@ -148,7 +180,7 @@ export default class extends React.Component {
     const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
-        <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
+        <StatusBar backgroundColor='#00462D' animated barStyle='light-content' />
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
           <View style={Style.navLeft}>
             <TouchableOpacity onPress={() => {
@@ -159,7 +191,7 @@ export default class extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={Style.navMiddle}>
-            <Text style={Style.navMiddleText}>cinegorntheme</Text>
+            <Text style={Style.navMiddleTextats}>Ticketsat.com</Text><Image source={require('@Asset/images/tats_logo.png')} style={Style.navMiddleLogo}/>
           </View>
           <View style={Style.navRight} />
         </ImageBackground>
@@ -181,9 +213,9 @@ export default class extends React.Component {
             activeTextStyle={Styles.activeTextStyle}
           >
             <View style={Style.layoutDefault}>
-              <View>
+            <View>
                 <FlatList
-                  data={SHOWS}
+                  data={this.state.featured}
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   renderItem={({ item, separators }) => (
@@ -192,13 +224,30 @@ export default class extends React.Component {
                     //     NavigationService.navigate('PublicDetail')
                     //   }}
                     // >
-                    <TouchableOpacity
+                    <TouchableOpacity 
+                    onPress={()=>{   
+                      console.log("event",this.state.events);                  
+                      if(item.type=='event'){
+                        var event = this.state.events;
+                        for(i=0;i<event.length;i++){
+                          if(event[i].id==item.listing_id){
+                            console.log( event[i]);
+                            NavigationService.navigate('PublicDetail', { item: event[i], redirect: 'Home' })
+                          }
+                        }                       
+                      }else{
+                        var listings = this.state.listings;
+                        for(i=0;i<listings.length;i++){
+                          if(listings[i].id==item.listing_id){
+                            NavigationService.navigate('PublicDetail', { item: listings[i], redirect: 'Home' })
+                          }
+                        } 
+                       
+                      }
+                    }}
                       style={Styles.myShows}
-                      onPress={() => {
-                        navigation.navigate('PublicDetail')
-                      }}
                     >
-                      <Image source={{ uri: item.image }} style={Styles.showImg} />
+                      <Image source={{ uri: item.url }} style={Styles.showImg} />
                       <View style={Styles.showBgMain} />
                       <View style={Styles.showBg}>
                         <Text style={Styles.showDesc}>{item.desc}</Text>
@@ -230,10 +279,6 @@ export default class extends React.Component {
                         <EventImage ImageData={item.logo} />
                       </TouchableOpacity>
                       <Text style={Styles.funDesc}>{item.name}</Text>
-                      <View style={Styles.funRow}>
-                        <Icon name='favorite' type='MaterialIcons' style={Styles.funIcon} />
-                        <Text style={Styles.funReview}>61%</Text>
-                      </View>
                     </View>
                   )}
                 />
@@ -259,10 +304,6 @@ export default class extends React.Component {
                       {/* <Image source={{ uri: item.image }} style={Styles.funImg} /> */}
                       <EventImage ImageData={item.logo} />
                       <Text style={Styles.funDesc}>{item.name}</Text>
-                      <View style={Styles.funRow}>
-                        <Icon name='favorite' type='MaterialIcons' style={Styles.funIcon} />
-                        <Text style={Styles.funReview}>61%</Text>
-                      </View>
                     </TouchableOpacity>
                   )}
                 />
@@ -327,10 +368,6 @@ export default class extends React.Component {
                             <TouchableOpacity style={Styles.eventBooking}>
                               <Text style={Styles.movieBooking}>Book</Text>
                             </TouchableOpacity>
-                          </View>
-                          <View style={Styles.movieForm}>
-                            <Text style={Styles.eventDescBorder}>{item.categories.length != 0 ? item.categories[0].name : ""}</Text>
-                            <Text style={Styles.eventDesc}>{item.price != null ? item.price : ""}</Text>
                           </View>
                         </View>
                       )}
@@ -403,10 +440,6 @@ export default class extends React.Component {
                               <Text style={Styles.movieBooking}>Book</Text>
                             </TouchableOpacity>
                           </View>
-                          <View style={Styles.movieForm}>
-                            <Text style={Styles.eventDescBorder}>{item.categories.length != 0 ? item.categories[0].name : ""}</Text>
-                            <Text style={Styles.eventDesc}>{item.price != null ? item.price : ""}</Text>
-                          </View>
                         </View>
                       )}
                     />
@@ -474,11 +507,11 @@ class EventImage extends React.Component {
     //console.log(this.props.ImageData)
     if (this.props.ImageData != null) {
       return (
-        <Image source={{ uri: "https://demo.ticketstake.com" + this.props.ImageData.url }} style={Styles.funImg} />
+        <Image source={{ uri: this.props.ImageData.url }} style={Styles.funImg} />
       )
     } else {
       return (
-        <Image source={{ uri: "https://demo.ticketstake.com/img/default.jpg" }} style={Styles.funImg} />
+        <Image source={{ uri: "https://www.ticketsat.com/img/default.jpg" }} style={Styles.funImg} />
       )
     }
   }
@@ -492,11 +525,11 @@ class EventImageBig extends React.Component {
     //console.log(this.props.ImageData)
     if (this.props.ImageData != null) {
       return (
-        <Image source={{ uri: "https://demo.ticketstake.com" + this.props.ImageData.url }} style={Styles.movieImg} />
+        <Image source={{ uri: this.props.ImageData.url }} style={Styles.movieImg} />
       )
     } else {
       return (
-        <Image source={{ uri: "https://demo.ticketstake.com/img/default.jpg" }} style={Styles.movieImg} />
+        <Image source={{ uri: "https://www.ticketsat.com/img/default.jpg" }} style={Styles.movieImg} />
       )
     }
   }

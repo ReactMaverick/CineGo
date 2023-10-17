@@ -48,7 +48,9 @@ export default {
   showDesc: {
     fontSize: 16,
     fontFamily: 'Montserrat-SemiBold',
-    color: 'rgba(255,255,255,1)'
+    color: '#000',
+    backgroundColor: '#f2f2f2',
+    padding: 5
   },
   entertainment: {
     backgroundColor: '#f2f2f2',
@@ -272,13 +274,16 @@ export default {
     padding: 5
   },
   movieBooking: {
-    backgroundColor: 'rgb(250,0,56)',
+    backgroundColor: '#00a76b',
     borderRadius: 5,
     paddingHorizontal: 20,
-    paddingVertical: 5,
+    paddingVertical: 3,
+	textTransform: 'uppercase',
     fontSize: 12,
     fontFamily: 'Montserrat-Regular',
-    color: 'rgba(255,255,255,1)'
+    color: 'rgba(255,255,255,1)',
+    borderColor: '#000',
+    borderWidth: 2,
   },
   /* ComingSoon */
   movieRelease: {
