@@ -1,13 +1,12 @@
 import React from 'react'
 import { StatusBar, TouchableOpacity, Image, ImageBackground, FlatList, ScrollView, Dimensions, Alert } from 'react-native'
-import { Container, Header, Content, Icon, Text, View, Tab, Tabs, ScrollableTab, Card, Picker } from 'native-base'
+import { Container, Header, Content, Icon, Text, View, Tab, Tabs, ScrollableTab, Card, Picker  } from 'native-base'
 import Spinner from "react-native-loading-spinner-overlay";
 import NavigationService from '@Service/Navigation'
 const { width: WIDTH } = Dimensions.get('window')
 import Style from '@Theme/Style'
 import Styles from '@Screen/Public/Events/Style'
 import { LIST_PRODUCT } from '../../../api/ApiConfig';
-
 export default class extends React.Component {
   constructor(props) {
     super(props);
@@ -93,6 +92,7 @@ export default class extends React.Component {
     return str;
   }
   render() {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
@@ -100,7 +100,7 @@ export default class extends React.Component {
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
           <View style={Style.navLeft}>
             <TouchableOpacity onPress={() => {
-              NavigationService.openDrawer()
+              navigation.openDrawer()
             }}
             >
               <Image source={require('@Asset/images/menu.png')} />
@@ -151,7 +151,7 @@ export default class extends React.Component {
                     <View style={{ borderColor: '#f2f2f2', borderWidth: 2, flex: 2, height: 50 }}>
                       <Picker
                         note
-                        // mode="dropdown"
+                        mode="dropdown"
                         style={{ width: 170, }}
                         selectedValue={this.state.selected}
                         onValueChange={this.onValueChange.bind(this)}

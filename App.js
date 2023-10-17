@@ -172,6 +172,11 @@ function AppNav() {
         component={PublicListing}
         options={{headerShown: false}}
       />
+      <Stack.Screen
+        name="PublicAddons"
+        component={PublicAddons}
+        options={{headerShown: false}}
+      />
     </Stack.Navigator>
   );
 }

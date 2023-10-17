@@ -68,6 +68,7 @@ export default class extends React.Component {
   }
 
   render () {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
@@ -75,7 +76,7 @@ export default class extends React.Component {
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
           <View style={Style.navLeft}>
             <TouchableOpacity onPress={() => {
-              NavigationService.openDrawer()
+              navigation.openDrawer()
             }}
             >
               <Image source={require('@Asset/images/menu.png')} />
