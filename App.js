@@ -1,8 +1,9 @@
 import React from 'react';
-import {Dimensions} from 'react-native';
-import {NavigationContainer} from '@react-navigation/native';
-import {createNativeStackNavigator} from '@react-navigation/native-stack';
-import {createDrawerNavigator} from '@react-navigation/drawer';
+import { Dimensions } from 'react-native';
+import { Icon } from 'native-base'
+import { NavigationContainer } from '@react-navigation/native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import DrawerContent from './app/Component/Menu/Left';
 
@@ -36,22 +37,54 @@ const deviceWidth = Dimensions.get('window').width;
 const Drawer = createDrawerNavigator();
 function MyDrawer() {
   return (
-    <Drawer.Navigator 
-    // initialRouteName="PublicHome"
-    screenOptions={{
-      headerShown: false,
-      drawerType: deviceWidth.width >= 768 ? 'permanent' : 'front',
-      drawerStyle: deviceWidth.width >= 768 ? null : {width: '80%'},
-    }}
-    contentComponent={DrawerContent}
+    <Drawer.Navigator
+      // initialRouteName="PublicHome"
+      screenOptions={{
+        headerShown: false,
+        drawerType: deviceWidth.width >= 768 ? 'permanent' : 'front',
+        drawerStyle: deviceWidth.width >= 768 ? null : { width: '80%' },
+      }}
     >
-      <Drawer.Screen name="Home" component={PublicHome} />
-      <Drawer.Screen name="Events" component={PublicEvents} />
-      <Drawer.Screen name="Listing" component={PublicListing} />
-      <Drawer.Screen name="Addons" component={PublicAddons} />
+      <Drawer.Screen
+        name="Home"
+        component={PublicHome}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <Icon name="home" type='SimpleLineIcons' size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Events"
+        component={PublicEvents}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <Icon name="event" type='MaterialIcons' size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Listing"
+        component={PublicListing}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <Icon name="list" type='Entypo' size={size} color={color} />
+          ),
+        }}
+      />
+      <Drawer.Screen
+        name="Sign In"
+        component={PublicSignIn}
+        options={{
+          drawerIcon: ({ focused, color, size }) => (
+            <Icon name="login" type='AntDesign' size={size} color={color} />
+          ),
+        }}
+      />
     </Drawer.Navigator>
   );
 }
+
 
 const Stack = createNativeStackNavigator();
 function AppNav() {
@@ -60,122 +93,122 @@ function AppNav() {
       <Stack.Screen
         name="PublicIntro"
         component={PublicIntro}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicSelectCity"
         component={PublicSelectCity}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicDetail"
         component={PublicDetail}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicSearch"
         component={PublicSearch}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicBooking"
         component={PublicBooking}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicSelectSeat"
         component={PublicSelectSeat}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicFilter"
         component={PublicFilter}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicBuzz"
         component={PublicBuzz}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicReserve"
         component={PublicReserve}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicPaymentDetail"
         component={PublicPaymentDetail}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicPayment"
         component={PublicPayment}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicConfirmation"
         component={PublicConfirmation}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicProfile"
         component={PublicProfile}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicEditProfile"
         component={PublicEditProfile}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicSettings"
         component={PublicSettings}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicSignIn"
         component={PublicSignIn}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicSignUp"
         component={PublicSignUp}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicVerifyOtp"
         component={PublicVerifyOtp}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicForgotPswd"
         component={PublicForgotPswd}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicChangePassword"
         component={PublicChangePassword}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicHome"
         component={MyDrawer}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicEvents"
         component={PublicEvents}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicListing"
         component={PublicListing}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
       <Stack.Screen
         name="PublicAddons"
         component={PublicAddons}
-        options={{headerShown: false}}
+        options={{ headerShown: false }}
       />
     </Stack.Navigator>
   );
@@ -185,7 +218,7 @@ export default class App extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <AppNav/>
+        <AppNav />
       </NavigationContainer>
     );
   }

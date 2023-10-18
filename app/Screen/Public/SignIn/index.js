@@ -83,7 +83,7 @@ export default class extends React.Component {
                   [
                       {
                           text: 'OK',
-                          onPress: () => NavigationService.navigate('PublicHome')
+                          onPress: () => navigation.navigate('PublicHome')
                       },
                   ],
                   { cancelable: false },
@@ -104,6 +104,7 @@ export default class extends React.Component {
    
   }
   render () {
+    const { navigation } = this.props;
     return <Container style={Style.bgMain}>
       <StatusBar backgroundColor='#151515' animated barStyle='light-content' />
       <Spinner visible={this.state.isLoading} />
@@ -137,7 +138,7 @@ export default class extends React.Component {
                 <Icon name='lock-outline' type='MaterialIcons' style={Styles.formIcon} />
               </View>
             </View>
-            <Text style={Styles.forgot} onPress={() => { NavigationService.navigate('PublicForgotPswd') }}>Forgot your password?</Text>
+            <Text style={Styles.forgot} onPress={() => { navigation.navigate('PublicForgotPswd') }}>Forgot your password?</Text>
           </View>
           <View style={Styles.SignIn}>
             <TouchableOpacity
@@ -148,7 +149,7 @@ export default class extends React.Component {
               <Text style={Styles.SignInBtnText}>Sign In</Text>
             </TouchableOpacity>
             <TouchableOpacity onPress={() => {
-              NavigationService.navigate('PublicSignUp')
+              navigation.navigate('PublicSignUp')
             }}
             >
               <Text style={Styles.account}>Don't have an account? SignUp</Text>

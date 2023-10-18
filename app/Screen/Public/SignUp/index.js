@@ -130,7 +130,7 @@ export default class extends React.Component {
                   [
                       {
                           text: 'OK',
-                          onPress: () => NavigationService.navigate('PublicSignIn')
+                          onPress: () => navigation.navigate('PublicSignIn')
                       },
                   ],
                   { cancelable: false },
@@ -151,6 +151,7 @@ export default class extends React.Component {
    
   }
   render() {
+    const { navigation } = this.props;
     return <Container style={Style.bgMain}>
       <StatusBar backgroundColor='#151515' animated barStyle='light-content' />
 
@@ -245,7 +246,7 @@ export default class extends React.Component {
             </TouchableOpacity>
 
             <TouchableOpacity onPress={() => {
-              NavigationService.navigate('PublicSignIn')
+              navigation.navigate('PublicSignIn')
             }}
             >
               <Text style={Styles.account}>Already have an account? SignIn</Text>
