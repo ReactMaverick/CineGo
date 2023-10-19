@@ -130,7 +130,7 @@ export default class extends React.Component {
                   [
                       {
                           text: 'OK',
-                          onPress: () => navigation.navigate('PublicSignIn')
+                          onPress: () => this.props.navigation.navigate('PublicSignIn')
                       },
                   ],
                   { cancelable: false },
