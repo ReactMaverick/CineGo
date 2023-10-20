@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar, TouchableOpacity, TextInput, Image, Share, ImageBackground, FlatList } from 'react-native'
+import { StatusBar, TouchableOpacity, TextInput, Image, Share, ImageBackground, Linking } from 'react-native'
 import { Container, Header, Footer, Content, Button, Icon, Text, Title, View, Item } from 'native-base'
 
 import NavigationService from '@Service/Navigation'
@@ -9,29 +9,33 @@ import FUN from './Fun'
 
 import Style from '@Theme/Style'
 import Styles from '@Screen/Public/Detail/Style'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
+import { RELEASE_ALL } from '../../../api/ApiConfig';
 export default class extends React.Component {
-    // constructor(props){
-    //     super(props);
-    //     this.state = {
-    //         item: this.props.navigation.getParam('item'),
-    //         redirect: this.props.navigation.getParam('redirect')
-
-    //     }
-    //     console.log(this.state.item);
-    // }
     constructor(props) {
         super(props);
         this.state = {
             item: this.props.route.params.item,
             redirect: this.props.route.params.redirect
         };
-        console.log(this.state.item);
     }
-    onShare = () => {
+    componentDidMount() {
+		/*
+        console.log("ROUTE ITEM: ",this.props.route.params.item);
+        AsyncStorage.clear();
+        AsyncStorage.getItem('userData').then((value) => {
+            console.log("userD::::::",JSON.parse(value));
+        })
+          
+        */
+        
+	}
+	
+	onShare = () => {
         Share.share({
             message:
-                'React Native | A framework for building native apps using React',
+                'Fancy some tickets for '+this.state.item.name+'. Get them on the Ticketsat.com mobile app',
         })
     }
     onSelect(index, value) {
@@ -49,56 +53,99 @@ export default class extends React.Component {
             navigation.navigate('PublicListing')
         }
     }
+
+
+    _releaseAll = async () => {
+
+    
+        fetch(RELEASE_ALL, {
+          method: "POST",
+          headers: {
+            // 'Authorization': 'Bearer ' + this.state.user_data.token,
+            'Content-Type': 'application/x-www-form-urlencoded'
+          }
+        })
+          .then((response) => response.json())
+          .then((responseJson) => {
+          //  console.log("responseJson", responseJson);
+        
+    
+          })
+          .catch((error) => console.log(error))
+          .finally(() => {
+            this.setState({ isLoading: false });
+          });
+    
+      }
+    
+
+
+    // _setVenue = async (venue) => {
+    //     this.setState({ venueIndex: venue });
+    // }
     render() {
         const { navigation } = this.props;
-        var imgUrl = "https://demo.ticketstake.com/img/default.jpg";
+		var imgUrl = "https://rest.ticketstake.com/img/default.jpg";
         if (this.state.item.logo != null) {
-            imgUrl = "https://demo.ticketstake.com" + this.state.item.logo.url;
+            imgUrl = this.state.item.logo.url;
         }
         return <Container>
-            <StatusBar backgroundColor="#9013FE" animated barStyle="light-content" />
+            <StatusBar backgroundColor="#00462d" animated barStyle="light-content" />
             <ImageBackground source={{ uri: imgUrl }} style={Styles.detailImg} >
                 <View style={Styles.navigation}>
-                    <Icon name='ios-arrow-back' type="Ionicons" style={Styles.navLeftIcon} onPress={() => {
-                        //    this.state.redirect=="Home"? NavigationService.navigate('PublicHome'):NavigationService.navigate('PublicEvents')
-                        this._goBack();
+                <Icon name='arrow-left' type='FontAwesome' style={Styles.navLeftIcon} onPress={() => {
+                        this.state.redirect=="Home"? navigation.navigate('PublicHome'):navigation.navigate('PublicEvents')
+                        //this._goBack();
                     }} />
-                    <Text style={Styles.navRightDesc} onPress={this.onShare}>SHARE</Text>
+                    
+                    <Text style={Styles.navRightDesc} onPress={this.onShare}>Share</Text>
                 </View>
             </ImageBackground>
             <Content contentContainerStyle={Style.layoutDefault}>
                 <View style={Styles.detail}>
-                    <View style={Styles.detailMain}>
+                    <View style={Styles.detailMain}>                        
+                        <View>
+                            <View style={Styles.movieDate}>
+                                <DateFormat startDate={this.state.item.start_date} />
+                            </View>
+                        </View>
                         <Text style={Styles.detailTitle}>{this.state.item.name}</Text>
                         <View>
-                            <View style={Styles.detailRow}>
-                                <Icon name="favorite" type="MaterialIcons" style={Styles.detailIcon} />
-                                <Text style={Styles.detailReview}>61%</Text>
+                            {this.state.item.categories.map((mapItem, key) => (
+                                <Text key={key} style={Styles.detailDimens}>{mapItem.name}</Text>
+                            ))}
+                            <View style={Styles.smn}>
+                                <TouchableOpacity style={[Styles.smnBtn, Styles.smnFacebook]}>
+                                    <Icon name='facebook' type='FontAwesome' style={Styles.smnIcon} onPress={() => {
+                                        Linking.openURL(this.state.item.facebook)
+                                    }} />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[Styles.smnBtn, Styles.smnTwitter]}>
+                                    <Icon name='twitter' type='FontAwesome' style={Styles.smnIcon} onPress={() => {
+                                        Linking.openURL(this.state.item.twitter)
+                                    }} />
+                                </TouchableOpacity>
+                                <TouchableOpacity style={[Styles.smnBtn, Styles.smnChrome]}>
+                                    <Icon name='chrome' type='FontAwesome' style={Styles.smnIcon} onPress={() => {
+                                        Linking.openURL(this.state.item.other)
+                                    }} />
+                                </TouchableOpacity>
                             </View>
-                            <Text style={Styles.detailVotes}>3,145 votes</Text>
                         </View>
                     </View>
-                    <View>
-                        <View style={Styles.movieDate}>
-                            <DateFormat startDate={this.state.item.start_date} />
-                        </View>
-                    </View>
-
                     {/* <Text style={Styles.detailDesc}>{this.state.item.start_date+" "+this.state.item.start_time}</Text> */}
                     {/* <Text style={Styles.detailTime}>2h 18 min | Crime,Suspense,Thriller</Text>
                     <Text style={Styles.detailLang}>English, Tamil & Hindi</Text> */}
-                    {this.state.item.categories != undefined ? <View style={Styles.detailDimensRow}>
-                        {this.state.item.categories.map((mapItem, key) => (
-                            <Text key={key} style={Styles.detailDimens}>{mapItem.name}</Text>
-                        ))}
-                        {/* <Text style={Styles.detailDimens}>2D</Text> */}
-                    </View> : <></>}
+                    
                     {/* <View>
-                        <Text style={Styles.offer}>Applicable Offers</Text>
-                        <View style={Styles.offerDetail}>
-                            <Text style={Styles.offerDesc}>Googlepay cashback offer</Text>
-                            <Text style={Styles.offerprice}>Get rewards upto Rs.300</Text>
-                        </View>
+                        <Text style={Styles.offer}>Venue</Text>
+
+                        {this.state.item.venue.map((item, index) => (
+                            <TouchableOpacity style={[this.state.venueIndex == index ? Styles.offerDetailActive : Styles.offerDetail, { marginBottom: 10 }]} onPress={() => { this._setVenue(index) }}>
+                                <Text style={Styles.offerDesc}>{item.name + "," + item.address + "," + item.city + "," + item.county + "," + item.country}</Text>
+                            </TouchableOpacity>
+                        ))}
+
                     </View> */}
                 </View>
                 <View style={Styles.bgImg}>
@@ -141,7 +188,7 @@ export default class extends React.Component {
                         horizontal
                         showsHorizontalScrollIndicator={false}
                         renderItem={({ item, separators }) => (
-                            <TouchableOpacity style={Styles.funGroup} onPress={() => { NavigationService.navigate('PublicBuzz') }}>
+                            <TouchableOpacity style={Styles.funGroup} onPress={() => { navigation.navigate('PublicBuzz') }}>
                                 <Image source={{ uri: item.image }} style={Styles.funImg} />
                                 <Text style={Styles.funDesc}>{item.desc}</Text>
                                 <View style={Styles.funRow}>
@@ -154,7 +201,18 @@ export default class extends React.Component {
 
                 </View>
             </Content>
-            <TouchableOpacity onPress={() => { navigation.navigate('PublicBooking') }}>
+            <TouchableOpacity onPress={() => {
+                AsyncStorage.getItem("userData").then((value) => {
+                    this._releaseAll();
+                    var user_data = JSON.parse(value);
+                    if (user_data == null) {
+                        navigation.navigate('PublicSignIn', { item: this.state.item })
+                    } else {
+                        navigation.navigate('PublicBooking', { item: this.state.item })
+                    }
+                })
+
+            }}>
                 <Footer style={Styles.ftrTab}>
                     <Icon name="ticket" type="Entypo" style={Styles.ftrIcon} />
                     <Text style={Styles.ftrDesc}>Book Tickets</Text>
@@ -171,18 +229,18 @@ export default class extends React.Component {
 class DateFormat extends React.Component {
 
     render() {
-        // var startDate = this.props.startDate;
-        // var newDate = startDate.split("-");
+        var startDate = this.props.startDate;
+        var newDate = startDate.split("-");
 
-        // var monthArr = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'June', '07': 'July', '08': 'Aug', '09': 'Sept', '10': 'Oct', '11': 'Nov', '12': 'Dec' };
-        // var Day = newDate[2];
-        // var Month = monthArr[newDate[1]];
-        // var Year = newDate[0];
+        var monthArr = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'June', '07': 'July', '08': 'Aug', '09': 'Sept', '10': 'Oct', '11': 'Nov', '12': 'Dec' };
+        var Day = newDate[2];
+        var Month = monthArr[newDate[1]];
+        var Year = newDate[0];
         return (
             <View>
-                <Text style={Styles.eventDate}>01</Text>
-                <Text style={[Styles.eventMonth, { textAlign: 'center' }]}>Apr</Text>
-                <Text style={Styles.eventDate}>2023</Text>
+                <Text style={Styles.eventDate}>{Day}</Text>
+                <Text style={[Styles.eventMonth, { textAlign: 'center' }]}>{Month}</Text>
+                <Text style={Styles.eventDate}>{Year}</Text>
             </View>
         )
 
