@@ -50,22 +50,24 @@ export default class extends React.Component {
   }
 
   render() {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
           <TouchableOpacity
             style={Styles.profileRight} onPress={() => {
-              NavigationService.navigate('PublicHome')
+              navigation.navigate('PublicHome')
             }}
           >
             {/* <Image source={{ uri: 'https://images.pexels.com/photos/733872/pexels-photo-733872.jpeg?auto=compress&cs=tinysrgb&dpr=1&w=500' }} style={Styles.profileImg} /> */}
-            <Text style={Styles.profileNum}>Profile</Text>
+            <Icon name='keyboard-arrow-left' type='MaterialIcons' style={Style.navLeftIcon} />
+            <Text style={Styles.profileNum}>Home</Text>
           </TouchableOpacity>
           <View style={Style.navMiddle} />
           <TouchableOpacity
             style={Style.navRight} onPress={() => {
-              NavigationService.navigate('PublicEditProfile')
+              navigation.navigate('PublicEditProfile')
             }}
           >
 
@@ -80,7 +82,7 @@ export default class extends React.Component {
 
             <View style={{ flexDirection: 'row', flex: 1, margin: 10 }}>
               <View style={{ flex: 1 }}>
-                <Image source={{ uri: "https://demo.ticketstake.com/img/default.jpg" }} style={{ width: 100, height: 100, borderRadius: 50 }} />
+                <Image source={{ uri: "https://www.ticketsat.com/images/default.jpg" }} style={{ width: 100, height: 100, borderRadius: 50 }} />
               </View>
               <View style={{ flex: 2, justifyContent: 'center' }}>
                 <Text style={{ color: 'gray', fontFamily: 'Montserrat-SemiBold', fontSize: 12 }}>Name</Text>
@@ -130,7 +132,7 @@ export default class extends React.Component {
         </Card>
 
         <TouchableOpacity 
-        onPress={()=>{ NavigationService.navigate('PublicChangePassword'); }}
+        onPress={()=>{ navigation.navigate('PublicChangePassword'); }}
               style={{backgroundColor:'#9013FE',height:60,width:WIDTH-20,alignItems:"center",margin:10,flexDirection:"row"}} 
             >
                <Icon name="keyboard-arrow-right" type="MaterialIcons" style={{ fontSize: 40, color: '#fff' }} />

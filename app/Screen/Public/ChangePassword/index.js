@@ -54,7 +54,7 @@ export default class extends React.Component {
   _updatePassword = async() =>{
 
           
-    await this.setState({ isLoading: true })
+    
 
     if (this.state.old_password == '') {
         Alert.alert(
@@ -110,7 +110,7 @@ export default class extends React.Component {
 
 }
      else {
-             
+      await this.setState({ isLoading: true })      
       let details = {
         'email': this.state.email,        
         'old_password': this.state.old_password,
@@ -146,7 +146,7 @@ export default class extends React.Component {
                   [
                       {
                           text: 'OK',
-                          onPress: () => NavigationService.navigate('PublicHome')
+                          onPress: () => navigation.navigate('PublicHome')
                       },
                   ],
                   { cancelable: false },
@@ -167,6 +167,7 @@ export default class extends React.Component {
    
   }
   render() {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <Spinner visible={this.state.isLoading} />
@@ -174,19 +175,19 @@ export default class extends React.Component {
         <View style={Style.navigationBar}>
           <TouchableOpacity
             style={Styles.profileLeft} onPress={() => {
-              NavigationService.navigate('PublicProfile')
+              navigation.navigate('PublicProfile')
             }}
           >
             <Icon name='keyboard-arrow-left' type='MaterialIcons' style={Style.navLeftIcon} />
-            <Text style={Styles.profileNum}>Change Password</Text>
+            <Text style={Styles.profileNum}>Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={Styles.navRight} onPress={() => {
               this._updatePassword()
-            //  NavigationService.navigate('PublicHome')
+            //  navigation.navigate('PublicHome')
             }}
           >
-            <Text style={Styles.rightDesc}>Update</Text>
+            <Text style={Styles.rightDesc}>Update Password</Text>
           </TouchableOpacity>
         </View>
       </Header>

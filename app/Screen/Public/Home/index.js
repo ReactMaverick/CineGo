@@ -1,6 +1,7 @@
 import React from 'react'
 import { StatusBar, TouchableOpacity, Image, ImageBackground, FlatList, Text, View } from 'react-native'
 import { Container, Header, Content, Icon, Tab, Tabs, ScrollableTab } from 'native-base'
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from "react-native-loading-spinner-overlay";
 import NavigationService from '@Service/Navigation'
 import { useNavigation } from '@react-navigation/native';
@@ -36,6 +37,7 @@ export default class extends React.Component {
   }
 
   componentDidMount() {
+    //AsyncStorage.clear();
     this._getEventDetails();
     this._getEventPageList();
     this._getFeaturedDetails();
@@ -488,11 +490,16 @@ export default class extends React.Component {
           >
             <Icon name='flame' type='Octicons' style={Style.iconInactive} />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={Style.fIcons} onPress={() => {
-              navigation.navigate('PublicProfile')
-            }}
-          >
+          <TouchableOpacity onPress={() => {
+                AsyncStorage.getItem("userData").then((value) => {
+                    var user_data = JSON.parse(value);
+                    if (user_data == null) {
+                        navigation.navigate('PublicSignIn', { item: this.state.item })
+                    } else {
+                        this.props.navigation.navigate('PublicProfile')
+                    }
+                })
+            }}>
             <Icon name='user-o' type='FontAwesome' style={Style.iconInactive} />
           </TouchableOpacity>
         </View>
