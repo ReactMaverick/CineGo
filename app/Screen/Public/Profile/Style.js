@@ -12,7 +12,7 @@ export default {
         alignSelf: 'center',
         color: '#FFF',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 12,
+        fontSize: 16,
         marginHorizontal: 10
     },
     profileImg: {
@@ -20,6 +20,12 @@ export default {
         height: 40,
         borderRadius: 20,
         marginVertical: 5
+    },
+    QRImg: {
+        width: 200,
+        height: 200,
+        borderRadius: 20,
+        marginVertical: 5,
     },
     profileMain: {
         flexDirection: 'row',
@@ -36,13 +42,13 @@ export default {
     profileChange:{
         color: '#FFF',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 16,
     },
     profileDesc:{
         padding: 20,
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 16,
         borderBottomWidth: 1,
         borderColor: 'rgba(0,0,0,0.1)'
     },

@@ -234,14 +234,14 @@ export default class extends React.Component {
                         for(i=0;i<event.length;i++){
                           if(event[i].id==item.listing_id){
                             console.log( event[i]);
-                            NavigationService.navigate('PublicDetail', { item: event[i], redirect: 'Home' })
+                            navigation.navigate('PublicDetail', { item: event[i], redirect: 'Home' })
                           }
                         }                       
                       }else{
                         var listings = this.state.listings;
                         for(i=0;i<listings.length;i++){
                           if(listings[i].id==item.listing_id){
-                            NavigationService.navigate('PublicDetail', { item: listings[i], redirect: 'Home' })
+                            navigation.navigate('PublicDetail', { item: listings[i], redirect: 'Home' })
                           }
                         } 
                        

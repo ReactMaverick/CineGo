@@ -9,9 +9,9 @@ export default {
     },
     profileNum: {
         alignSelf: 'center',
-        color: '#4A90E2',
+        color: '#FFF',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 16,
         marginHorizontal: 10
     },
     navRight: {
@@ -20,8 +20,8 @@ export default {
         alignItems: 'flex-end'
     },
     rightDesc: {
-        color: '#4A90E2',
-        fontSize: 12,
+        color: '#FFF',
+        fontSize: 16,
         fontFamily: 'Montserrat-Regular',
         marginHorizontal: 10
     },
@@ -37,7 +37,7 @@ export default {
     },
     profileDesc: {
         color: 'rgba(0,0,0,0.7)',
-        fontSize: 12,
+        fontSize: 16,
         fontFamily: 'Montserrat-Regular',
         alignSelf: 'center',
         marginVertical: 10
@@ -49,9 +49,9 @@ export default {
     },
     textInputDesc: {
         flex: 1,
-        marginHorizontal: 5,
-        borderColor: 'rgba(0,0,0,0.1)',
-        borderBottomWidth: 1
+        marginHorizontal: 5,      
+        fontSize: 22,
+        color: '#000',
     },
     textInputNum: {
         flex: 1,
@@ -61,7 +61,7 @@ export default {
     },
     prfDesc:{
         color: 'rgba(0,0,0,0.5)',
-        fontSize: 12,
+        fontSize: 16,
         fontFamily: 'Montserrat-Regular',
         marginHorizontal: 15,
         marginTop: 10,
@@ -73,7 +73,7 @@ export default {
     radioDesc: {
         alignSelf: 'center',
         color: 'rgba(0,0,0,0.5)',
-        fontSize: 12,
+        fontSize: 16,
         fontFamily: 'Montserrat-Regular',
         paddingHorizontal: 5
     },

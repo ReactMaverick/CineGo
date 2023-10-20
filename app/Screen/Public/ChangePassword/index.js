@@ -5,7 +5,7 @@ import Spinner from "react-native-loading-spinner-overlay";
 import NavigationService from '@Service/Navigation'
 
 import Style from '@Theme/Style'
-import Styles from '@Screen/Public/EditProfile/Style'
+import Styles from '@Screen/Public/ChangePassword/Style'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { VIEW_PROFILE,CHANGE_PASSWORD } from '../../../api/ApiConfig';
 export default class extends React.Component {
@@ -171,7 +171,7 @@ export default class extends React.Component {
     return <Container>
       <Header style={Style.navigation}>
         <Spinner visible={this.state.isLoading} />
-        <StatusBar backgroundColor='#000' animated barStyle='light-content' />
+        <StatusBar backgroundColor='#00462d' animated barStyle='light-content' />
         <View style={Style.navigationBar}>
           <TouchableOpacity
             style={Styles.profileLeft} onPress={() => {
@@ -219,7 +219,7 @@ export default class extends React.Component {
           <TextInput
             style={Styles.textInputDesc}
             placeholder='Old Password'
-            placeholderTextColor='#666'
+            placeholderTextColor='#d1d1d1'
             secureTextEntry={true}
             onChangeText={(old_password) => this.setState({ old_password })}
             value={this.state.old_password}
@@ -228,7 +228,7 @@ export default class extends React.Component {
           <TextInput
             style={Styles.textInputDesc}
             placeholder='New Password'
-            placeholderTextColor='#666'
+            placeholderTextColor='#d1d1d1'
             secureTextEntry={true}
             onChangeText={(password) => this.setState({ password })}
             value={this.state.password}
@@ -238,7 +238,7 @@ export default class extends React.Component {
           <TextInput
             style={Styles.textInputDesc}
             placeholder='Confirm Password'
-            placeholderTextColor='#666'
+            placeholderTextColor='#d1d1d1'
             secureTextEntry={true}
             onChangeText={(conf_password) => this.setState({ conf_password })}
             value={this.state.conf_password}
