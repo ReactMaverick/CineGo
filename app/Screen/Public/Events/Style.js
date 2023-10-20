@@ -7,7 +7,7 @@ export default {
     backgroundColor: '#111'
   },
   textStyle: {
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(255,255,255,0.6)'
   },
@@ -15,7 +15,7 @@ export default {
     backgroundColor: '#111'
   },
   activeTextStyle: {
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: 'Montserrat-Regular',
     color: '#FFF'
   },
@@ -134,7 +134,7 @@ export default {
     borderWidth: 0
   },
   movietextStyle: {
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: 'Montserrat-Regular',
     color: '#FFF'
   },
@@ -142,7 +142,7 @@ export default {
     backgroundColor: '#999'
   },
   movieactiveTextStyle: {
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.5)'
   },
@@ -253,7 +253,7 @@ export default {
     color: 'rgba(0,0,0,0.7)'
   },
   movieLang: {
-    fontSize: 11,
+    fontSize: 14,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.5)'
   },
@@ -272,13 +272,16 @@ export default {
     padding: 5
   },
   movieBooking: {
-    backgroundColor: 'rgb(250,0,56)',
+    backgroundColor: '#00a76b',
     borderRadius: 5,
     paddingHorizontal: 20,
     paddingVertical: 5,
     fontSize: 12,
-    fontFamily: 'Montserrat-Regular',
-    color: 'rgba(255,255,255,1)'
+    fontFamily: 'Montserrat-SemiBold',
+    color: 'rgba(255,255,255,1)',
+    borderColor: '#000',
+    borderWidth: 1,
+	textTransform: 'uppercase',
   },
   /* ComingSoon */
   movieRelease: {
@@ -330,7 +333,7 @@ export default {
     backgroundColor: '#FFF'
   },
   eventtextStyle: {
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: 'Montserrat-Regular',
     color: '#000',
     padding: 10,
@@ -342,7 +345,7 @@ export default {
     backgroundColor: '#FFF'
   },
   eventactiveTextStyle: {
-    fontSize: 8,
+    fontSize: 10,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(255,255,255,1)',
     padding: 5,
