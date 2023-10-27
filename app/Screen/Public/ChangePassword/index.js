@@ -5,7 +5,7 @@ import Spinner from "react-native-loading-spinner-overlay";
 import NavigationService from '@Service/Navigation'
 
 import Style from '@Theme/Style'
-import Styles from '@Screen/Public/EditProfile/Style'
+import Styles from '@Screen/Public/ChangePassword/Style'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { VIEW_PROFILE,CHANGE_PASSWORD } from '../../../api/ApiConfig';
 export default class extends React.Component {
@@ -54,7 +54,7 @@ export default class extends React.Component {
   _updatePassword = async() =>{
 
           
-    await this.setState({ isLoading: true })
+    
 
     if (this.state.old_password == '') {
         Alert.alert(
@@ -110,7 +110,7 @@ export default class extends React.Component {
 
 }
      else {
-             
+      await this.setState({ isLoading: true })      
       let details = {
         'email': this.state.email,        
         'old_password': this.state.old_password,
@@ -146,7 +146,7 @@ export default class extends React.Component {
                   [
                       {
                           text: 'OK',
-                          onPress: () => NavigationService.navigate('PublicHome')
+                          onPress: () => navigation.navigate('PublicHome')
                       },
                   ],
                   { cancelable: false },
@@ -167,26 +167,27 @@ export default class extends React.Component {
    
   }
   render() {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <Spinner visible={this.state.isLoading} />
-        <StatusBar backgroundColor='#000' animated barStyle='light-content' />
+        <StatusBar backgroundColor='#00462d' animated barStyle='light-content' />
         <View style={Style.navigationBar}>
           <TouchableOpacity
             style={Styles.profileLeft} onPress={() => {
-              NavigationService.navigate('PublicProfile')
+              navigation.navigate('PublicProfile')
             }}
           >
             <Icon name='keyboard-arrow-left' type='MaterialIcons' style={Style.navLeftIcon} />
-            <Text style={Styles.profileNum}>Change Password</Text>
+            <Text style={Styles.profileNum}>Profile</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={Styles.navRight} onPress={() => {
               this._updatePassword()
-            //  NavigationService.navigate('PublicHome')
+            //  navigation.navigate('PublicHome')
             }}
           >
-            <Text style={Styles.rightDesc}>Update</Text>
+            <Text style={Styles.rightDesc}>Update Password</Text>
           </TouchableOpacity>
         </View>
       </Header>
@@ -218,7 +219,7 @@ export default class extends React.Component {
           <TextInput
             style={Styles.textInputDesc}
             placeholder='Old Password'
-            placeholderTextColor='#666'
+            placeholderTextColor='#d1d1d1'
             secureTextEntry={true}
             onChangeText={(old_password) => this.setState({ old_password })}
             value={this.state.old_password}
@@ -227,7 +228,7 @@ export default class extends React.Component {
           <TextInput
             style={Styles.textInputDesc}
             placeholder='New Password'
-            placeholderTextColor='#666'
+            placeholderTextColor='#d1d1d1'
             secureTextEntry={true}
             onChangeText={(password) => this.setState({ password })}
             value={this.state.password}
@@ -237,7 +238,7 @@ export default class extends React.Component {
           <TextInput
             style={Styles.textInputDesc}
             placeholder='Confirm Password'
-            placeholderTextColor='#666'
+            placeholderTextColor='#d1d1d1'
             secureTextEntry={true}
             onChangeText={(conf_password) => this.setState({ conf_password })}
             value={this.state.conf_password}

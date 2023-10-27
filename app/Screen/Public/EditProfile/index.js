@@ -116,7 +116,7 @@ export default class extends React.Component {
                   [
                       {
                           text: 'OK',
-                          onPress: () => NavigationService.navigate('PublicHome')
+                          onPress: () => navigation.navigate('PublicHome')
                       },
                   ],
                   { cancelable: false },
@@ -137,6 +137,7 @@ export default class extends React.Component {
    
   }
   render() {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
         <Spinner visible={this.state.isLoading} />
@@ -144,11 +145,11 @@ export default class extends React.Component {
         <View style={Style.navigationBar}>
           <TouchableOpacity
             style={Styles.profileLeft} onPress={() => {
-              NavigationService.navigate('PublicProfile')
+              navigation.navigate('PublicProfile')
             }}
           >
             <Icon name='keyboard-arrow-left' type='MaterialIcons' style={Style.navLeftIcon} />
-            <Text style={Styles.profileNum}>Edit Profile</Text>
+            <Text style={Styles.profileNum}>Back</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={Styles.navRight} onPress={() => {

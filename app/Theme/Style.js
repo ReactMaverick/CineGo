@@ -28,7 +28,8 @@ export default {
         height: 60,
         flexDirection: 'row',
         alignItems: 'center',
-        marginHorizontal: -10
+        marginHorizontal: -10,
+        backgroundColor: '#00462d',
     },
     nav: {
 
@@ -151,11 +152,11 @@ export default {
     iconActive: {
         ...Platform.select({
             ios: {
-                color: '#4A90E2',
+                color: '#00a86b',
                 fontSize: 24,
             },
             android: {
-                color: '#4A90E2',
+                color: '#00a86b',
                 fontSize: 24,
                 alignSelf: 'center'
             },
@@ -195,7 +196,7 @@ export default {
     },
     textActive: {
         fontSize: 12,
-        color: '#4A90E2'
+        color: '#00a86b'
     },
     textInactive: {
         fontSize: 12,

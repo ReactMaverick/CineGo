@@ -62,7 +62,7 @@ export default class extends React.Component {
     const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
-        <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
+        <StatusBar backgroundColor='#00462D' animated barStyle='light-content' />
         <Spinner visible={this.state.isLoading} />
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
           <View style={Style.navLeft}>
@@ -74,7 +74,7 @@ export default class extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={Style.navMiddle}>
-            <Text style={Style.navMiddleText}>Listings</Text>
+            <Text style={Style.navMiddleTextats}>Ticketsat.com</Text><Image source={require('@Asset/images/tats_logo.png')} style={Style.navMiddleLogo}/>
           </View>
           <View style={Style.navRight} />
         </ImageBackground>
@@ -105,7 +105,7 @@ export default class extends React.Component {
                         <View style={Styles.movieLayout}>
                           <TouchableOpacity
                             style={Styles.movieGroup} onPress={() => {
-                              NavigationService.navigate('PublicDetail', { item: item, redirect: 'Listing' })
+                              navigation.navigate('PublicDetail', { item: item, redirect: 'Listing' })
                             }}
                           >
 
@@ -126,13 +126,18 @@ export default class extends React.Component {
                               {/* <Text style={Styles.movieLang}>{ item.description}</Text> */}
                               <Description description={item.description} />
                             </View>
-                            <TouchableOpacity style={Styles.eventBooking}>
-                              <Text style={Styles.movieBooking}>Book</Text>
+                            <TouchableOpacity style={Styles.eventBooking} onPress={() => {
+                                    AsyncStorage.getItem("userData").then((value) => {
+                                        var user_data = JSON.parse(value);
+                                        if (user_data == null) {
+                                            navigation.navigate('PublicSignIn', { item: item })
+                                        } else {
+                                            navigation.navigate('PublicBooking', { item: item })
+                                        }
+                                    })
+                                  }}>
+                                <Text style={Styles.movieBooking}>Tickets</Text>
                             </TouchableOpacity>
-                          </View>
-                          <View style={Styles.movieForm}>
-                            <Text style={Styles.eventDescBorder}>{item.categories.length != 0 ? item.categories[0].name : ""}</Text>
-                            <Text style={Styles.eventDesc}>{item.price != null ? item.price : ""}</Text>
                           </View>
                         </View>
                       )}
@@ -159,11 +164,11 @@ export default class extends React.Component {
     //console.log(this.props.ImageData)
     if(this.props.ImageData!=null){
       return(
-        <Image source={{ uri:  "https://demo.ticketstake.com"+ this.props.ImageData.url }} style={Styles.movieImg} />
+        <Image source={{ uri: this.props.ImageData.url }} style={Styles.movieImg} />
         )
      }else{
       return(
-        <Image source={{ uri: "https://demo.ticketstake.com/img/default.jpg"}} style={Styles.movieImg} />
+        <Image source={{ uri: "https://www.ticketsat.com/img/default.jpg" }} style={Styles.movieImg} />
         )
      }
   }
@@ -176,9 +181,9 @@ class Description extends React.Component{
  
   render(){
   //  console.log(this.props.description)
-    var description  = this.props.description.substring(0,100);
+    var description  = this.props.description.substring(0,70);
     return(
-    <Text style={[Styles.movieLang,{width:150}]}>{description}</Text>
+    <Text style={[Styles.movieLang,{width:170}]}>{description}</Text>
       )
   }
    

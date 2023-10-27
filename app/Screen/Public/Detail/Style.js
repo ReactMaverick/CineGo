@@ -7,14 +7,57 @@ export default {
         justifyContent: 'space-between'
     },
     navRightDesc: {
-        padding: 10,
+        padding: 5,
+        backgroundColor: '#f0f0f0',
+        alignItems:"center",
+        borderWidth: 1,
+        borderColor: '#00a86b',
+        color: '#00462d',
         fontSize: 12,
-        fontFamily: 'Montserrat-SemiBold',
-        color: 'rgba(255,255,255,1)'
+        height: 27,
+    },
+    smn: {
+        flex: 1,
+        flexDirection: 'row',
+        justifyContent: 'space-evenly'
+    },
+    smnBtn: {
+        width: 40,
+        height: 30,
+        alignItems: 'center',
+        justifyContent: 'center',
+        borderRadius: 3,
+        backgroundColor: 'transparent',
+    },
+    smnIcon: {
+        fontSize: 14,
+        color: '#FFF',
+    },
+    smnFacebook: {
+        backgroundColor: '#3a559f',        
+        borderWidth: 1,
+        borderColor: '#00462d',
+        color: '#00a86b',
+    },
+    smnTwitter: {
+        backgroundColor: '#4faaf0',
+        borderWidth: 1,
+        borderColor: '#00462d',
+        color: '#00a86b',
+    },
+    smnChrome: {
+        backgroundColor: '#FBBC05',        
+        borderWidth: 1,
+        borderColor: '#00462d',
+        color: '#00a86b',
     },
     navLeftIcon: {
         padding: 10,
-        color: 'rgba(255,255,255,1)'
+        backgroundColor: '#f0f0f0',
+        alignItems:"center",
+        borderWidth: 1,
+        borderColor: '#00a86b',
+        color: '#00a86b',
     },
     detailImg: {
         width: '100%',
@@ -22,7 +65,13 @@ export default {
         opacity: 0.9
     },
     detail: {
-        padding: 15
+        paddingTop: 15,
+        paddingBottom: 15,
+        paddingLeft: 15,
+        paddingRight: 15,
+        borderColor: '#00462d',
+        borderBottomWidth: 1,
+        borderRadius: 10,
     },
     detailMain: {
         flexDirection: 'row',
@@ -30,6 +79,7 @@ export default {
     },
     detailTitle: {
         fontSize: 16,
+        width: 120,
         fontFamily: 'Montserrat-SemiBold',
         color: 'rgba(0,0,0,0.9)'
     },
@@ -72,16 +122,15 @@ export default {
     },
     detailDimensRow: {
         flexDirection: 'row',
-        marginVertical: 5
+        marginVertical: 5,
+        marginTop: -15,
     },
     detailDimens: {
-        fontSize: 10,
         fontFamily: 'Montserrat-Regular',
-        color: 'rgba(0,0,0,0.5)',
-        borderColor: 'rgba(0,0,0,0.1)',
-        borderWidth: 1,
         padding: 5,
-        marginRight: 5
+        marginRight: 5,
+        fontSize: 18,
+        marginTop: -7,
     },
     offer: {
         fontSize: 12,
@@ -92,6 +141,11 @@ export default {
     offerDetail: {
         padding: 10,
         borderColor: 'rgba(0,0,0,0.1)',
+        borderWidth: 1
+    },
+    offerDetailActive: {
+        padding: 10,
+        borderColor: 'blue',
         borderWidth: 1
     },
     offerDesc: {
@@ -129,10 +183,11 @@ export default {
     },
     movieDesc: {
         lineHeight: 20,
-        fontSize: 12,
+        fontSize: 16,
         fontFamily: 'Montserrat-Regular',
         color: 'rgba(0,0,0,0.5)',
-        paddingVertical: 10
+        paddingVertical: 10,        
+        marginTop: -15,
     },
     castForm: {
         marginRight: 10,
@@ -202,23 +257,25 @@ export default {
     },
     /* Footer */
     ftrTab: {
-        backgroundColor: '#4A90E2',
-        alignItems: 'center'
+        backgroundColor: '#00a86b',
+        alignItems: 'center',
+        borderTopWidth: 1,
+        borderColor: '#000', 
     },
     ftrIcon: {
         fontSize: 24,
         color: 'rgba(255,255,255,1)'
     },
     ftrDesc: {
-        fontSize: 16,
+        fontSize: 22,
         fontFamily: 'Montserrat-Regular',
         color: 'rgba(255,255,255,1)',
         marginHorizontal: 10
     },
     eventMonth: {
-        fontSize: 10,
+        fontSize: 18,
         fontFamily: 'Montserrat-Regular',
-        color: '#4A90E2',
+        color: '#000',
         alignSelf: 'center',
     },
     eventDate: {
@@ -241,6 +298,9 @@ export default {
         paddingHorizontal: 15,
         paddingVertical: 3,
         width:80,
-        alignItems:"center"
+        alignItems:"center",
+        borderWidth: 1,
+        borderColor: '#00a86b',  
+        borderRadius: 5,
       },
 }
