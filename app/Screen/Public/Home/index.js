@@ -287,7 +287,7 @@ export default class extends React.Component {
               <View style={Styles.entertainment}>
                 <View style={Styles.caption}>
                   <Text style={Styles.captionDesc}>Listings</Text>
-                  <TouchableOpacity style={Styles.captionBtn} onPress={() => { navigation.navigate('PublicListing') }}>
+                  <TouchableOpacity style={Styles.captionBtn} onPress={() => { navigation.navigate('Listing') }}>
                     <Text style={Styles.captionDescAll}>VIEW ALL</Text>
                   </TouchableOpacity>
                 </View>

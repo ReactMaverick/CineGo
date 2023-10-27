@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { Dimensions } from 'react-native';
 import { Icon } from 'native-base'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-
 import DrawerContent from './app/Component/Menu/Left';
-
+import { Provider } from 'react-redux';
+import { store, persistor } from './app/redux/store';
+import { PersistGate } from 'reduxjs-toolkit-persist/integration/react';
+import { useDispatch, useSelector } from 'react-redux';
+import { LOGOUT } from './app/api/ApiConfig';
+import MyComponent from './app/Screen/Public/MyComponent';
 import PublicIntro from './app/Screen/Public/Intro';
 import PublicHome from './app/Screen/Public/Home';
 import PublicSearch from './app/Screen/Public/Search';
@@ -31,11 +35,12 @@ import PublicEvents from './app/Screen/Public/Events';
 import PublicListing from './app/Screen/Public/Listing';
 import PublicAddons from './app/Screen/Public/Addons';
 import PublicChangePassword from './app/Screen/Public/ChangePassword';
-
-
+import { useNavigation } from '@react-navigation/native';
+import { userDetails, logOut } from './app/redux/reducers/Customer';
 const deviceWidth = Dimensions.get('window').width;
 const Drawer = createDrawerNavigator();
 function MyDrawer() {
+  const userDetail = useSelector(state => state.userReducer.value);
   return (
     <Drawer.Navigator
       // initialRouteName="PublicHome"
@@ -72,9 +77,11 @@ function MyDrawer() {
           ),
         }}
       />
+
+
       <Drawer.Screen
-        name="Sign In"
-        component={PublicSignIn}
+        name={userDetail ? "Log Out" : "Sign In"}
+        component={userDetail ? _logout : PublicSignIn}
         options={{
           drawerIcon: ({ focused, color, size }) => (
             <Icon name="login" type='AntDesign' size={size} color={color} />
@@ -86,6 +93,39 @@ function MyDrawer() {
 }
 
 
+const _logout = () => {
+  const dispatch = useDispatch();
+  const navigation = useNavigation();
+  const userDetail = useSelector(state => state.userReducer.value);
+  console.log("userDetail", userDetail);
+
+  useEffect(() => {
+    fetch(LOGOUT, {
+      method: "POST",
+      headers: {
+        'Authorization': 'Bearer ' + userDetail.token,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // Handle the server response, if needed
+        // For example, set state or display a success message
+        console.log("Logout successful");
+        dispatch(logOut());
+        navigation.navigate('Home')
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      })
+      .finally(() => {
+        // 
+      });
+  })
+  return (
+    <></>
+  )
+}
 const Stack = createNativeStackNavigator();
 function AppNav() {
   return (
@@ -218,7 +258,11 @@ export default class App extends React.Component {
   render() {
     return (
       <NavigationContainer>
-        <AppNav />
+        <Provider store={store}>
+          <PersistGate loading={null} persistor={persistor}>
+            <AppNav />
+          </PersistGate>
+        </Provider>
       </NavigationContainer>
     );
   }

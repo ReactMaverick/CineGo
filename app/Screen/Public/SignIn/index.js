@@ -1,109 +1,111 @@
 import React from 'react'
-import { StatusBar, TouchableOpacity, TextInput, Image,Alert } from 'react-native'
+import { StatusBar, TouchableOpacity, TextInput, Image, Alert } from 'react-native'
 import { Container, Content, Icon, Text, View } from 'native-base'
 import Spinner from "react-native-loading-spinner-overlay";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import NavigationService from '@Service/Navigation'
-
+import { useDispatch, useSelector, connect } from 'react-redux';
 import Style from '@Theme/Style'
 import Styles from '@Screen/Public/SignIn/Style'
-import {SIGNIN_API} from '../../../api/ApiConfig';
-export default class extends React.Component {
-  constructor(props){
+import { SIGNIN_API } from '../../../api/ApiConfig';
+import { userDetails } from '../../../redux/reducers/Customer';
+class SignIn extends React.Component {
+  constructor(props) {
     super(props);
     this.state = {
-      email:'',
-      password:'',
-      isLoading:false
+      email: '',
+      password: '',
+      isLoading: false
     }
   }
-  _loginCheck = async () =>{
-          
+  _loginCheck = async () => {
+
     await this.setState({ isLoading: true })
 
     if (this.state.email == '') {
-        Alert.alert(
-            'Alert',
-            'Email cannot be empty.',
-            [
-                {
-                    text: 'OK',
-                    onPress: () => this.setState({ isLoading: false })
-                },
-            ],
-            { cancelable: false },
-        );
+      Alert.alert(
+        'Alert',
+        'Email cannot be empty.',
+        [
+          {
+            text: 'OK',
+            onPress: () => this.setState({ isLoading: false })
+          },
+        ],
+        { cancelable: false },
+      );
 
     } else if (this.state.password == '') {
-        Alert.alert(
-            'Alert',
-            'Password cannot be empty.',
-            [
-                {
-                    text: 'OK',
-                    onPress: () => this.setState({ isLoading: false })
-                },
-            ],
-            { cancelable: false },
-        );
+      Alert.alert(
+        'Alert',
+        'Password cannot be empty.',
+        [
+          {
+            text: 'OK',
+            onPress: () => this.setState({ isLoading: false })
+          },
+        ],
+        { cancelable: false },
+      );
 
     }
-     else {
-             
-      let details = {
-        'email': this.state.email,        
-        'password': this.state.password        
-    };
+    else {
 
-    
+      let details = {
+        'email': this.state.email,
+        'password': this.state.password
+      };
+
+
       let formBody = [];
       for (let property in details) {
-          let encodedKey = encodeURIComponent(property);
-          let encodedValue = encodeURIComponent(details[property]);
-          formBody.push(encodedKey + "=" + encodedValue);
+        let encodedKey = encodeURIComponent(property);
+        let encodedValue = encodeURIComponent(details[property]);
+        formBody.push(encodedKey + "=" + encodedValue);
       }
       formBody = formBody.join("&");
 
-        fetch(SIGNIN_API, {
-            method: "POST",
-            headers: {
-              'Authorization': 'Bearer token',
-              'Content-Type': 'application/x-www-form-urlencoded'
-            },
-            body: formBody
+      fetch(SIGNIN_API, {
+        method: "POST",
+        headers: {
+          'Authorization': 'Bearer token',
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: formBody
+      })
+        .then((response) => response.json())
+        .then((responseJson) => {
+          console.log(responseJson);
+          if (responseJson.success == true) {
+            // AsyncStorage.setItem('userData', JSON.stringify(responseJson.data));
+            this.props.userDetails(JSON.stringify(responseJson.data));
+            Alert.alert(
+              'Alert',
+              responseJson.message,
+              [
+                {
+                  text: 'OK',
+                  onPress: () => this.props.navigation.navigate('Home')
+                },
+              ],
+              { cancelable: false },
+            );
+
+          } else {
+            Alert.alert("Warning", responseJson.message);
+          }
+
+
         })
-            .then((response) => response.json())
-            .then((responseJson) => { 
-              console.log(responseJson);
-              if(responseJson.success==true){
-                AsyncStorage.setItem('userData',JSON.stringify(responseJson.data));
-                Alert.alert(
-                  'Alert',
-                  responseJson.message,
-                  [
-                      {
-                          text: 'OK',
-                          onPress: () => this.props.navigation.navigate('Home')
-                      },
-                  ],
-                  { cancelable: false },
-              );
-               
-              }else{
-                  Alert.alert("Warning",responseJson.message);
-              }
-              
-                
-            })
-            .catch((error) => console.log( error))
-            .finally(() => {
-                this.setState({ isLoading: false });
-            });
+        .catch((error) => console.log(error))
+        .finally(() => {
+          this.setState({ isLoading: false });
+        });
 
     }
-   
+
   }
-  render () {
+  render() {
     const { navigation } = this.props;
     return <Container style={Style.bgMain}>
       <StatusBar backgroundColor='#151515' animated barStyle='light-content' />
@@ -119,22 +121,22 @@ export default class extends React.Component {
             <View style={Styles.fRow}>
               <Text style={Styles.label}>Your Email</Text>
               <View style={Styles.formRow}>
-                <TextInput style={Styles.inputText} placeholder='johndoe@gmail.com' placeholderTextColor='#999'  
-                onChangeText={(email) => this.setState({ email })}
-                                value={this.state.email}
-                                keyboardType={'email-address'} />
+                <TextInput style={Styles.inputText} placeholder='johndoe@gmail.com' placeholderTextColor='#999'
+                  onChangeText={(email) => this.setState({ email })}
+                  value={this.state.email}
+                  keyboardType={'email-address'} />
                 <Icon name='mail-outline' type='MaterialIcons' style={Styles.formIcon} />
               </View>
             </View>
             <View style={Styles.fRow}>
               <Text style={Styles.label}>Your Password</Text>
               <View style={Styles.formRow}>
-                <TextInput style={Styles.inputText} 
-                 secureTextEntry={true} 
-                 placeholder='********' 
-                 placeholderTextColor='#999'
-                 onChangeText={(password) => this.setState({ password })}
-                                value={this.state.password} />
+                <TextInput style={Styles.inputText}
+                  secureTextEntry={true}
+                  placeholder='********'
+                  placeholderTextColor='#999'
+                  onChangeText={(password) => this.setState({ password })}
+                  value={this.state.password} />
                 <Icon name='lock-outline' type='MaterialIcons' style={Styles.formIcon} />
               </View>
             </View>
@@ -143,7 +145,7 @@ export default class extends React.Component {
           <View style={Styles.SignIn}>
             <TouchableOpacity
               style={Styles.SignInBtn} onPress={() => {
-               this._loginCheck()
+                this._loginCheck()
               }}
             >
               <Text style={Styles.SignInBtnText}>Sign In</Text>
@@ -170,6 +172,12 @@ export default class extends React.Component {
         </View>
 
       </Content>
-           </Container>
+    </Container>
   }
 }
+const mapStateToProps = (state) => ({
+  someValueFromState: state.userReducer.value,
+});
+
+export default connect(mapStateToProps, { userDetails })(SignIn);
+
