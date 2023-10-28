@@ -7,23 +7,25 @@ export default {
     backgroundColor: '#111'
   },
   textStyle: {
-    fontSize: 8,
+    fontSize: 14,
     fontFamily: 'Montserrat-Regular',
-    color: 'rgba(255,255,255,0.6)'
+    color: 'rgba(255,255,255,0.6)',	
+	textTransform: 'uppercase',
   },
   activeTabStyle: {
-    backgroundColor: '#111'
+    backgroundColor: '#111',
   },
   activeTextStyle: {
-    fontSize: 8,
+    fontSize: 14,
     fontFamily: 'Montserrat-Regular',
-    color: '#FFF'
+    color: '#FFF',
+	textTransform: 'uppercase',
   },
   /* Shows */
 
   tabText: {
     fontFamily: 'Montserrat-Regular',
-    fontSize: 12
+    fontSize: 16
   },
 
   showBgMain: {
@@ -64,7 +66,7 @@ export default {
     marginBottom: 5
   },
   captionDesc: {
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-SemiBold',
     color: 'rgba(0,0,0,0.8)'
   },
@@ -95,10 +97,20 @@ export default {
     marginBottom: 5
   },
   funDesc: {
-    fontSize: 12,
+    fontSize: 16,
+	width: 150,
     fontFamily: 'Montserrat-SemiBold',
     color: 'rgba(0,0,0,0.8)',
-    marginTop: 5
+    marginTop: 2,
+    alignSelf: 'center',	
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  evName: {
+    fontSize: 16,
+    alignSelf: 'center',	
+    justifyContent: 'center',
+    alignItems: 'center',
   },
   funRow: {
     flexDirection: 'row'
@@ -114,13 +126,13 @@ export default {
     marginLeft: 5
   },
   funShow: {
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.7)'
   },
   funShowDesc: {
     width: 100,
-    fontSize: 10,
+    fontSize: 14,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.4)'
   },
@@ -136,7 +148,7 @@ export default {
     borderWidth: 0
   },
   movietextStyle: {
-    fontSize: 8,
+    fontSize: 12,
     fontFamily: 'Montserrat-Regular',
     color: '#FFF'
   },
@@ -144,7 +156,7 @@ export default {
     backgroundColor: '#999'
   },
   movieactiveTextStyle: {
-    fontSize: 8,
+    fontSize: 12,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.5)'
   },
@@ -193,13 +205,13 @@ export default {
   },
   moviesDesc: {
     margin: 5,
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.7)'
   },
   funReviewColor: {
     alignSelf: 'center',
-    fontSize: 10,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(255,255,255,1)',
     marginLeft: 5
@@ -229,7 +241,7 @@ export default {
     paddingVertical: 5
   },
   movieVotes: {
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(255,255,255,1)'
   },
@@ -250,12 +262,12 @@ export default {
     alignSelf: 'center'
   },
   movieName: {
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: 'Montserrat-SemiBold',
     color: 'rgba(0,0,0,0.7)'
   },
   movieLang: {
-    fontSize: 11,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.5)'
   },
@@ -266,24 +278,54 @@ export default {
   },
   movieDimens: {
     alignSelf: 'center',
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.5)',
     borderColor: 'rgba(0,0,0,0.1)',
     borderWidth: 0,
     padding: 5
   },
+  ticketActive: {
+        ...Platform.select({
+            ios: {
+                marginTop: 5,
+				color: '#FFF',
+                fontSize: 14,
+            },
+            android: {
+                color: '#FFF',
+                fontSize: 14,
+                alignSelf: 'center'
+            },
+        }),
+    },
   movieBooking: {
     backgroundColor: '#00a76b',
     borderRadius: 5,
     paddingHorizontal: 20,
     paddingVertical: 3,
 	textTransform: 'uppercase',
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(255,255,255,1)',
     borderColor: '#000',
     borderWidth: 2,
+  },
+  movieBookingHome: {
+    backgroundColor: '#00a76b',
+    borderRadius: 5,
+    paddingHorizontal: 10,
+    paddingVertical: 3,
+    paddingTop: 6,
+	textTransform: 'uppercase',
+    fontSize: 16,
+    fontFamily: 'Montserrat-Regular',
+    color: 'rgba(255,255,255,1)',
+    borderColor: '#000',
+    borderWidth: 2,
+    justifyContent: 'center',
+    alignItems: 'center',
+	marginTop: -10,
   },
   /* ComingSoon */
   movieRelease: {
@@ -299,7 +341,7 @@ export default {
   },
   releaseDate: {
     alignSelf: 'center',
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.5)',
     paddingVertical: 10
@@ -307,13 +349,13 @@ export default {
   },
   filterDesc: {
     alignSelf: 'center',
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.7)',
     paddingHorizontal: 5
   },
   movieInterest: {
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.7)',
     marginLeft: 5
@@ -352,18 +394,18 @@ export default {
     color: 'rgba(255,255,255,1)',
     padding: 5,
     borderRadius: 5,
-    backgroundColor: '#4A90E2',
+    backgroundColor: '#00a76b',
     borderColor: 'rgba(0,0,0,0.1)',
     borderWidth: 1
   },
   eventMonth: {
     fontSize: 10,
     fontFamily: 'Montserrat-Regular',
-    color: '#4A90E2'
+    color: '#00a76b'
   },
   eventDate: {
     alignSelf: 'center',
-    fontSize: 14,
+    fontSize: 16,
     fontFamily: 'Montserrat-SemiBold',
     color: 'rgba(0,0,0,0.7)',
     marginTop: 3
@@ -379,7 +421,7 @@ export default {
     alignSelf: 'center'
   },
   eventDescBorder: {
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.7)',
     padding: 5,
@@ -389,9 +431,84 @@ export default {
   },
   eventDesc: {
     alignSelf: 'center',
-    fontSize: 12,
+    fontSize: 16,
     fontFamily: 'Montserrat-Regular',
     color: 'rgba(0,0,0,0.7)'
-  }
+  },
+  
+  
+    detailImg: {
+        width: '100%',
+        height: 200,
+    },
+	
+    detail: {
+        paddingTop: 5,
+        paddingBottom: 5,
+        paddingLeft: 5,
+        paddingRight: 5,
+		flex: 4,
+    },
+    detailMain: {
+        flexDirection: 'row',
+        justifyContent: 'space-between'
+    },
+    detailTitle: {
+        fontSize: 16,
+        width: '60%',
+        fontFamily: 'Montserrat-SemiBold',
+        color: 'rgba(0,0,0,0.9)'
+    },
+    detailRow: {
+        flexDirection: 'row',
+        justifyContent: 'center'
+    },
+    detailIcon: {
+        color: 'rgb(250,0,56)',
+        fontSize: 20
+    },
+    detailReview: {
+        fontSize: 16,
+        fontFamily: 'Montserrat-SemiBold',
+        color: 'rgba(0,0,0,0.7)',
+        marginLeft: 5
+    },
+    detailVotes: {
+        fontSize: 12,
+        fontFamily: 'Montserrat-Regular',
+        color: 'rgba(0,0,0,0.7)',
+    },
+    detailDesc: {
+        fontSize: 12,
+        fontFamily: 'Montserrat-Regular',
+        color: 'rgba(0,0,0,0.5)'
+    },
+    detailTime: {
+        fontSize: 10,
+        fontFamily: 'Montserrat-Regular',
+		color: '#00a76b'
+    },
+    detailInfo: {
+        fontSize: 14,
+        fontFamily: 'Montserrat-Regular',
+        color: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',	
+		alignSelf: 'center',
+    },
+    detailLang: {
+        fontSize: 10,
+        fontFamily: 'Montserrat-Regular',
+        color: 'rgba(0,0,0,0.5)',
+    },
+    detailDimensRow: {
+        flexDirection: 'row',
+    },
+    detailDimens: {
+        fontFamily: 'Montserrat-Regular',
+    },
+  
+  
+  
+  
 
 }

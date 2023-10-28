@@ -129,7 +129,12 @@ const _logout = () => {
 const Stack = createNativeStackNavigator();
 function AppNav() {
   return (
-    <Stack.Navigator>
+    <Stack.Navigator>      
+      <Stack.Screen
+        name="PublicHome"
+        component={MyDrawer}
+        options={{ headerShown: false }}
+      />
       <Stack.Screen
         name="PublicIntro"
         component={PublicIntro}
@@ -228,11 +233,6 @@ function AppNav() {
       <Stack.Screen
         name="PublicChangePassword"
         component={PublicChangePassword}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="PublicHome"
-        component={MyDrawer}
         options={{ headerShown: false }}
       />
       <Stack.Screen

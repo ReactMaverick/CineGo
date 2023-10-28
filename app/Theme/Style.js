@@ -55,7 +55,7 @@ export default {
         color: '#FFF',
 		textTransform: 'uppercase',
         position: 'absolute', 
-		right: 180,		
+		right: 40,		
         marginTop: -31,
     },
 	navMiddleTextats: {
@@ -65,7 +65,7 @@ export default {
 		textTransform: 'uppercase',
         position: 'absolute', 
         marginTop: -15,
-		right: 20,		
+		left: -31,		
     },
     navRight: {
         flex: 1.5,
@@ -120,7 +120,46 @@ export default {
         alignSelf: 'flex-start',
         marginLeft: -10,
     },
-    
+    signMiddleText: {               
+        paddingBottom: 25,
+    },	
+    signMiddleText2: {        
+        borderColor: '#000',
+        borderBottomWidth: 1,        
+        borderTopWidth: 1,        
+        padding: 5,
+        backgroundColor: '#000',
+        marginBottom: 25,
+        backgroundColor: '#00462d',
+        opacity: 0.2
+    },	
+    signMiddleDesc: {     
+        fontFamily: "Montserrat-SemiBold",
+        fontSize: 20,
+        color: '#000',
+		textTransform: 'uppercase',
+        position: 'absolute', 
+        marginTop: 10,
+        alignItems: 'center',
+        alignSelf: 'center',
+    },	
+    signMiddleLogo: {
+        alignSelf: 'center',
+    },
+	signMiddleTextats: {
+        fontFamily: 'Montserrat-SemiBold',
+        textAlign: 'center',
+        fontSize: 36,
+        color: '#00462d',
+		textTransform: 'uppercase',
+    },
+    desc: {
+        fontFamily: 'Montserrat-Regular',
+        textAlign: 'center',
+        fontSize: 26,
+        color: '#fff',        
+        opacity: 1
+    },
     // *** footer *** //
     footerBg: {
         backgroundColor: '#000',

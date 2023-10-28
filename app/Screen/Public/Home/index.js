@@ -1,21 +1,9 @@
 import React from 'react'
-import { StatusBar, TouchableOpacity, Image, ImageBackground, FlatList, Text, View } from 'react-native'
+import { StatusBar, TouchableOpacity, Image, ImageBackground, FlatList, Text, View,RefreshControl } from 'react-native'
 import { Container, Header, Content, Icon, Tab, Tabs, ScrollableTab } from 'native-base'
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import Spinner from "react-native-loading-spinner-overlay";
-import NavigationService from '@Service/Navigation'
 import { useNavigation } from '@react-navigation/native';
-import SHOWS from './Shows'
-// import FUN from './Fun'
-// import EVENTS from './Events'
-// import ACTIVITIES from './Activities'
-// import SPORTS from './Sports'
-// import MOVIES from './Movies'
-// import MOVIESUP from './MoviesUp'
-// import EVENTLIST from './EventList'
-
-// import Advent from './Advent'
-
 import Style from '../../../Theme/Style'
 import Styles from './Style'
 import { EVENT_LIST } from '../../../api/ApiConfig';
@@ -25,6 +13,8 @@ export default class extends React.Component {
     super(props);
     this.state = {
       isLoading: false,
+      refreshing: false,
+      showListings: false,
       events: [],
       listings: [],
       featured: [],
@@ -74,7 +64,9 @@ export default class extends React.Component {
   }
   
   _getEventDetails = async () => {
-
+	if(this.state.refreshing==false){
+      await this.setState({ isLoading: true });
+    }
     await this.setState({ isLoading: true });
     fetch(EVENT_LIST, {
       method: "GET",
@@ -107,11 +99,13 @@ export default class extends React.Component {
             }
           }
         }
-        this.setState({ listings: listingData });
+        if (lisingCount>1) this.setState({showListings: true});
+		this.setState({ listings: listingData });
       })
       .catch((error) => console.log(error))
       .finally(() => {
         this.setState({ isLoading: false });
+        this.setState({refreshing: false});
       });
   }
 
@@ -177,9 +171,155 @@ export default class extends React.Component {
       });
   }
 
+	_onRefresh = () => {
+		this.setState({refreshing: true});
+		this._getEventDetails();
+		this._getEventPageList();
+		this._getFeaturedDetails();
+	}
+	
+	_renderListingTab(index) {
+    if (this.state.showListings) {
+		
+    const { navigation } = this.props;
+      return (
+      <Tab
+      heading='Listings'
+      tabStyle={Styles.tabStyle}
+      textStyle={Styles.textStyle}
+      activeTabStyle={Styles.activeTabStyle}
+      activeTextStyle={Styles.activeTextStyle}
+    >
 
+      <View style={Styles.inBg}>
+        <Tabs
+          tabBarUnderlineStyle={{ backgroundColor: '#CCC' }}
+          renderTabBar={() => <ScrollableTab style={{ backgroundColor: '#CCC', marginHorizontal: 20, marginVertical: 5 }} />}
+        >
+
+          {this.state.listingCategoryList.map((item1, index) => (
+
+            <Tab
+                    style={{ backgroundColor: 'transparent' }} heading={item1}
+                    tabStyle={Styles.movietabStyle}
+                    textStyle={Styles.movietextStyle}
+                    activeTabStyle={Styles.movieactiveTabStyle}
+                    activeTextStyle={Styles.movieactiveTextStyle}
+                  >
+
+
+                    <FlatList
+                      data={this.state.listingCategory[item1]}
+                      showsHorizontalScrollIndicator={false}
+                      renderItem={({ item, separators }) => (
+                        <View style={Styles.movieLayout}>
+                          <TouchableOpacity
+                            style={Styles.movieGroup} onPress={() => {
+                              navigation.navigate('PublicDetail', { item: item, redirect: 'Home' })
+                            }}
+                          >
+
+                            <EventImageBig ImageData={item.logo} />
+
+
+                          </TouchableOpacity>
+                          <View style={Styles.detail}>
+								<View style={Styles.detailMain}>                        
+									<Title description={item.name} />
+									<View>
+									<TouchableOpacity style={Styles.eventBooking} onPress={() => {
+										AsyncStorage.getItem("userData").then((value) => {
+											var user_data = JSON.parse(value);
+											if (user_data == null) {
+												navigation.navigate('PublicSignIn', { item: item })
+											} else {
+												navigation.navigate('PublicBooking', { item: item })
+											}
+										})
+									  }}>
+									<Text style={Styles.movieBooking}>Tickets</Text>
+									</TouchableOpacity>
+								</View>
+							</View>
+							</View><View style={Styles.detail}>
+								<View style={Styles.detailMain}>                        
+									<DescriptionList description={item.description} />
+									<View>
+									<View style={Styles.movieDate}>
+									<DateFormat startDate={item.start_date} />
+								</View>
+								</View>
+							</View>
+							</View>
+                        </View>
+                      )}
+                    />
+
+                  </Tab>
+
+          ))}
+
+
+
+        </Tabs>
+      </View>
+
+    </Tab>
+    );
+    }
+  }
+
+  _renderListings(index) {
+    const { navigation } = this.props;
+    if (this.state.showListings) {
+      return (
+        <View style={Styles.entertainment}>
+                <View style={Styles.caption}>
+                  <Text style={Styles.captionDesc}>Listings</Text>
+                  <TouchableOpacity style={Styles.captionBtn} onPress={() => { navigation.navigate('Listing') }}>
+                    <Text style={Styles.captionDescAll}>VIEW ALL</Text>
+                  </TouchableOpacity>
+                </View>
+                <FlatList
+                  data={this.state.listings}
+                  horizontal
+                  showsHorizontalScrollIndicator={false}
+                  renderItem={({ item, separators }) => (
+                    <View style={Styles.funGroup}>
+						<TouchableOpacity onPress={() => {
+                        navigation.navigate('PublicDetail', { item: item, redirect: 'Home' })
+                      }}
+                      >
+                        {/* <Image source={{ uri: item.image }} style={Styles.funImg} /> */}
+                        <Title description={item.name} />
+						<EventImage ImageData={item.logo} />
+						</TouchableOpacity>
+						<TouchableOpacity style={Styles.eventBooking} onPress={() => {
+							AsyncStorage.getItem("userData").then((value) => {
+								var user_data = JSON.parse(value);
+								if (user_data == null) {
+									navigation.navigate('PublicSignIn', { item: item })
+								} else {
+									navigation.navigate('PublicBooking', { item: item })
+								}
+							})
+						  }}>
+						<Text style={Styles.movieBooking}>Grab Tickets</Text>
+						</TouchableOpacity>
+                    </View>
+                  )}
+                />
+				
+              </View>
+    );
+    }
+  }
+  
   render() {
     const { navigation } = this.props;
+    var min = 1;
+	var max = 100;
+    var rand =  Math.floor(Math.random() * (max - min + 1)) + min;
     return <Container>
       <Header style={Style.navigation}>
         <StatusBar backgroundColor='#00462D' animated barStyle='light-content' />
@@ -193,13 +333,24 @@ export default class extends React.Component {
             </TouchableOpacity>
           </View>
           <View style={Style.navMiddle}>
-            <Text style={Style.navMiddleTextats}>Ticketsat.com</Text><Image source={require('@Asset/images/tats_logo.png')} style={Style.navMiddleLogo}/>
+            <TouchableOpacity onPress={() => {
+			  navigation.navigate('Home')
+			}}
+			>
+				<Text style={Style.navMiddleTextats}>Ticketsat.com</Text>
+				<Image source={require('@Asset/images/tats_logo.png')} style={Style.navMiddleLogo}/>
+			</TouchableOpacity>
           </View>
           <View style={Style.navRight} />
         </ImageBackground>
       </Header>
 
-      <Content contentContainerStyle={Style.layoutDefault}>
+		<Content contentContainerStyle={Style.layoutDefault} refreshControl={
+			<RefreshControl
+				refreshing={this.state.refreshing}
+				onRefresh={this._onRefresh}
+			/>
+		}>
         <Spinner visible={this.state.isLoading} />
 
         <Tabs
@@ -221,11 +372,6 @@ export default class extends React.Component {
                   horizontal
                   showsHorizontalScrollIndicator={false}
                   renderItem={({ item, separators }) => (
-                    // <TouchableOpacity
-                    //   style={Styles.myShows} onPress={() => {
-                    //     NavigationService.navigate('PublicDetail')
-                    //   }}
-                    // >
                     <TouchableOpacity 
                     onPress={()=>{   
                       console.log("event",this.state.events);                  
@@ -278,38 +424,28 @@ export default class extends React.Component {
                       }}
                       >
                         {/* <Image source={{ uri: item.image }} style={Styles.funImg} /> */}
-                        <EventImage ImageData={item.logo} />
-                      </TouchableOpacity>
-                      <Text style={Styles.funDesc}>{item.name}</Text>
+                        <Title description={item.name} />
+						<EventImage ImageData={item.logo} />
+						</TouchableOpacity>
+						<TouchableOpacity style={Styles.eventBooking} onPress={() => {
+							AsyncStorage.getItem("userData").then((value) => {
+								var user_data = JSON.parse(value);
+								if (user_data == null) {
+									navigation.navigate('PublicSignIn', { item: item })
+								} else {
+									navigation.navigate('PublicBooking', { item: item })
+								}
+							})
+						  }}>
+						<Text style={Styles.movieBooking}>Grab Tickets</Text>
+						</TouchableOpacity>
+					  
                     </View>
                   )}
                 />
               </View>
-
-              <View style={Styles.entertainment}>
-                <View style={Styles.caption}>
-                  <Text style={Styles.captionDesc}>Listings</Text>
-                  <TouchableOpacity style={Styles.captionBtn} onPress={() => { navigation.navigate('Listing') }}>
-                    <Text style={Styles.captionDescAll}>VIEW ALL</Text>
-                  </TouchableOpacity>
-                </View>
-                <FlatList
-                  data={this.state.listings}
-                  horizontal
-                  showsHorizontalScrollIndicator={false}
-                  renderItem={({ item, separators }) => (
-                    <TouchableOpacity
-                      style={Styles.funGroup} onPress={() => {
-                        navigation.navigate('PublicDetail', { item: item, redirect: 'Home' })
-                      }}
-                    >
-                      {/* <Image source={{ uri: item.image }} style={Styles.funImg} /> */}
-                      <EventImage ImageData={item.logo} />
-                      <Text style={Styles.funDesc}>{item.name}</Text>
-                    </TouchableOpacity>
-                  )}
-                />
-              </View>
+				{this._renderListings()}
+              
 
             </View>
           </Tab>
@@ -363,14 +499,31 @@ export default class extends React.Component {
                             <Text style={Styles.eventDay}>{item.day}</Text> */}
                             </View>
                             <View >
-                              <Text style={Styles.movieName}>{item.name}</Text>
+                              <Title description={item.name} />
                               {/* <Text style={Styles.movieLang}>{ item.description}</Text> */}
                               <Description description={item.description} />
                             </View>
-                            <TouchableOpacity style={Styles.eventBooking}>
-                              <Text style={Styles.movieBooking}>Book</Text>
-                            </TouchableOpacity>
-                          </View>
+                            
+							</View>
+							<View style={Styles.detail}>
+								<View style={Styles.detailMain}>                        
+									<Text style={Styles.detailInfo}>{rand}% of allocation remaining</Text>
+									<View>
+									<TouchableOpacity style={Styles.eventBooking} onPress={() => {
+										AsyncStorage.getItem("userData").then((value) => {
+											var user_data = JSON.parse(value);
+											if (user_data == null) {
+												navigation.navigate('PublicSignIn', { item: item })
+											} else {
+												navigation.navigate('PublicBooking', { item: item })
+											}
+										})
+									  }}>
+									<Text style={Styles.movieBooking}>Tickets</Text>
+									</TouchableOpacity>
+								</View>
+							</View>
+							</View>
                         </View>
                       )}
                     />
@@ -384,79 +537,10 @@ export default class extends React.Component {
               </Tabs>
             </View>
           </Tab>
-
-          <Tab
-            heading='Listings'
-            tabStyle={Styles.tabStyle}
-            textStyle={Styles.textStyle}
-            activeTabStyle={Styles.activeTabStyle}
-            activeTextStyle={Styles.activeTextStyle}
-          >
-
-            <View style={Styles.inBg}>
-              <Tabs
-                tabBarUnderlineStyle={{ backgroundColor: '#CCC' }}
-                renderTabBar={() => <ScrollableTab style={{ backgroundColor: '#CCC', marginHorizontal: 20, marginVertical: 5 }} />}
-              >
-
-                {this.state.listingCategoryList.map((item1, index) => (
-
-                  <Tab
-                    style={{ backgroundColor: 'transparent' }} heading={item1}
-                    tabStyle={Styles.movietabStyle}
-                    textStyle={Styles.movietextStyle}
-                    activeTabStyle={Styles.movieactiveTabStyle}
-                    activeTextStyle={Styles.movieactiveTextStyle}
-                  >
-
-
-                    <FlatList
-                      data={this.state.listingCategory[item1]}
-                      showsHorizontalScrollIndicator={false}
-                      renderItem={({ item, separators }) => (
-                        <View style={Styles.movieLayout}>
-                          <TouchableOpacity
-                            style={Styles.movieGroup} onPress={() => {
-                              navigation.navigate('PublicDetail', { item: item, redirect: 'Home' })
-                            }}
-                          >
-
-                            <EventImageBig ImageData={item.logo} />
-
-
-                          </TouchableOpacity>
-                          <View style={Styles.movieForm}>
-                            <View style={Styles.movieDate}>
-
-                              <DateFormat startDate={item.start_date} />
-                              {/*<Text style={Styles.eventMonth}>{item.month}</Text>
-                            <Text style={Styles.eventDate}>{item.date}</Text>
-                            <Text style={Styles.eventDay}>{item.day}</Text> */}
-                            </View>
-                            <View >
-                              <Text style={Styles.movieName}>{item.name}</Text>
-                              {/* <Text style={Styles.movieLang}>{ item.description}</Text> */}
-                              <Description description={item.description} />
-                            </View>
-                            <TouchableOpacity style={Styles.eventBooking}>
-                              <Text style={Styles.movieBooking}>Book</Text>
-                            </TouchableOpacity>
-                          </View>
-                        </View>
-                      )}
-                    />
-
-                  </Tab>
-
-                ))}
-
-
+			{this._renderListingTab()}
 
               </Tabs>
-            </View>
 
-          </Tab>
-        </Tabs>
       </Content>
 
       <View style={Style.footerBg}>
@@ -470,36 +554,46 @@ export default class extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={Style.fIcons} onPress={() => {
-              navigation.navigate('PublicSearch')
+              navigation.navigate('PublicEvents')
             }}
           >
-            <Icon name='search' type='MaterialIcons' style={Style.iconInactive} />
+            <Icon name='event' type='MaterialIcons' style={Style.iconInactive} />
 
           </TouchableOpacity>
-          <TouchableOpacity
-            style={Style.fIcons} onPress={() => {
-              navigation.navigate('PublicBooking')
-            }}
-          >
-            <Icon name='headphones' type='MaterialCommunityIcons' style={Style.iconInactive} />
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={Style.fIcons} onPress={() => {
-              navigation.navigate('PublicBuzz')
-            }}
-          >
-            <Icon name='flame' type='Octicons' style={Style.iconInactive} />
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.getItem("userData").then((value) => {
+                var user_data = JSON.parse(value);
+                if (user_data == null) {
+                    navigation.navigate('PublicSignIn')
+                } else {
+                  navigation.navigate('PublicBalances')
+                }
+            })
+          }}>
+            <Icon name='money' type='FontAwesome' style={Style.iconInactive} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
-                AsyncStorage.getItem("userData").then((value) => {
-                    var user_data = JSON.parse(value);
-                    if (user_data == null) {
-                        navigation.navigate('PublicSignIn', { item: this.state.item })
-                    } else {
-                        this.props.navigation.navigate('PublicProfile')
-                    }
-                })
-            }}>
+            AsyncStorage.getItem("userData").then((value) => {
+                var user_data = JSON.parse(value);
+                if (user_data == null) {
+                    navigation.navigate('PublicSignIn')
+                } else {
+                  navigation.navigate('PublicOrders')
+                }
+            })
+          }}>
+            <Icon name='shopping-basket' type='FontAwesome' style={Style.iconInactive} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.getItem("userData").then((value) => {
+                var user_data = JSON.parse(value);
+                if (user_data == null) {
+                    navigation.navigate('PublicSignIn')
+                } else {
+                  navigation.navigate('PublicProfile')
+                }
+            })
+          }}>
             <Icon name='user-o' type='FontAwesome' style={Style.iconInactive} />
           </TouchableOpacity>
         </View>
@@ -549,14 +643,35 @@ class Description extends React.Component {
 
   render() {
     // console.log(this.props.description)
-    var description = this.props.description.substring(0, 100);
+    var description = this.props.description.substring(0, 90);
     return (
-      <Text style={[Styles.movieLang, { width: 150 }]}>{description}</Text>
+      <Text style={[Styles.movieLang, { width: 260 }]}>{description}</Text>
     )
   }
 
 }
+class Title extends React.Component {
 
+  render() {
+    // console.log(this.props.description)
+    var title = this.props.description.substring(0, 20);
+    return (
+      <Text style={[Styles.evName]}>{title}</Text>
+    )
+  }
+
+}
+class DescriptionList extends React.Component {
+
+  render() {
+    // console.log(this.props.description)
+    var description = this.props.description.substring(0, 95);
+    return (
+      <Text style={[Styles.movieLang, { width: '70%' }]}>{description}...</Text>
+    )
+  }
+
+}
 
 class DateFormat extends React.Component {
 
