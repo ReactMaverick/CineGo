@@ -18,7 +18,7 @@ export default {
         width: '100%',
         height: '100%',
         backgroundColor: '#000',
-        opacity: 0.4
+        opacity: 0.2
     },
     bgLayout: {
         flex: 1,
@@ -34,7 +34,7 @@ export default {
     },
     backBtnIcon: {
         fontSize: 20,
-        color: '#FFF'
+        color: '#00462d'
     },
     formLayout: {
         width: '100%',
@@ -48,15 +48,15 @@ export default {
         fontFamily: 'Montserrat-SemiBold',
         textAlign: 'center',
         fontSize: 36,
-        color: '#FFF',
+        color: '#00462d',
         marginBottom: 10
     },
     desc: {
         fontFamily: 'Montserrat-Regular',
         textAlign: 'center',
-        fontSize: 12,
-        color: '#FFF',
-        marginBottom: 40
+        fontSize: 26,
+        color: '#fff',        
+        opacity: 1
     },
     fRow: {
         flex: 1,
@@ -71,55 +71,61 @@ export default {
         borderColor: 'rgba(255,255,255,0.2)'
     },
     formIcon:{
-        color: '#FFF',
+        color: '#00462d',
         fontSize: 24,
         paddingHorizontal: 5
     },
     label: {
         flex: 1,
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
-        color: '#FFF'
+        fontSize: 16,
+        color: '#000',
+		textTransform: 'uppercase',
     },
     inputText: {
         flex: 1,
-        fontFamily: 'Montserrat-SemiBold',
-        fontSize: 14,
-        padding: 0,
-        color: '#FFF'
+		fontFamily: 'Montserrat-SemiBold',
+		fontSize: 20,
+		paddingVertical: 5,
+		color: '#000',
+		borderBottomWidth: 1,
+		borderColor: 'rgba(255,255,255,0.1)'
     },
     SignInBtn: {
-        backgroundColor: '#9013FE',
+        backgroundColor: '#00a86b',
         paddingVertical: 10,
-        borderRadius: 5
+        borderRadius: 5,
+        borderWidth: 1,
+        borderColor: '#000'
     },
     SignInBtnText: {
         textAlign: 'center',
         paddingVertical: 10,
         fontFamily: 'Montserrat-SemiBold',
         color: '#FFF',
-        fontSize: 12
+        fontSize: 16
     },
     account: {
         flex: 1,
         fontFamily: 'Montserrat-Regular',
         textAlign: 'center',
         marginVertical: 20,
-        fontSize: 12,
-        color: '#FFF'
+        fontSize: 16,
+        color: '#000'
     },
     forgot: {
         textAlign: 'right',
         color: 'rgba(255,255,255,1)',
         marginBottom: 20,
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12
+        fontSize: 16,
+        color: '#00462d'
     },
     or: {
         textAlign: 'center',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
-        color: '#FFF',
+        fontSize: 16,
+        color: '#00462d',
         marginVertical: 15,
     },
     smn: {

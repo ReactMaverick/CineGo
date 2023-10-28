@@ -9,9 +9,9 @@ export default {
     },
     navLeftDesc: {
         alignSelf: 'center',
-        color: '#4A90E2',
+        color: '#00a86b',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 18,
         marginHorizontal: 10
     },
     reserveShow: {
@@ -24,36 +24,51 @@ export default {
         borderColor: 'rgba(0,0,0,0.1)',
         borderBottomWidth: 1
     },
+    firstBox:{
+        flex:5
+    },
     movieName: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 14,
+        fontSize: 16,
     },
     moviePlace: {
         color: 'rgba(0,0,0,0.5)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 16,
         marginVertical: 5
     },
     movieTime: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 12,
+        fontSize: 16,
         marginBottom: 15
     },
     boxOffice: {
-        alignSelf: 'center'
+        alignSelf: 'center',  
+        justifyContent:'center',
+         flex:4
+    },
+    removeItem:{
+      
+        alignSelf: 'center',
+        flex:1,
+        alignItems:'center'
+    },
+    deleteBox:{
+        color:'#000',
+        fontSize: 20,
     },
     movieSeats: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 12,
+        fontSize: 16,
         alignSelf: 'center'
     },
     movieBox: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 10
+        fontSize: 16
     },
     paymentInfo: {
         flexDirection: 'row',
@@ -63,7 +78,7 @@ export default {
     paymentDesc: {
         color: 'rgba(0,0,0,0.5)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 18,
     },
     paymentDetail:{
         paddingHorizontal: 15,
@@ -74,8 +89,9 @@ export default {
     paymentTotal:{
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 12,
-        marginBottom: 10
+        fontSize: 18,
+        marginBottom: 10,
+		textTransform: 'uppercase',
     },
     cardPayment:{
         flexDirection: 'row',
@@ -85,23 +101,42 @@ export default {
         marginLeft: 10,
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 12
+        fontSize: 18
     },
     cardIcon:{
         alignSelf: 'center',
-        fontSize: 18,
+        fontSize: 22,
         color: 'rgba(0,0,0,0.5)',
     },
     payBtn: {
-        backgroundColor: '#4A90E2',
+        backgroundColor: '#00a86b',
         paddingVertical: 15,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderTopWidth: 1,
+        borderColor: '#000',
     },
     payBtnText:{
         textAlign: 'center',
         color: '#FFF',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 14
+        fontSize: 22
+    },
+    modalRowNew: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
+        borderColor: '#000',
+        marginTop: 0,
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
+    modalDesc: {
+        flex: 1,
+        textAlign: 'center',
+        color: 'rgba(0,0,0,0.7)',
+        fontFamily: 'Montserrat-Regular',
+        fontSize: 22,
+        alignItems: 'center',
     },
 }

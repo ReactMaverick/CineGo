@@ -177,20 +177,6 @@ export default class extends React.Component {
                <Icon name="keyboard-arrow-right" type="MaterialIcons" style={{ fontSize: 20, color: '#fff' }} />
               <Text style={{color:'#fff',fontFamily:'Montserrat-SemiBold'}}>Change Password</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-        onPress={()=>{ navigation.navigate('PublicChangePassword'); }}
-              style={{backgroundColor:'#000',height:40,width:WIDTH-20,alignItems:"center",margin:5,flexDirection:"row"}} 
-            >
-               <Icon name="keyboard-arrow-right" type="MaterialIcons" style={{ fontSize: 20, color: '#fff' }} />
-              <Text style={{color:'#fff',fontFamily:'Montserrat-SemiBold'}}>Balances</Text>
-        </TouchableOpacity>
-        <TouchableOpacity 
-        onPress={()=>{ navigation.navigate('PublicChangePassword'); }}
-              style={{backgroundColor:'#000',height:40,width:WIDTH-20,alignItems:"center",margin:5,flexDirection:"row"}} 
-            >
-               <Icon name="keyboard-arrow-right" type="MaterialIcons" style={{ fontSize: 20, color: '#fff' }} />
-              <Text style={{color:'#fff',fontFamily:'Montserrat-SemiBold'}}>2FA</Text>
-        </TouchableOpacity>
 
 
         {/* <View style={Styles.profile}>
@@ -208,48 +194,61 @@ export default class extends React.Component {
           <Text style={Styles.profileDesc}>Notifications</Text>
         </View> */}
       </Content>
-      {/* <View style={Style.footerBg}>
+      <View style={Style.footerBg}>
         <View style={Style.fTab}>
           <TouchableOpacity
             style={Style.fIcons} onPress={() => {
-              NavigationService.navigate('PublicHome')
+              navigation.navigate('Home')
             }}
           >
             <Icon name='home' type='FontAwesome' style={Style.iconInactive} />
           </TouchableOpacity>
           <TouchableOpacity
             style={Style.fIcons} onPress={() => {
-              NavigationService.navigate('PublicSearch')
+              navigation.navigate('PublicEvents')
             }}
           >
-            <Icon name='search' type='MaterialIcons' style={Style.iconInactive} />
+            <Icon name='event' type='MaterialIcons' style={Style.iconInactive} />
 
           </TouchableOpacity>
-          <TouchableOpacity
-            style={Style.fIcons} onPress={() => {
-              NavigationService.navigate('PublicBooking')
-            }}
-          >
-            <Icon name='headphones' type='MaterialCommunityIcons' style={Style.iconInactive} />
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.getItem("userData").then((value) => {
+                var user_data = JSON.parse(value);
+                if (user_data == null) {
+                    navigation.navigate('PublicSignIn')
+                } else {
+                  navigation.navigate('Listing')
+                }
+            })
+          }}>
+            <Icon name="list" type='Entypo' style={Style.iconInactive} />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={Style.fIcons} onPress={() => {
-              NavigationService.navigate('PublicBuzz')
-            }}
-          >
-            <Icon name='flame' type='Octicons' style={Style.iconInactive} />
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.getItem("userData").then((value) => {
+                var user_data = JSON.parse(value);
+                if (user_data == null) {
+                    navigation.navigate('PublicSignIn')
+                } else {
+                  navigation.navigate('PublicOrders')
+                }
+            })
+          }}>
+            <Icon name='shopping-basket' type='FontAwesome' style={Style.iconInactive} />
           </TouchableOpacity>
-          <TouchableOpacity
-            style={Style.fIcons} onPress={() => {
-              NavigationService.navigate('PublicProfile')
-            }}
-          >
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.getItem("userData").then((value) => {
+                var user_data = JSON.parse(value);
+                if (user_data == null) {
+                    navigation.navigate('PublicSignIn')
+                } else {
+                  navigation.navigate('PublicProfile')
+                }
+            })
+          }}>
             <Icon name='user-o' type='FontAwesome' style={Style.iconActive} />
           </TouchableOpacity>
         </View>
       </View>
-          
-           */}
     </Container>
   }
 }

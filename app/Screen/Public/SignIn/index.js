@@ -77,7 +77,7 @@ class SignIn extends React.Component {
         .then((responseJson) => {
           console.log(responseJson);
           if (responseJson.success == true) {
-            // AsyncStorage.setItem('userData', JSON.stringify(responseJson.data));
+            AsyncStorage.setItem('userData', JSON.stringify(responseJson.data));
             this.props.userDetails(JSON.stringify(responseJson.data));
             Alert.alert(
               'Alert',
@@ -108,71 +108,72 @@ class SignIn extends React.Component {
   render() {
     const { navigation } = this.props;
     return <Container style={Style.bgMain}>
-      <StatusBar backgroundColor='#151515' animated barStyle='light-content' />
-      <Spinner visible={this.state.isLoading} />
-      <Content contentContainerStyle={Style.layoutCenter}>
-        <Image source={require('@Asset/images/loginbg.png')} imageStyle='cover' style={Styles.bg} />
-        <View style={Styles.formLayout}>
-          <View style={Styles.form}>
-            <View>
-              <Text style={Styles.title}>cinegorntheme</Text>
-              <Text style={Styles.desc}>Sign In</Text>
-            </View>
-            <View style={Styles.fRow}>
-              <Text style={Styles.label}>Your Email</Text>
-              <View style={Styles.formRow}>
-                <TextInput style={Styles.inputText} placeholder='johndoe@gmail.com' placeholderTextColor='#999'
-                  onChangeText={(email) => this.setState({ email })}
-                  value={this.state.email}
-                  keyboardType={'email-address'} />
-                <Icon name='mail-outline' type='MaterialIcons' style={Styles.formIcon} />
-              </View>
-            </View>
-            <View style={Styles.fRow}>
-              <Text style={Styles.label}>Your Password</Text>
-              <View style={Styles.formRow}>
-                <TextInput style={Styles.inputText}
-                  secureTextEntry={true}
-                  placeholder='********'
-                  placeholderTextColor='#999'
-                  onChangeText={(password) => this.setState({ password })}
-                  value={this.state.password} />
-                <Icon name='lock-outline' type='MaterialIcons' style={Styles.formIcon} />
-              </View>
-            </View>
-            <Text style={Styles.forgot} onPress={() => { navigation.navigate('PublicForgotPswd') }}>Forgot your password?</Text>
+    <StatusBar backgroundColor='#151515' animated barStyle='light-content' />
+    <Spinner visible={this.state.isLoading} />
+    <Content contentContainerStyle={Style.layoutCenter}>
+      <Image source={require('@Asset/images/login.jpeg')} imageStyle='cover' style={Styles.bgCover} />
+      <View style={Styles.formLayout}>
+        <View style={Styles.form}>
+          <View style={Style.signMiddleText}>
+            <Image source={require('@Asset/images/tats_logo.png')} style={Style.signMiddleLogo}/>
+            <Text style={Style.signMiddleTextats}>Ticketsat.com</Text>
           </View>
-          <View style={Styles.SignIn}>
-            <TouchableOpacity
-              style={Styles.SignInBtn} onPress={() => {
-                this._loginCheck()
-              }}
-            >
-              <Text style={Styles.SignInBtnText}>Sign In</Text>
-            </TouchableOpacity>
-            <TouchableOpacity onPress={() => {
-              navigation.navigate('PublicSignUp')
-            }}
-            >
-              <Text style={Styles.account}>Don't have an account? SignUp</Text>
-            </TouchableOpacity>
+          <View>
+            <Text style={Style.signMiddleDesc}>Sign In</Text>
           </View>
-          <Text style={Styles.or}>OR</Text>
-          <View style={Styles.smn}>
-            <TouchableOpacity style={[Styles.smnBtn, Styles.smnFacebook]}>
-              <Icon name='facebook' type='FontAwesome' style={Styles.smnIcon} />
-            </TouchableOpacity>
-            <TouchableOpacity style={[Styles.smnBtn, Styles.smnTwitter]}>
-              <Icon name='twitter' type='FontAwesome' style={Styles.smnIcon} />
-            </TouchableOpacity>
-            <TouchableOpacity style={[Styles.smnBtn, Styles.smnGooglePlus]}>
-              <Icon name='google-plus' type='FontAwesome' style={Styles.smnIcon} />
-            </TouchableOpacity>
+          <View style={Style.signMiddleText2}>              
+            <Text style={Style.desc}></Text>
           </View>
-        </View>
+          {this.state.displayErrorMessage == true ?
+            <View style={{ backgroundColor: '#000', flex: 1, justifyContent: 'center', marginBottom: 10, borderRadius: 5, padding: 5 }}>
+              {this.state.errorMsg.email ? <Text style={{ color: '#fff', marginLeft: 10 }}>*{this.state.errorMsg.email}</Text> : <View></View>}
 
-      </Content>
-    </Container>
+              {this.state.errorMsg.password ? <Text style={{ color: '#fff', marginLeft: 10 }}>*{this.state.errorMsg.password}</Text> : <View></View>}
+
+            </View>
+            : <View></View>}
+          <View style={Styles.fRow}>
+            <Text style={Styles.label}>Your Email</Text>
+            <View style={Styles.formRow}>
+              <TextInput style={Styles.inputText} placeholder='johndoe@gmail.com' placeholderTextColor='#000'  
+              onChangeText={(email) => this.setState({ email })}
+                              value={this.state.email}
+                              keyboardType={'email-address'} />
+              <Icon name='mail-outline' type='MaterialIcons' style={Styles.formIcon} />
+            </View>
+          </View>
+          <View style={Styles.fRow}>
+            <Text style={Styles.label}>Your Password</Text>
+            <View style={Styles.formRow}>
+              <TextInput style={Styles.inputText} 
+               secureTextEntry={true} 
+               placeholder='********' 
+               placeholderTextColor='#000'
+               onChangeText={(password) => this.setState({ password })}
+                              value={this.state.password} />
+              <Icon name='lock-outline' type='MaterialIcons' style={Styles.formIcon} />
+            </View>
+          </View>
+          <Text style={Styles.forgot} onPress={() => { navigation.navigate('PublicForgotPswd') }}>Forgot your password?</Text>
+        </View>
+        <View style={Styles.SignIn}>
+          <TouchableOpacity
+            style={Styles.SignInBtn} onPress={() => {
+             this._loginCheck()
+            }}
+          >
+            <Text style={Styles.SignInBtnText}>Sign In</Text>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            navigation.navigate('PublicSignUp')
+          }}
+          >
+            <Text style={Styles.account}>Don't have an account? Sign Up</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Content>
+  </Container>
   }
 }
 const mapStateToProps = (state) => ({

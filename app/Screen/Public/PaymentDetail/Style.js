@@ -9,9 +9,9 @@ export default {
     },
     navLeftDesc: {
         alignSelf: 'center',
-        color: '#4A90E2',
+        color: '#00a86b',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 16,
         marginHorizontal: 10
     },
     paymentInfo: {
@@ -31,7 +31,7 @@ export default {
         marginVertical: 5,
         paddingHorizontal: 20,
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 16,
     },
     paymentSection: {
         flexDirection: 'row',
@@ -51,22 +51,58 @@ export default {
         fontSize: 14,
         marginTop: 5,
     },
+    paymentMethods: {
+        color: '#000',
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 18,
+    },
+    paymentDetails: {
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderColor: '#00462d',
+        borderTopWidth: 2,
+        borderBottomWidth: 1,
+        color: '#FFF',
+        marginTop: 2,
+    },
     paymentCheck:{
         color: 'rgba(0,0,0,0.5)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 16,
         marginTop: 5
     },
+    modalRowNew: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
+        borderColor: '#000',
+        margin: 10,
+        marginTop: 3,
+        marginBottom: 0,
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
+    modalDesc: {
+        flex: 1,
+        textAlign: 'center',
+        color: 'rgba(0,0,0,0.7)',
+        fontFamily: 'Montserrat-Regular',
+        fontSize: 22,
+        alignItems: 'center',
+    },
     payBtn: {
-        backgroundColor: '#4A90E2',
+        backgroundColor: '#00a86b',
         paddingVertical: 15,
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        borderTopWidth: 1,
+        borderColor: '#000', 
     },
     payBtnText:{
         textAlign: 'center',
         color: '#FFF',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 14
+        fontSize: 22, 
     },
 }

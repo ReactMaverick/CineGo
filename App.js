@@ -5,6 +5,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import DrawerContent from './app/Component/Menu/Left';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Provider } from 'react-redux';
 import { store, persistor } from './app/redux/store';
 import { PersistGate } from 'reduxjs-toolkit-persist/integration/react';
@@ -24,6 +25,8 @@ import PublicPayment from './app/Screen/Public/Payment';
 import PublicConfirmation from './app/Screen/Public/Confirmation';
 import PublicFilter from './app/Screen/Public/Filter';
 import PublicBuzz from './app/Screen/Public/Buzz';
+import PublicOrder from './app/Screen/Public/Order';
+import PublicOrders from './app/Screen/Public/Orders';
 import PublicProfile from './app/Screen/Public/Profile';
 import PublicEditProfile from './app/Screen/Public/EditProfile';
 import PublicSettings from './app/Screen/Public/Settings';
@@ -111,6 +114,7 @@ const _logout = () => {
       .then((responseJson) => {
         // Handle the server response, if needed
         // For example, set state or display a success message
+        AsyncStorage.clear();
         console.log("Logout successful");
         dispatch(logOut());
         navigation.navigate('Home')
@@ -143,6 +147,16 @@ function AppNav() {
       <Stack.Screen
         name="PublicSelectCity"
         component={PublicSelectCity}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PublicOrder"
+        component={PublicOrder}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen
+        name="PublicOrders"
+        component={PublicOrders}
         options={{ headerShown: false }}
       />
       <Stack.Screen

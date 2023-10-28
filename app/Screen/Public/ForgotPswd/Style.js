@@ -18,7 +18,7 @@ export default {
     width: '100%',
     height: '100%',
     backgroundColor: '#000',
-    opacity: 0.1
+    opacity: 0.2
   },
   bgLayout: {
     flex: 1,
@@ -34,7 +34,7 @@ export default {
   },
   backBtnIcon: {
     fontSize: 24,
-    color: '#FFF'
+    color: '#000'
   },
 
   /**-- Content --**/
@@ -49,14 +49,14 @@ export default {
     fontFamily: 'Montserrat-SemiBold',
     textAlign: 'center',
     fontSize: 36,
-    color: '#FFF',
+    color: '#000',
     marginBottom: 10
   },
   desc: {
     fontFamily: 'Montserrat-Regular',
     textAlign: 'center',
-    fontSize: 12,
-    color: '#FFF',
+    fontSize: 16,
+    color: '#000',
     marginBottom: 40
   },
   fRow: {
@@ -65,16 +65,17 @@ export default {
   },
   label: {
     flex: 1,
-    fontFamily: 'Montserrat-Regular',
-    fontSize: 12,
-    color: '#FFF'
+	fontFamily: 'Montserrat-Regular',
+	fontSize: 16,
+	color: '#000',
+	textTransform: 'uppercase',
   },
   inputText: {
     flex: 1,
     fontFamily: 'Montserrat-SemiBold',
-    fontSize: 14,
+    fontSize: 20,
     paddingVertical: 5,
-    color: '#FFF',
+    color: '#000',
     borderBottomWidth: 1,
     borderColor: 'rgba(255,255,255,0.1)'
   },
@@ -82,16 +83,18 @@ export default {
     paddingTop: 50
   },
   sendBtn: {
-    backgroundColor: '#9013FE',
+    backgroundColor: '#00a86b',
     paddingVertical: 10,
     borderRadius: 5,
-    marginTop: 20
+    marginTop: 20,
+	borderWidth: 1,
+    borderColor: '#000'
   },
   sendBtnText: {
     textAlign: 'center',
     paddingVertical: 10,
     fontFamily: 'Montserrat-SemiBold',
     color: '#FFF',
-    fontSize: 12
+    fontSize: 16
   },
 }

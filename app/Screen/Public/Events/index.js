@@ -2,6 +2,7 @@ import React from 'react'
 import { StatusBar, TouchableOpacity, Image, ImageBackground, FlatList,ScrollView } from 'react-native'
 import { Container, Header, Content, Icon, Text, View, Tab, Tabs, ScrollableTab } from 'native-base'
 import Spinner from "react-native-loading-spinner-overlay";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import NavigationService from '@Service/Navigation'
 
 import Style from '@Theme/Style'
@@ -75,15 +76,16 @@ export default class extends React.Component {
         <Spinner visible={this.state.isLoading} />
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
           <View style={Style.navLeft}>
-            <TouchableOpacity onPress={() => {
-              navigation.openDrawer()
-            }}
-            >
-              <Image source={require('@Asset/images/menu.png')} />
-            </TouchableOpacity>
+            <Image source={require('@Asset/images/menu.png')} />
           </View>
           <View style={Style.navMiddle}>
-            <Text style={Style.navMiddleTextats}>Ticketsat.com</Text><Image source={require('@Asset/images/tats_logo.png')} style={Style.navMiddleLogo}/>
+            <TouchableOpacity onPress={() => {
+			  navigation.navigate('Home')
+			}}
+			>
+				<Text style={Style.navMiddleTextats}>Ticketsat.com</Text>
+				<Image source={require('@Asset/images/tats_logo.png')} style={Style.navMiddleLogo}/>
+			</TouchableOpacity>
           </View>
           <View style={Style.navRight} />
         </ImageBackground>
@@ -162,8 +164,62 @@ export default class extends React.Component {
         </View>
             
      </Content>
+	 <View style={Style.footerBg}>
+        <View style={Style.fTab}>
+          <TouchableOpacity
+            style={Style.fIcons} onPress={() => {
+              navigation.navigate('Home')
+            }}
+          >
+            <Icon name='home' type='FontAwesome' style={Style.iconInactive} />
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={Style.fIcons} onPress={() => {
+              navigation.navigate('PublicEvents')
+            }}
+          >
+            <Icon name='event' type='MaterialIcons' style={Style.iconActive} />
 
-       </Container>
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.getItem("userData").then((value) => {
+                var user_data = JSON.parse(value);
+                if (user_data == null) {
+                    navigation.navigate('PublicSignIn')
+                } else {
+                  navigation.navigate('Listing')
+                }
+            })
+          }}>
+            <Icon name="list" type='Entypo' style={Style.iconInactive} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.getItem("userData").then((value) => {
+                var user_data = JSON.parse(value);
+                if (user_data == null) {
+                    navigation.navigate('PublicSignIn')
+                } else {
+                  navigation.navigate('PublicOrders')
+                }
+            })
+          }}>
+            <Icon name='shopping-basket' type='FontAwesome' style={Style.iconInactive} />
+          </TouchableOpacity>
+          <TouchableOpacity onPress={() => {
+            AsyncStorage.getItem("userData").then((value) => {
+                var user_data = JSON.parse(value);
+                if (user_data == null) {
+                    navigation.navigate('PublicSignIn')
+                } else {
+                  navigation.navigate('PublicProfile')
+                }
+            })
+          }}>
+            <Icon name='user-o' type='FontAwesome' style={Style.iconInactive} />
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Container>
   }
 }
 

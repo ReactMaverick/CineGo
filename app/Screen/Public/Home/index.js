@@ -566,11 +566,11 @@ export default class extends React.Component {
                 if (user_data == null) {
                     navigation.navigate('PublicSignIn')
                 } else {
-                  navigation.navigate('PublicBalances')
+                  navigation.navigate('Listing')
                 }
             })
           }}>
-            <Icon name='money' type='FontAwesome' style={Style.iconInactive} />
+            <Icon name="list" type='Entypo' style={Style.iconInactive} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             AsyncStorage.getItem("userData").then((value) => {

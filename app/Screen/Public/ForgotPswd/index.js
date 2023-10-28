@@ -9,26 +9,33 @@ import Styles from '@Screen/Public/ForgotPswd/Style'
 
 export default class extends React.Component {
   render () {
+    const { navigation } = this.props;
     return <Container style={Style.bgMain}>
       <StatusBar backgroundColor='#151515' animated barStyle='light-content' />
 
       <Content contentContainerStyle={Style.layoutCenter}>
-        <Image source={require('@Asset/images/loginbg.png')} imageStyle='cover' style={Styles.bg} />
+        <Image source={require('@Asset/images/login.jpeg')} imageStyle='cover' style={Styles.bgCover} />
         <View style={Styles.formLayout}>
           <View style={Styles.form}>
+            <View style={Style.signMiddleText}>
+              <Image source={require('@Asset/images/tats_logo.png')} style={Style.signMiddleLogo}/>
+              <Text style={Style.signMiddleTextats}>Ticketsat.com</Text>
+            </View>
             <View>
-              <Text style={Styles.title}>cinegorntheme</Text>
-              <Text style={Styles.desc}>Forgot Password</Text>
+              <Text style={Style.signMiddleDesc}>Forgot Password</Text>
+            </View>
+            <View style={Style.signMiddleText2}>              
+              <Text style={Style.desc}></Text>
             </View>
 
             <View style={Styles.fRow}>
               <Text style={Styles.label}>Enter your e-mail Address</Text>
-              <TextInput style={Styles.inputText} placeholder='johndoe@gmail.com ' placeholderTextColor='#999' />
+              <TextInput style={Styles.inputText} placeholder='johndoe@gmail.com ' placeholderTextColor='#000' />
             </View>
 
             <TouchableOpacity
               style={Styles.sendBtn} onPress={() => {
-                NavigationService.navigate('PublicSignIn')
+                navigation.navigate('Home')
               }}
             >
               <Text style={Styles.sendBtnText}>Send Password</Text>

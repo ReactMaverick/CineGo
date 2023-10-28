@@ -18,7 +18,7 @@ export default {
     width: '100%',
     height: '100%',
     backgroundColor: '#000',
-    opacity: 0.1
+    opacity: 0.2
   },
   bgLayout: {
     flex: 1,
@@ -64,6 +64,7 @@ export default {
     paddingVertical: 5,
     flexDirection: 'row',
     justifyContent: 'space-between',
+    alignSelf: 'center',
   },
   label: {
     flex: 1,
@@ -76,20 +77,23 @@ export default {
     fontFamily: 'Montserrat-SemiBold',
     fontSize: 18,
     padding: 0,
-    color: '#FFF',
+    color: '#000',
     marginHorizontal: 5,
     borderBottomWidth: 1,
     textAlign: 'center',
-    borderColor: 'rgba(255,255,255,0.3)'
+    borderColor: 'rgba(255,255,255,0.3)',	
+    alignSelf: 'center',
   },
   send: {
     paddingTop: 50
   },
   sendBtn: {
-    backgroundColor: '#9013FE',
+    backgroundColor: '#00a86b',
     paddingVertical: 10,
     borderRadius: 5,
-    marginTop: 20
+    marginTop: 20,
+    borderWidth: 1,
+    borderColor: '#000'
   },
   sendBtnText: {
     textAlign: 'center',
@@ -100,10 +104,10 @@ export default {
   },
   resend: {
     fontFamily: 'Montserrat-Regular',
-    fontSize: 12,
-    color: '#FFF',
+    fontSize: 20,
+    color: '#000',
     marginVertical: 20,
-    textAlign: 'right'
+    alignSelf: 'center',
   }
 
 }
