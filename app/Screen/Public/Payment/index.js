@@ -5,7 +5,7 @@ import { Container, Header, Content, Icon, Text, View, Button } from 'native-bas
 import NavigationService from '@Service/Navigation'
 
 import AsyncStorage from '@react-native-async-storage/async-storage';
-import { CRYPTO_CHECKOUT } from '../../../api/ApiConfig';
+import { PROMO_CHECKOUT } from '../../../api/ApiConfig';
 import Style from '@Theme/Style'
 import Styles from '@Screen/Public/Payment/Style'
 
@@ -62,7 +62,7 @@ export default class extends React.Component {
 		}
 		formBody = formBody.join("&");
 
-		fetch(CRYPTO_CHECKOUT, {
+		fetch(PROMO_CHECKOUT, {
 		  method: "POST",
 		  headers: {
 			'Authorization': 'Bearer ' + userData.token,

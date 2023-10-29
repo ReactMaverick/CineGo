@@ -1,4 +1,3 @@
-// export const BASE_URL = "https://demo.ticketstake.com/api/"
 export const BASE_URL = "https://www.ticketsat.com/api/"
 
 export const SIGNUP_API = BASE_URL + "register";
@@ -21,3 +20,4 @@ export const RELEASE = BASE_URL + "release";
 export const TIMESLOT_BY_EVENT = BASE_URL + "timeslots/byevent";
 export const FEATURED_LIST = BASE_URL + "featured";
 export const RELEASE_ALL = BASE_URL + "release_all";
+export const PROMO_CHECKOUT = BASE_URL + "cart/promo_checkout";
