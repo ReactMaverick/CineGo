@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, ImageBackground, StyleSheet, useWindowDimensions, View, Text, TouchableOpacity } from 'react-native';
 import { Icon } from 'native-base'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import { createDrawerNavigator } from '@react-navigation/drawer';
+import { createDrawerNavigator, DrawerContentScrollView } from '@react-navigation/drawer';
 import DrawerContent from './app/Component/Menu/Left';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { Provider } from 'react-redux';
@@ -40,100 +40,34 @@ import PublicAddons from './app/Screen/Public/Addons';
 import PublicChangePassword from './app/Screen/Public/ChangePassword';
 import { useNavigation } from '@react-navigation/native';
 import { userDetails, logOut } from './app/redux/reducers/Customer';
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen';
 const deviceWidth = Dimensions.get('window').width;
 const Drawer = createDrawerNavigator();
 function MyDrawer() {
-  const userDetail = useSelector(state => state.userReducer.value);
   return (
+
     <Drawer.Navigator
-      // initialRouteName="PublicHome"
       screenOptions={{
         headerShown: false,
         drawerType: deviceWidth.width >= 768 ? 'permanent' : 'front',
-        drawerStyle: deviceWidth.width >= 768 ? null : { width: '80%' },
+        drawerStyle: deviceWidth.width >= 768 ? null : { width: '80%', backgroundColor: "transparent" },
       }}
-    >
-      <Drawer.Screen
-        name="Home"
-        component={PublicHome}
-        options={{
-          drawerIcon: ({ focused, color, size }) => (
-            <Icon name="home" type='SimpleLineIcons' size={size} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Events"
-        component={PublicEvents}
-        options={{
-          drawerIcon: ({ focused, color, size }) => (
-            <Icon name="event" type='MaterialIcons' size={size} color={color} />
-          ),
-        }}
-      />
-      <Drawer.Screen
-        name="Listing"
-        component={PublicListing}
-        options={{
-          drawerIcon: ({ focused, color, size }) => (
-            <Icon name="list" type='Entypo' size={size} color={color} />
-          ),
-        }}
-      />
-
-
-      <Drawer.Screen
-        name={userDetail ? "Log Out" : "Sign In"}
-        component={userDetail ? _logout : PublicSignIn}
-        options={{
-          drawerIcon: ({ focused, color, size }) => (
-            <Icon name="login" type='AntDesign' size={size} color={color} />
-          ),
-        }}
-      />
+      drawerContent={props => <CustomDrawerContent {...props} />}>
+      <Drawer.Screen name="Home" component={PublicHome} />
+      <Drawer.Screen name="Events" component={PublicEvents} />
+      <Drawer.Screen name="Listing" component={PublicListing} />
+      <Drawer.Screen name={"Sign In"} component={PublicSignIn} />
     </Drawer.Navigator>
   );
 }
 
-
-const _logout = () => {
-  const dispatch = useDispatch();
-  const navigation = useNavigation();
-  const userDetail = useSelector(state => state.userReducer.value);
-  console.log("userDetail", userDetail);
-
-  useEffect(() => {
-    fetch(LOGOUT, {
-      method: "POST",
-      headers: {
-        'Authorization': 'Bearer ' + userDetail.token,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      }
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        // Handle the server response, if needed
-        // For example, set state or display a success message
-        AsyncStorage.clear();
-        console.log("Logout successful");
-        dispatch(logOut());
-        navigation.navigate('Home')
-      })
-      .catch((error) => {
-        console.log("Error:", error);
-      })
-      .finally(() => {
-        // 
-      });
-  })
-  return (
-    <></>
-  )
-}
 const Stack = createNativeStackNavigator();
 function AppNav() {
   return (
-    <Stack.Navigator>      
+    <Stack.Navigator>
       <Stack.Screen
         name="PublicHome"
         component={MyDrawer}
@@ -281,3 +215,110 @@ export default class App extends React.Component {
     );
   }
 }
+
+const CustomDrawerContent = props => {
+  const dispatch = useDispatch();
+  const userDetail = useSelector(state => state.userReducer.value);
+  const navigation = useNavigation();
+  const _logout = () => {
+    fetch(LOGOUT, {
+      method: "POST",
+      headers: {
+        'Authorization': 'Bearer ' + userDetail.token,
+        'Content-Type': 'application/x-www-form-urlencoded'
+      }
+    })
+      .then((response) => response.json())
+      .then((responseJson) => {
+        // Handle the server response, if needed
+        // For example, set state or display a success message
+        AsyncStorage.clear();
+        console.log("Logout successful");
+        dispatch(logOut());
+        navigation.navigate('Home')
+      })
+      .catch((error) => {
+        console.log("Error:", error);
+      })
+  }
+  useEffect(() => { }, []);
+  return (
+    <DrawerContentScrollView {...props}>
+      <ImageBackground source={require('./assets/images/bg.png')} style={{ flex: 1, height: hp('100%') }}>
+        <View style={{ alignItems: "flex-start", marginLeft: wp("5%") }}>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Home');
+              props.navigation.closeDrawer();
+            }}
+          >
+            <View style={styles.drawerMenu}>
+              <Icon name="home" type='SimpleLineIcons' style={styles.drawerIcon} />
+              <Text style={styles.drawerMenuText}>Home</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Events');
+              props.navigation.closeDrawer();
+            }}
+          >
+            <View style={styles.drawerMenu}>
+              <Icon name="event" type='MaterialIcons' style={styles.drawerIcon} />
+              <Text style={styles.drawerMenuText}>Events</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('Listing');
+              props.navigation.closeDrawer();
+            }}
+          >
+            <View style={styles.drawerMenu}>
+              <Icon name="list" type='Entypo' style={styles.drawerIcon} />
+              <Text style={styles.drawerMenuText}>Listing</Text>
+            </View>
+          </TouchableOpacity>
+          {userDetail ? <TouchableOpacity
+            onPress={() => {
+              _logout();
+              props.navigation.closeDrawer();
+            }}
+          >
+            <View style={styles.drawerMenu}>
+              <Icon name="login" type='AntDesign' style={styles.drawerIcon} />
+              <Text style={styles.drawerMenuText}>Log Out</Text>
+            </View>
+          </TouchableOpacity> : <TouchableOpacity
+            onPress={() => {
+              props.navigation.navigate('PublicSignIn');
+              props.navigation.closeDrawer();
+            }}
+          >
+            <View style={styles.drawerMenu}>
+              <Icon name="login" type='AntDesign' style={styles.drawerIcon} />
+              <Text style={styles.drawerMenuText}>Sign In</Text>
+            </View>
+          </TouchableOpacity>}
+        </View>
+      </ImageBackground>
+    </DrawerContentScrollView>
+  );
+};
+
+const styles = StyleSheet.create({
+  drawerMenu: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: wp('5%')
+  },
+  drawerIcon: {
+    marginRight: wp('3%'),
+    color: '#fff',
+    fontSize: hp('4%')
+  },
+  drawerMenuText: {
+    color: '#fff',
+    fontSize: hp('2%')
+  }
+});
