@@ -65,7 +65,7 @@ export default class extends React.Component {
 
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
           <View style={Styles.navigation}>
-            <Icon name='ios-arrow-back' type="Ionicons" style={Styles.navLeftIcon} onPress={() => {
+            <Icon name='keyboard-arrow-left' type='MaterialIcons' style={Styles.navLeftIcon} onPress={() => {
               navigation.navigate('PublicOrders')
             }} />
 
@@ -93,11 +93,6 @@ export default class extends React.Component {
               <Text style={Styles.movieView}>Event:</Text>
               <Text style={Styles.movieView}>{this.state.orderDetailsObject.event}</Text>
             </View>
-            
-            <View style={Styles.confirmRow}>
-              <Text style={Styles.movieView}>City:</Text>
-              <Text style={Styles.movieView}>{this.state.orderDetailsObject.city}</Text>
-            </View>
             <View style={Styles.confirmRow}>
               <Text style={Styles.movieView}>Venue:</Text>
               <Text style={Styles.movieView}>{this.state.orderDetailsObject.venue}</Text>
@@ -107,7 +102,7 @@ export default class extends React.Component {
               <Text style={Styles.movieView}>{this.state.orderDetailsObject.start_time+"-"+this.state.orderDetailsObject.end_time}</Text>
             </View>
             <View style={Styles.confirmRow}>
-              <Text style={Styles.movieView}>Total:</Text>
+              <Text style={Styles.movieView}>Amount Paid:</Text>
               <Text style={Styles.movieView}>{this.state.order.total}</Text>
             </View>
 

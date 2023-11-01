@@ -36,7 +36,7 @@ export default {
     },
     navLeftIcon: {
         padding: 10,
-        color: 'rgba(255,255,255,1)'
+        color: '#FFF'
     },
     movieImg: {
         width: 84,

@@ -66,13 +66,10 @@ export default class extends React.Component {
         <StatusBar backgroundColor='#00462d' animated barStyle='light-content' />
 
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
-          <View style={Style.navLeft}>
-            <TouchableOpacity onPress={() => {
-              navigation.openDrawer()
-            }}
-            >
-              <Image source={require('@Asset/images/menu.png')} />
-            </TouchableOpacity>
+        <View style={Styles.navigation}>
+            <Icon name='keyboard-arrow-left' type='MaterialIcons' style={Styles.navLeftIcon} onPress={() => {
+              navigation.navigate('PublicProfile')
+            }} />
           </View>
           <View style={Style.navMiddle}>
             <Text style={Style.navMiddleText}>Orders</Text>

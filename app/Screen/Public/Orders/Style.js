@@ -128,6 +128,10 @@ export default {
         height: 120,
         width: '100%'
     },
+    navLeftIcon: {
+        padding: 10,
+        color: '#FFF'
+    },
 
 
 }

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Dimensions, ImageBackground, StyleSheet, useWindowDimensions, View, Text, TouchableOpacity } from 'react-native';
+import { Dimensions, Image, ImageBackground, StyleSheet, useWindowDimensions, View, Text, TouchableOpacity } from 'react-native';
 import { Icon } from 'native-base'
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
@@ -53,7 +53,7 @@ function MyDrawer() {
       screenOptions={{
         headerShown: false,
         drawerType: deviceWidth.width >= 768 ? 'permanent' : 'front',
-        drawerStyle: deviceWidth.width >= 768 ? null : { width: '80%', backgroundColor: "transparent" },
+        drawerStyle: deviceWidth.width >= 768 ? null : { width: '80%', backgroundColor: "#000" },
       }}
       drawerContent={props => <CustomDrawerContent {...props} />}>
       <Drawer.Screen name="Home" component={PublicHome} />
@@ -244,8 +244,18 @@ const CustomDrawerContent = props => {
   useEffect(() => { }, []);
   return (
     <DrawerContentScrollView {...props}>
-      <ImageBackground source={require('./assets/images/bg.png')} style={{ flex: 1, height: hp('100%') }}>
-        <View style={{ alignItems: "flex-start", marginLeft: wp("5%") }}>
+      <ImageBackground source={require('./assets/images/navmenu.png')} style={{ flex: 1, height: hp('100%') }}>
+      { userDetail ? <View style={styles.overlay}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        props.navigation.navigate('PublicSettings');
+                        props.navigation.closeDrawer();
+                      }}
+                    >
+                      <Image source= {{uri:'https://www.ticketsat.com/images/default.jpg'}} style={styles.avatarStyle}/>
+                    </TouchableOpacity>
+                    </View> : null }
+            <View style={{ alignItems: "flex-start", marginLeft: wp("5%") }}>
           <TouchableOpacity
             onPress={() => {
               props.navigation.navigate('Home');
@@ -320,5 +330,25 @@ const styles = StyleSheet.create({
   drawerMenuText: {
     color: '#ffff',
     fontSize: hp('2%')
-  }
+  },
+  overlay: {
+    backgroundColor:'#000',
+    borderColor: '#FFF',
+    borderBottomWidth: 1,
+  },
+  avatarStyle: {
+      width:100, 
+      height: 100,
+      marginTop: 10,
+      marginBottom: 15,
+      borderRadius: 50,
+      alignSelf: 'center',
+  },
+  textStyle: {
+      marginTop: 10,
+      fontSize: 18,
+      color: "#FFFFFF",
+      fontWeight: 'bold',
+      alignSelf: 'center',
+  },
 });

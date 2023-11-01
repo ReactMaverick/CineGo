@@ -9,14 +9,15 @@ import Styles from '@Screen/Public/Settings/Style'
 
 export default class extends React.Component {
   render () {
+    const { navigation } = this.props;
     return <Container>
       <Header style={Style.navigation}>
-        <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
+        <StatusBar backgroundColor='#00462d' animated barStyle='light-content' />
         <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
           <View style={Style.navLeft}>
             <Button
               transparent onPress={() => {
-                NavigationService.navigate('PublicProfile')
+                navigation.navigate('PublicProfile')
               }}
             >
               <Icon name='arrow-left' type='MaterialCommunityIcons' style={Style.navLeftIcon} />
@@ -31,24 +32,30 @@ export default class extends React.Component {
 
       <Content contentContainerStyle={Style.layoutDefault}>
         <View>
-          <Text style={Styles.settingsCaption}>TicketType</Text>
+          <Text style={Styles.settingsCaption}>Ticket Preferences</Text>
         </View>
         <View style={Styles.settings}>
           <View style={Styles.settingsInfo}>
             <View style={Styles.settingsView}>
-              <Text style={Styles.settingsDesc}>M-Ticket</Text>
+              <Text style={Styles.settingsDesc}>Email Ticket</Text>
             </View>
             <Switch value style={Styles.conditionChange} />
           </View>
           <View style={Styles.settingsInfo}>
             <View style={Styles.settingsView}>
-              <Text style={Styles.settingsDesc}>Box office pick up</Text>
+              <Text style={Styles.settingsDesc}>Text Ticket</Text>
+            </View>
+            <Switch value style={Styles.conditionChange} />
+          </View>
+          <View style={Styles.settingsInfo}>
+            <View style={Styles.settingsView}>
+              <Text style={Styles.settingsDesc}>Box office collection</Text>
             </View>
             <Switch value style={Styles.conditionChange} />
           </View>
         </View>
         <View>
-          <Text style={Styles.settingsCaption}>Wish to see F&B while booking tickets?</Text>
+          <Text style={Styles.settingsCaption}>View Food & Beverages while booking tickets?</Text>
         </View>
         <View style={Styles.settings}>
           <View style={Styles.settingsInfo}>
@@ -57,26 +64,6 @@ export default class extends React.Component {
             </View>
             <Switch value style={Styles.conditionChange} />
           </View>
-        </View>
-        <View>
-          <Text style={Styles.settingsCaption}>Settings</Text>
-        </View>
-        <View style={Styles.settings}>
-          <View style={Styles.settingsInfo}>
-            <View style={Styles.settingsView}>
-              <Text style={Styles.settingsDesc}>Mobile notifications</Text>
-            </View>
-            <Switch value style={Styles.conditionChange} />
-          </View>
-          <View style={Styles.settingsInfo}>
-            <View style={Styles.settingsView}>
-              <Text style={Styles.settingsDesc}>WhatsApp notifications</Text>
-            </View>
-            <Switch value style={Styles.conditionChange} />
-          </View>
-        </View>
-        <View>
-          <Text style={Styles.settingsCaption}>Sign Out</Text>
         </View>
       </Content>
            </Container>
