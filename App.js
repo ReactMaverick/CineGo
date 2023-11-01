@@ -318,7 +318,7 @@ const styles = StyleSheet.create({
     fontSize: hp('4%')
   },
   drawerMenuText: {
-    color: '#fff',
+    color: '#ffff',
     fontSize: hp('2%')
   }
 });
