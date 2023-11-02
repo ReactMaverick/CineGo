@@ -48,7 +48,9 @@ export default class extends React.Component {
       addIndex: '',
       searchText: [],
       tempData: [],
-
+      selected: '',
+      selectedIndex: '',
+      selectedVariantOptions: {}
 
     }
   }
@@ -90,7 +92,11 @@ export default class extends React.Component {
   componentWillUnmount() {
     this.setState({ showTheThing: true });
   }
-
+  _setSelectedVariantOptions = (variant, variant_option) => {
+    var tempSelectedVariantOptions = this.state.selectedVariantOptions;
+    tempSelectedVariantOptions[variant] = variant_option;
+    this.setState({ selectedVariantOptions: tempSelectedVariantOptions });
+  }
   _getPriceByEvent = async (venueIndex) => {
     //venueIndex.venue_id
     // console.log("venueIndex",venueIndex.times);
@@ -306,15 +312,19 @@ export default class extends React.Component {
 
 
   onValueChange(value) {
-    this.setState({
-      selected: value
-    });
     var products = this.state.products;
     // console.log("pro1==>>",products);
     var arr = value.split('_');
+    this._setSelectedVariantOptions(products[arr[1]].title.replace(" ", "_"), products[arr[1]].variants[arr[0]].options[0].value)
     products[arr[1]].price = products[arr[1]].variants[arr[0]].price;
     products[arr[1]].variants_id = products[arr[1]].variants[arr[0]].options[0].variant_id;
-
+    this.setState({
+      selected: products[arr[1]].variants[arr[0]].options[0].value
+    });
+    this.setState({
+      selectedIndex: products[arr[1]].variants[arr[0]].options[0].variant_id
+    });
+    // console.log("products[arr[1]].price", products[arr[1]].variants[arr[0]].options[0].value);
     this.setState({ products: products });
     this.setState({ isModalOpen: false });
   }
@@ -846,7 +856,11 @@ export default class extends React.Component {
                   <View style={{ flex: 1, flexDirection: 'row', marginBottom: 5, marginTop: -5 }}>
                     <View style={{ borderColor: '#000', borderWidth: 1, flex: 2, height: 40, margin: 10, backgroundColor: '#f1f1f1', color: '#000' }}>
                       <View>
-                        <TouchableOpacity onPress={() => { this.openModal(); this.setState({ addFunds: item.variants }); this.setState({ tempData: item.variants }); this.setState({ addIndex: index }) }}><Text>Click</Text></TouchableOpacity>
+                        <TouchableOpacity onPress={() => { this.openModal(); this.setState({ addFunds: item.variants }); this.setState({ tempData: item.variants }); this.setState({ addIndex: index }) }}>
+                          {
+                            this.state.selectedVariantOptions[item.title.replace(" ", "_")] != undefined ? <Text>{this.state.selectedVariantOptions[item.title.replace(" ", "_")]}</Text> : <Text>Choose Beer,Choose Soft Drinks</Text>
+                          }
+                        </TouchableOpacity>
                       </View>
                     </View>
 
@@ -906,7 +920,7 @@ export default class extends React.Component {
               <View style={{ width: wp('100%') }}>
                 {this.state.addFunds.map((list, key) => (
 
-                  <TouchableOpacity key={key} onPress={() => this.onValueChange(key + '_' + this.state.addIndex)}>
+                  <TouchableOpacity key={key} onPress={() => { this.onValueChange(key + '_' + this.state.addIndex) }}>
                     <Text style={{ fontSize: 20, borderBottomWidth: 1, borderColor: '#e2e2e2', paddingBottom: hp('2%'), marginBottom: hp('2%') }}>{this._customText(list)}</Text>
                   </TouchableOpacity>
                 ))}
