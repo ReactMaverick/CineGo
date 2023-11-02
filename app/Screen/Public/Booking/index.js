@@ -646,6 +646,7 @@ export default class extends React.Component {
           <View style={Style.navMiddle}>
             <Text style={Style.navMiddleText}>{this.state.item.name}</Text>
           </View>
+          <View style={Style.navRight}></View>
         </ImageBackground>
       </Header>
 
@@ -794,7 +795,7 @@ export default class extends React.Component {
         </View> */}
           <TouchableOpacity onPress={() => {
             if (this.state.isSelectNo != 0) {
-              navigation.navigate('PublicSelectSeat', { data: this.state.name, seat: this.state.ticketPrice, item: this.state.item, venueIndex: this.state.venueIndex })
+              navigation.navigate('PublicSelectSeat', { data: this.state.name, seats: this.state.ticketPrice, item: this.state.item, venueIndex: this.state.venueIndex, ticketPrice: this.state.ticketPrice })
             }
           }}
           >
@@ -840,7 +841,7 @@ export default class extends React.Component {
 
                   <View style={{ flexDirection: 'row', flex: 1, marginBottom: 5 }}>
                     <View style={{ flex: 1 }}>
-                      <Text style={{ fontSize: 18, color: '#000', margin: 10, marginTop: 20 }}>Options</Text>
+                      <Text style={{ fontSize: 18, color: '#000', margin: 10, marginTop: 20 }}>Quantity</Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginRight: 10, marginTop: 20 }}>
                       <TouchableOpacity onPress={() => { this._remove(index) }}>
@@ -854,11 +855,11 @@ export default class extends React.Component {
                   </View>
 
                   <View style={{ flex: 1, flexDirection: 'row', marginBottom: 5, marginTop: -5 }}>
-                    <View style={{ borderColor: '#000', borderWidth: 1, flex: 2, height: 40, margin: 10, backgroundColor: '#f1f1f1', color: '#000' }}>
+                    <View style={{ borderColor: '#000', borderWidth: 1, flex: 2, height: 30, margin: 10, backgroundColor: '#f1f1f1', color: '#000' }}>
                       <View>
                         <TouchableOpacity onPress={() => { this.openModal(); this.setState({ addFunds: item.variants }); this.setState({ tempData: item.variants }); this.setState({ addIndex: index }) }}>
                           {
-                            this.state.selectedVariantOptions[item.title.replace(" ", "_")] != undefined ? <Text>{this.state.selectedVariantOptions[item.title.replace(" ", "_")]}</Text> : <Text>Choose Beer,Choose Soft Drinks</Text>
+                            this.state.selectedVariantOptions[item.title.replace(" ", "_")] != undefined ? <Text>{this.state.selectedVariantOptions[item.title.replace(" ", "_")]}</Text> : <Text>Choose {item.title}</Text>
                           }
                         </TouchableOpacity>
                       </View>

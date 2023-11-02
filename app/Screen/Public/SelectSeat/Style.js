@@ -17,7 +17,7 @@ export default {
     movieName: {
         color: '#FFF',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 12,
+        fontSize: 20,
     },
     moviePlace: {
         color: '#FFF',
@@ -31,7 +31,7 @@ export default {
     },
     rightDesc: {
         color: '#FFF',
-        fontSize: 12,
+        fontSize: 16,
         fontFamily: 'Montserrat-SemiBold',
         marginHorizontal: 10
     },
@@ -43,25 +43,54 @@ export default {
     calenderDesc: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 12,
-        padding: 15
+        fontSize: 22,
+        padding: 15,        
+        alignSelf: 'center',
     },
     bookingTime: {
         flexDirection: 'row',
-        marginHorizontal: 15,
-        marginBottom: 10
+        marginBottom: 10,
+        backgroundColor: '#FFF',
+        backgroundColor: '#000',       
+        color: '#FFF',
+        alignSelf: 'center',
+        borderRadius: 16,
     },
     showTime: {
-        color: '#4A90E2',
+        color: '#FFF',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 11,
-        borderColor: '#4A90E2',
-        borderWidth: 1,
+        fontSize: 18,
         paddingVertical: 5,
         paddingHorizontal: 10,
-        marginRight: 10,
-        marginBottom: 20,
-        borderRadius: 3
+        marginRight: 10,        
+        alignSelf: 'center',
+        borderRadius: 16
+    },
+    
+    modalRowNew: {
+        flexDirection: 'row',
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
+        borderColor: '#000',
+        marginTop: 20,
+        paddingTop: 10,
+        paddingBottom: 10,
+    },
+    modalDescNew: {
+        flexDirection: 'row',
+        borderColor: '#000',
+        marginTop: 20,
+        padding: 10,
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        backgroundColor: '#FFF',
+        backgroundColor: '#f9f9f9',       
+        color: 'rgba(0,0,0,0.7)',
+        marginBottom: -20,
+    },
+    modalVenues: {
+        flexDirection: 'row',
+        borderColor: '#000',
+        marginTop: 20,
     },
     bookSeat: {
         marginHorizontal: 15,
@@ -84,7 +113,7 @@ export default {
     bitePrice: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 16,
         marginTop: 5,
         marginBottom: 5
     },
@@ -99,10 +128,10 @@ export default {
     biteAdd: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 16,
         paddingHorizontal: 10,
         paddingVertical: 5,
-        borderColor: '#4A90E2',
+        borderColor: '#000',
         borderWidth: 1,
         borderRadius: 3
     },
@@ -121,14 +150,25 @@ export default {
         borderColor: '#000',
         borderWidth: 1
     },
-    addBtn: {
-        position: 'absolute',
-        fontSize: 18,
-        fontFamily: 'Montserrat-SemiBold',
+    paymentMethods: {
         color: '#000',
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 18,
+        alignSelf: 'center',
+    },
+    addBtn: {
+        color: '#FFF',
+        fontFamily: 'Montserrat-Regular',
+        fontSize: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderColor: '#000',
+        borderWidth: 1,
+        backgroundColor: '#00462d',        
+        borderRadius: 16
     },
     cartText: {
-        fontSize: 12,
+        fontSize: 16,
         fontFamily: 'Montserrat-SemiBold',
         color: '#000',
         alignSelf: 'center',
@@ -151,7 +191,17 @@ export default {
         textAlign: 'center',
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 16,
+        paddingHorizontal: 10,
+        alignSelf: 'center'
+    },
+    venueDesc: {
+        flex: 1,
+        textAlign: 'center',
+        color: 'rgba(0,0,0,0.7)',
+        fontFamily: 'Montserrat-Regular',
+        fontSize: 22,
+        padding: 15,   
         paddingHorizontal: 10,
         alignSelf: 'center'
     },
@@ -164,17 +214,17 @@ export default {
         borderColor: 'rgba(0,0,0,0.1)',
         paddingTop: 20,
         paddingHorizontal: 5
-    },
+    },    
     doneBtn: {
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        color: 'rgba(0,0,0,0.7)',
+        color: '#fff',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 12,
+        fontSize: 22,
         padding: 10,
         textAlign: 'center',
         marginVertical: 20,
-        borderColor: 'rgba(0,0,0,0.1)',
-        borderWidth: 1
+        borderWidth: 1,        
+        backgroundColor: '#000',     
+        borderRadius: 16,
     },
     /* Footer */
     ftrTab: {
@@ -182,9 +232,10 @@ export default {
         alignItems: 'center'
     },
     ftrDesc: {
-        fontSize: 14,
+        color: '#fff',
         fontFamily: 'Montserrat-Regular',
-        color: '#4A90E2',
+        fontSize: 22,
+        fontFamily: 'Montserrat-Regular',
         marginHorizontal: 10
     },
 }
