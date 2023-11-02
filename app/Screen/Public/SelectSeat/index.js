@@ -6,8 +6,8 @@ import Modal from 'react-native-modalbox'
 
 import Style from '@Theme/Style'
 import Styles from '@Screen/Public/SelectSeat/Style'
-import SeatLayout from './SeatLayout'
-import BITE from './Bite'
+//import SeatLayout from './SeatLayout'
+//import BITE from './Bite'
 import { LIST_PRODUCT,CART_ADD,CART_VIEW } from '../../../api/ApiConfig';
 const { width: WIDTH } = Dimensions.get('window')
 import Spinner from "react-native-loading-spinner-overlay";
@@ -18,7 +18,6 @@ export default class extends React.Component {
     this.state = {
       isDisabled: false,
       isOpen: false,
-      data: BITE,
       isSelect: false,
       amount: 1,
       grandTotal: '',
@@ -289,11 +288,14 @@ export default class extends React.Component {
       </View>
 
   
-      <View style={Styles.bookSeat}>
+      {
+      /*<View style={Styles.bookSeat}>
         <ScrollView horizontal>
           <SeatLayout layoutType={layoutType} navigation={this.props.navigation} />
         </ScrollView>
-      </View>
+        </View>
+      */
+      }
     
 
     </Content>
