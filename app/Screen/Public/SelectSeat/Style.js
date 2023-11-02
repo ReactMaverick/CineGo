@@ -205,6 +205,21 @@ export default {
         paddingHorizontal: 10,
         alignSelf: 'center'
     },
+    seatingPlan: {
+        flex: 1,
+        textAlign: 'center',        
+        borderWidth: 1,        
+        backgroundColor: '#fff',     
+        borderRadius: 16,
+        borderBottomWidth: 1,
+        borderTopWidth: 1,
+        borderColor: '#00462d',
+        margin: 5,
+    },
+    seatingPlanDesc:{
+        flex: 4,
+        padding: 10
+    },
     closeIcon: {
         color: 'rgba(0,0,0,0.7)',
         fontSize: 24

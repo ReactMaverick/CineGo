@@ -287,7 +287,9 @@ export default class extends React.Component {
         <Text style={Styles.showTime}>{this.state.venueIndex.start_time+"-"+this.state.venueIndex.end_time}</Text>
       </View>
 
-  
+      <View style={Styles.seatingPlan}>
+      <Text style={Styles.seatingPlanDesc}>Seating plan here</Text>
+      </View>
       {
       /*<View style={Styles.bookSeat}>
         <ScrollView horizontal>

@@ -21,3 +21,4 @@ export const TIMESLOT_BY_EVENT = BASE_URL + "timeslots/byevent";
 export const FEATURED_LIST = BASE_URL + "featured";
 export const RELEASE_ALL = BASE_URL + "release_all";
 export const PROMO_CHECKOUT = BASE_URL + "cart/promo_checkout";
+export const PROMO_CODE = BASE_URL + "promo";
