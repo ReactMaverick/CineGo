@@ -40,6 +40,11 @@ export default {
         justifyContent: 'space-between',
         backgroundColor: "#FFF"
     },
+    dateView: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        backgroundColor: "#FFF"
+    },
     calenderDesc: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-SemiBold',
@@ -198,11 +203,17 @@ export default {
     venueDesc: {
         flex: 1,
         textAlign: 'center',
+        fontSize: 22,
+        paddingTop: 5,   
+        alignSelf: 'center'
+    },
+    dateDesc: {
+        flex: 1,
+        textAlign: 'center',
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 22,
-        padding: 15,   
-        paddingHorizontal: 10,
+        fontSize: 20,
+        padding: 5,   
         alignSelf: 'center'
     },
     seatingPlan: {
@@ -215,14 +226,35 @@ export default {
         borderTopWidth: 1,
         borderColor: '#00462d',
         margin: 5,
+        marginTop: 0,
     },
     seatingPlanDesc:{
         flex: 4,
-        padding: 10
+        padding: 10,
+        alignSelf: 'center',
+		textTransform: 'uppercase',
+        fontSize: 22,
     },
+    paymentMethods: {
+        color: '#000',
+        fontFamily: 'Montserrat-SemiBold',
+        fontSize: 18,
+        alignSelf: 'center',
+    },
+    paymentDetails: {
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        paddingVertical: 10,
+        paddingHorizontal: 15,
+        borderColor: '#00462d',
+        borderTopWidth: 2,
+        borderBottomWidth: 1,
+        color: '#FFF',
+        marginTop: 2,
+    },    
     closeIcon: {
         color: 'rgba(0,0,0,0.7)',
-        fontSize: 24
+        fontSize: 28,
+        alignSelf: 'center',
     },
     inputDesc: {
         borderBottomWidth: 1,

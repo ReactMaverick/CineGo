@@ -1,6 +1,6 @@
 import React from 'react'
 import { StatusBar, TouchableOpacity, TextInput, Image, ScrollView, ImageBackground, FlatList, Dimensions, Alert } from 'react-native'
-import { Container, Header, Content, Footer, Icon, Text, View, Card, Picker } from 'native-base'
+import { Container, Header, Content, Footer, Icon, Text, View, Button, Card } from 'native-base'
 
 import Modal from 'react-native-modalbox'
 
@@ -12,6 +12,8 @@ import { LIST_PRODUCT,CART_ADD,CART_VIEW } from '../../../api/ApiConfig';
 const { width: WIDTH } = Dimensions.get('window')
 import Spinner from "react-native-loading-spinner-overlay";
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import {  widthPercentageToDP as wp,  heightPercentageToDP as hp,} from 'react-native-responsive-screen';
+
 export default class extends React.Component {
   constructor(props) {
     super(props)
@@ -45,7 +47,15 @@ export default class extends React.Component {
       userData: {},
       venueName: '',
       ticketTotalPrice: 0,
-      totalTicket: 0
+      totalTicket: 0,
+      isModalOpen: false,
+      addFunds: [],
+      addIndex: '',
+      searchText: [],
+      tempData: [],
+      selected: '',
+      selectedIndex: '',
+      selectedVariantOptions: {}
     }
   } 
 
@@ -80,14 +90,43 @@ export default class extends React.Component {
 
     })
     this._getProducts();
-    console.log("____TICKET #___"+totalTicket);
-    console.log("____SEATS PRICE ___"+ticketTotalPrice);
     this.setState({ total_amount: ticketTotalPrice });
   }
 
-  // componentDidMount() {
+  
+  _setSelectedVariantOptions = (variant, variant_option) => {
+    var tempSelectedVariantOptions = this.state.selectedVariantOptions;
+    tempSelectedVariantOptions[variant] = variant_option;
+    this.setState({ selectedVariantOptions: tempSelectedVariantOptions });
+  }
+  onValueChange(value) {
+    var products = this.state.products;
+    // console.log("pro1==>>",products);
+    var arr = value.split('_');
+    this._setSelectedVariantOptions(products[arr[1]].title.replace(" ", "_"), products[arr[1]].variants[arr[0]].options[0].value)
+    products[arr[1]].price = products[arr[1]].variants[arr[0]].price;
+    products[arr[1]].variants_id = products[arr[1]].variants[arr[0]].options[0].variant_id;
+    this.setState({
+      selected: products[arr[1]].variants[arr[0]].options[0].value
+    });
+    this.setState({
+      selectedIndex: products[arr[1]].variants[arr[0]].options[0].variant_id
+    });
+    // console.log("products[arr[1]].price", products[arr[1]].variants[arr[0]].options[0].value);
+    this.setState({ products: products });
+    this.setState({ isModalOpen: false });
+  }
+  openModal = () => {
+    this.setState({ isModalOpen: true });
+    this.setState({
+      isOpen: false
+    })
+    console.log("click");
+  };
 
-  // }
+  closeModal = () => {
+    this.setState({ isModalOpen: false });
+  };
 
   _getProducts = async () => {
     await this.setState({ isLoading: true });
@@ -166,6 +205,28 @@ export default class extends React.Component {
     return str;
   }
 
+  _customSearch = search => {
+    this.setState({ searchText: search }, () => {
+      let data = this.state.tempData;
+      let newData = [];
+      if (this.state.searchText.length > 0) {
+        newData = data.filter(function (item) {
+          var str = '';
+          for (i = 0; i < item.options.length; i++) {
+            str = str + item.options[i].value
+          }
+          str = str.trim();
+          str = str.slice(0, - 1);
+          const itemData = str.toUpperCase();
+          const textData = search.toUpperCase();
+          return itemData.includes(textData);
+        });
+        this.setState({ addFunds: [...newData] });
+      } else {
+        this.setState({ addFunds: this.state.tempData });
+      }
+    });
+  };
   _addProductTocart = async (product) => {
 
 
@@ -251,6 +312,7 @@ export default class extends React.Component {
       });
 
   }
+  
   render() {
     const { navigation } = this.props;
     let layoutType = 0;
@@ -260,7 +322,7 @@ export default class extends React.Component {
       <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
         <TouchableOpacity
           style={Styles.navLeft} onPress={() => {
-            navigation.navigate('PublicBooking')
+            navigation.navigate('Booking')
           }}
         >
           <Icon name='arrow-left' type='MaterialCommunityIcons' style={Styles.navLeftIcon} />
@@ -273,14 +335,17 @@ export default class extends React.Component {
             navigation.navigate('PublicHome')
           }}
         >
-          <Text style={Styles.rightDesc}>{this.state.totalTicket} Tickets</Text>
+          <Text style={Styles.rightDesc}>{this.state.totalTicket} {this.state.totalTicket>1 ? 'Tickets' : 'Ticket' }</Text>
         </TouchableOpacity>
       </ImageBackground>
     </Header>
 
     <Content contentContainerStyle={Style.layoutDefault}>
       <View style={Styles.calender}>
-      <Text style={Styles.venueDesc}>{this.state.venueName}</Text>
+        <Text style={Styles.venueDesc}>{this.state.venueName}</Text>
+      </View>
+      <View style={Styles.dateView}>
+        <Text style={Styles.dateDesc}><DateFormat startDate={this.state.venueIndex.date} /></Text>
       </View>
 
       <View style={Styles.bookingTime}>
@@ -301,21 +366,24 @@ export default class extends React.Component {
     
 
     </Content>
+    
     <Modal
-      ref='modalBite'
-      isOpen={this.state.isOpen}
-      onClosed={() =>
-        this.setState({
-          isOpen: false
-        })}
-      isDisabled={this.state.isDisabled}
-      style={Styles.modalForm}
-    >
-      <View style={Styles.modalRow}>
-        <Icon name='keyboard-arrow-left' type='MaterialIcons' style={Styles.closeIcon} onPress={() => this.refs.modalBite.close()} />
-        <Text style={Styles.paymentMethods}>Extras @ {this.state.item.name} in {this.state.venueName}</Text>
-      </View>
-      <ScrollView>
+        ref='modalBite'
+        isOpen={this.state.isOpen}
+        onClosed={() =>
+          this.setState({
+            isOpen: false
+          })}
+        isDisabled={this.state.isDisabled}
+        style={Styles.modalFormNew}
+      >
+
+
+        <Icon name='close' type='MaterialIcons' style={Styles.closeIcon} onPress={() => this.refs.modalBite.close()} />
+        <View style={Styles.paymentDetails}>
+          <Text style={Styles.paymentMethods}>Extras @ {this.state.item.name} in {this.state.venueName}</Text>
+        </View>
+        <ScrollView>
 
 
           {this.state.products.map((item, index) => (
@@ -335,7 +403,7 @@ export default class extends React.Component {
 
                   <View style={{ flexDirection: 'row', flex: 1, marginBottom: 5 }}>
                     <View style={{ flex: 1 }}>
-                      <Text style={{ fontSize: 18, color: '#000', margin: 10, marginTop: 20 }}>Options</Text>
+                      <Text style={{ fontSize: 18, color: '#000', margin: 10, marginTop: 20 }}>Quantity</Text>
                     </View>
                     <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginRight: 10, marginTop: 20 }}>
                       <TouchableOpacity onPress={() => { this._remove(index) }}>
@@ -349,22 +417,14 @@ export default class extends React.Component {
                   </View>
 
                   <View style={{ flex: 1, flexDirection: 'row', marginBottom: 5, marginTop: -5 }}>
-
-
-                    <View style={{ borderColor: '#000', borderWidth: 1, flex: 2, height: 40, margin: 10, backgroundColor: '#f1f1f1',color: '#000' }}>
-                      <Picker
-                        note
-                        // mode="dropdown"
-                        style={{ width: 180, color: '#000', marginTop: -5}}
-                        selectedValue={this.state.selected}
-                        onValueChange={this.onValueChange.bind(this)}
-                      >
-                        {item.variants.map((list, key) => (
-
-                          <Picker.Item label={this._customText(list)} value={key + '_' + index} />
-                        ))}
-
-                      </Picker>
+                    <View style={{ borderColor: '#000', borderWidth: 1, flex: 2, height: 30, margin: 10, backgroundColor: '#f1f1f1', color: '#000' }}>
+                      <View>
+                        <TouchableOpacity onPress={() => { this.openModal(); this.setState({ addFunds: item.variants }); this.setState({ tempData: item.variants }); this.setState({ addIndex: index }) }}>
+                          {
+                            this.state.selectedVariantOptions[item.title.replace(" ", "_")] != undefined ? <Text>{this.state.selectedVariantOptions[item.title.replace(" ", "_")]}</Text> : <Text>Choose {item.title}</Text>
+                          }
+                        </TouchableOpacity>
+                      </View>
                     </View>
 
                     <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end', color: '#000', marginBottom: 10, top: 5 }}>
@@ -389,12 +449,48 @@ export default class extends React.Component {
           ))}
 
         </ScrollView>
-      <TouchableOpacity onPress={() => {
-        navigation.navigate('PublicReserve', { item: this.state.item, venueIndex: this.state.venueIndex, ticketPrice: this.state.ticketPrice })
-      }}
+        <TouchableOpacity onPress={() =>
+          //this.refs.modal2.open()
+
+          navigation.navigate('PublicReserve', { item: this.state.item, venueIndex: this.state.venueIndex, ticketPrice: this.state.ticketPrice })
+        }>
+          <Text style={Styles.doneBtn}>€ {this.state.new_total_amount} <Icon name='arrow-right' style={Styles.doneBtn} type='FontAwesome' /></Text>
+        </TouchableOpacity>
+    </Modal>
+    {/* add ons modal */}
+
+    <Modal
+        style={{ zIndex: 9999 }} // Set a high zIndex to make it appear on top
+        isOpen={this.state.isModalOpen}
+        onClosed={this.closeModal}
       >
-        <Text style={Styles.doneBtn}>€ {this.state.new_total_amount} <Icon name='arrow-right' style={Styles.doneBtn} type='FontAwesome' /></Text>
-      </TouchableOpacity>
+        <View style={{ flex: 1, marginVertical: hp('2%'), marginHorizontal: wp('3%') }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <TextInput ref="mycode" placeholder='Search...' placeholderTextColor='#00462d' style={{ borderWidth: 1, borderColor: '#3a3a3a', borderRadius: 6, marginBottom: hp('2%'), width: wp('82%'), paddingHorizontal: wp('2%'), fontSize: 15 }}
+              value={this.state.searchText}
+              onChangeText={searchText => this._customSearch(searchText)} />
+            <View style={{ width: wp('12%'), }}>
+              <Button title="Close Modal" onPress={this.closeModal} style={{ width: wp('100%'), backgroundColor: 'transparent', elevation: 0 }}>
+                <Icon name='close' type='MaterialIcons' style={{ fontSize: 28, color: '#000' }} />
+              </Button>
+            </View>
+          </View>
+          <ScrollView>
+            {/* Your modal content here */}
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
+              <View style={{ width: wp('100%') }}>
+                {this.state.addFunds.map((list, key) => (
+
+                  <TouchableOpacity key={key} onPress={() => { this.onValueChange(key + '_' + this.state.addIndex) }}>
+                    <Text style={{ fontSize: 20, borderBottomWidth: 1, borderColor: '#e2e2e2', paddingBottom: hp('2%'), marginBottom: hp('2%') }}>{this._customText(list)}</Text>
+                  </TouchableOpacity>
+                ))}
+
+              </View>
+
+            </View>
+          </ScrollView>
+        </View>
     </Modal>
     <Modal
       ref='modal1'
@@ -434,4 +530,24 @@ export default class extends React.Component {
     </TouchableOpacity> */}
   </Container>
   }
+}
+
+class DateFormat extends React.Component {
+
+  render() {
+    var startDate = this.props.startDate;
+    var newDate = startDate.split("-");
+
+    var monthArr = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'June', '07': 'July', '08': 'Aug', '09': 'Sept', '10': 'Oct', '11': 'Nov', '12': 'Dec' };
+    var Day = newDate[2];
+    var Month = monthArr[newDate[1]];
+    var Year = newDate[0];
+    return (
+      <View>
+        <Text style={Styles.eventDate}>{Day} {Month} {Year}</Text>
+      </View>
+    )
+
+  }
+
 }
