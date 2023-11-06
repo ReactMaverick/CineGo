@@ -50,10 +50,6 @@ export default {
 		textTransform: 'uppercase',
     },	
     navMiddleLogo: {
-        fontFamily: "Montserrat-SemiBold",
-        fontSize: 6,
-        color: '#FFF',
-		textTransform: 'uppercase',
         position: 'absolute', 
 		right: 40,		
         marginTop: -31,

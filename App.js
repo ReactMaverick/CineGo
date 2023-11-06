@@ -15,7 +15,6 @@ import MyComponent from './app/Screen/Public/MyComponent';
 import PublicIntro from './app/Screen/Public/Intro';
 import PublicHome from './app/Screen/Public/Home';
 import PublicSearch from './app/Screen/Public/Search';
-import PublicSelectCity from './app/Screen/Public/SelectCity';
 import PublicDetail from './app/Screen/Public/Detail';
 import PublicBooking from './app/Screen/Public/Booking';
 import PublicSelectSeat from './app/Screen/Public/SelectSeat';
@@ -36,7 +35,6 @@ import PublicVerifyOtp from './app/Screen/Public/VerifyOtp';
 import PublicForgotPswd from './app/Screen/Public/ForgotPswd';
 import PublicEvents from './app/Screen/Public/Events';
 import PublicListing from './app/Screen/Public/Listing';
-import PublicAddons from './app/Screen/Public/Addons';
 import PublicChangePassword from './app/Screen/Public/ChangePassword';
 import { useNavigation } from '@react-navigation/native';
 import { userDetails, logOut } from './app/redux/reducers/Customer';
@@ -76,11 +74,6 @@ function AppNav() {
       <Stack.Screen
         name="PublicIntro"
         component={PublicIntro}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="PublicSelectCity"
-        component={PublicSelectCity}
         options={{ headerShown: false }}
       />
       <Stack.Screen
@@ -191,11 +184,6 @@ function AppNav() {
       <Stack.Screen
         name="PublicListing"
         component={PublicListing}
-        options={{ headerShown: false }}
-      />
-      <Stack.Screen
-        name="PublicAddons"
-        component={PublicAddons}
         options={{ headerShown: false }}
       />
     </Stack.Navigator>
