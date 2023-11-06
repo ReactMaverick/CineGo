@@ -181,7 +181,7 @@ export default class extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={Style.fIcons} onPress={() => {
-              navigation.navigate('PublicEvents')
+              navigation.navigate('Events')
             }}
           >
             <Icon name='event' type='MaterialIcons' style={Style.iconActive} />

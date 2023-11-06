@@ -43,10 +43,10 @@ export default class extends React.Component {
         this.setState({ f_name: responseJson.user.name });
         this.setState({ email: responseJson.user.email });
         this.setState({ phone: responseJson.user.phone });
-        responseJson.user.is_2fa==1 ? this.setState({ is2fa: 'On' }) :  this.setState({ is2fa: 'Off' });
-        responseJson.user.is_2fa==1 ? this.setState({ lockicon: 'lock' }) :  this.setState({ lockicon: 'lock-open' });
-        responseJson.user.email_verified==0 ? this.setState({ emailv: 'close' }) :  this.setState({ emailv: 'check' });
-        responseJson.user.phone_verified==0 ? this.setState({ phonev: 'close' }) :  this.setState({ phonev: 'check' });
+        responseJson.user.is_2fa == 1 ? this.setState({ is2fa: 'On' }) : this.setState({ is2fa: 'Off' });
+        responseJson.user.is_2fa == 1 ? this.setState({ lockicon: 'lock' }) : this.setState({ lockicon: 'lock-open' });
+        responseJson.user.email_verified == 0 ? this.setState({ emailv: 'close' }) : this.setState({ emailv: 'check' });
+        responseJson.user.phone_verified == 0 ? this.setState({ phonev: 'close' }) : this.setState({ phonev: 'check' });
       })
       .catch((error) => console.log(error))
       .finally(() => {
@@ -82,7 +82,7 @@ export default class extends React.Component {
       </Header>
 
       <Content contentContainerStyle={Style.layoutDefault}>
-      <Card >
+        <Card >
           <View style={Styles.profile}>
 
             <View style={{ flexDirection: 'row', flex: 1, margin: 10 }}>
@@ -95,7 +95,7 @@ export default class extends React.Component {
 
               </View>
             </View>
-            
+
             <View style={{ flexDirection: 'row', flex: 2, margin: 10 }}>
               <View style={{ width: 50, justifyContent: 'center' }}>
                 <Icon name={this.state.lockicon} type="MaterialCommunityIcons" style={{ fontSize: 40, color: 'gray' }} />
@@ -163,19 +163,19 @@ export default class extends React.Component {
           </View>
         </Card>
 
-        <TouchableOpacity 
-        onPress={()=>{ navigation.navigate('PublicEditProfile'); }}
-              style={{backgroundColor:'#000',height:40,width:WIDTH-20,alignItems:"center",margin:5,flexDirection:"row"}} 
-            >
-               <Icon name="keyboard-arrow-right" type="MaterialIcons" style={{ fontSize: 20, color: '#fff' }} />
-              <Text style={{color:'#fff',fontFamily:'Montserrat-SemiBold'}}>Edit Profile</Text>
+        <TouchableOpacity
+          onPress={() => { navigation.navigate('PublicEditProfile'); }}
+          style={{ backgroundColor: '#000', height: 40, width: WIDTH - 20, alignItems: "center", margin: 5, flexDirection: "row" }}
+        >
+          <Icon name="keyboard-arrow-right" type="MaterialIcons" style={{ fontSize: 20, color: '#fff' }} />
+          <Text style={{ color: '#fff', fontFamily: 'Montserrat-SemiBold' }}>Edit Profile</Text>
         </TouchableOpacity>
-        <TouchableOpacity 
-        onPress={()=>{ navigation.navigate('PublicChangePassword'); }}
-              style={{backgroundColor:'#000',height:40,width:WIDTH-20,alignItems:"center",margin:5,flexDirection:"row"}} 
-            >
-               <Icon name="keyboard-arrow-right" type="MaterialIcons" style={{ fontSize: 20, color: '#fff' }} />
-              <Text style={{color:'#fff',fontFamily:'Montserrat-SemiBold'}}>Change Password</Text>
+        <TouchableOpacity
+          onPress={() => { navigation.navigate('PublicChangePassword'); }}
+          style={{ backgroundColor: '#000', height: 40, width: WIDTH - 20, alignItems: "center", margin: 5, flexDirection: "row" }}
+        >
+          <Icon name="keyboard-arrow-right" type="MaterialIcons" style={{ fontSize: 20, color: '#fff' }} />
+          <Text style={{ color: '#fff', fontFamily: 'Montserrat-SemiBold' }}>Change Password</Text>
         </TouchableOpacity>
 
 
@@ -205,7 +205,7 @@ export default class extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity
             style={Style.fIcons} onPress={() => {
-              navigation.navigate('PublicEvents')
+              navigation.navigate('Events')
             }}
           >
             <Icon name='event' type='MaterialIcons' style={Style.iconInactive} />
@@ -213,36 +213,36 @@ export default class extends React.Component {
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             AsyncStorage.getItem("userData").then((value) => {
-                var user_data = JSON.parse(value);
-                if (user_data == null) {
-                    navigation.navigate('PublicSignIn')
-                } else {
-                  navigation.navigate('Listing')
-                }
+              var user_data = JSON.parse(value);
+              if (user_data == null) {
+                navigation.navigate('PublicSignIn')
+              } else {
+                navigation.navigate('Listing')
+              }
             })
           }}>
             <Icon name="list" type='Entypo' style={Style.iconInactive} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             AsyncStorage.getItem("userData").then((value) => {
-                var user_data = JSON.parse(value);
-                if (user_data == null) {
-                    navigation.navigate('PublicSignIn')
-                } else {
-                  navigation.navigate('PublicOrders')
-                }
+              var user_data = JSON.parse(value);
+              if (user_data == null) {
+                navigation.navigate('PublicSignIn')
+              } else {
+                navigation.navigate('PublicOrders')
+              }
             })
           }}>
             <Icon name='shopping-basket' type='FontAwesome' style={Style.iconInactive} />
           </TouchableOpacity>
           <TouchableOpacity onPress={() => {
             AsyncStorage.getItem("userData").then((value) => {
-                var user_data = JSON.parse(value);
-                if (user_data == null) {
-                    navigation.navigate('PublicSignIn')
-                } else {
-                  navigation.navigate('PublicProfile')
-                }
+              var user_data = JSON.parse(value);
+              if (user_data == null) {
+                navigation.navigate('PublicSignIn')
+              } else {
+                navigation.navigate('PublicProfile')
+              }
             })
           }}>
             <Icon name='user-o' type='FontAwesome' style={Style.iconActive} />
