@@ -49,7 +49,6 @@ export default class extends React.Component {
       addIndex: '',
       searchText: [],
       tempData: [],
-      selected: '',
       selectedVariantOptions: {}
     }
   }
@@ -243,6 +242,7 @@ export default class extends React.Component {
         for (i = 0; i < responseJson.products.length; i++) {
           product[i].initial_quantity = 1;
           product[i].variants_id = product[i].variants[0].options[0].variant_id;
+          product[i].price = product[i].variants[0].price;
         }
         this.setState({ products: product });
         // console.log("product", product);
@@ -319,9 +319,6 @@ export default class extends React.Component {
     this._setSelectedVariantOptions(products[this.state.addIndex].title.replace(" ", "_"), list.options[0].value)
     products[this.state.addIndex].price = list.price;
     products[this.state.addIndex].variants_id = list.options[0].variant_id;
-    this.setState({
-      selected: list.options[0].value
-    });
     this.setState({ products: products });
     this.setState({ isModalOpen: false });
     this.setState({ isModalOpen2: true });
@@ -367,8 +364,6 @@ export default class extends React.Component {
     return str;
   }
   _addProductTocart = async (product) => {
-
-
     await this.setState({ isLoading: true });
 
     let details = {
@@ -864,9 +859,12 @@ export default class extends React.Component {
                           this.setState({ addIndex: index })
                         }}>
                           {
-                            this.state.selectedVariantOptions[item.title.replace(" ", "_")] != undefined ? <Text>{this.state.selectedVariantOptions[item.title.replace(" ", "_")]}</Text> : <View>{item.variants.map((list, key) => (
-                              <View>{key === 0 ? <Text key={key}>{this._customText2(list)}</Text> : <></>}</View>
-                            ))}</View>
+                            this.state.selectedVariantOptions[item.title.replace(" ", "_")] != undefined ? <Text>{this.state.selectedVariantOptions[item.title.replace(" ", "_")]}</Text> :
+                              <View>{item.variants.map((list, key) => (
+                                key === 0 ? (
+                                  <View><Text key={key}>{this._customText2(list)}</Text></View>
+                                ) : null
+                              ))}</View>
                           }
                         </TouchableOpacity>
                       </View>
