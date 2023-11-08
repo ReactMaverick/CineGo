@@ -15,7 +15,7 @@ export default class extends React.Component {
       item: this.props.route.params.item,
       venueIndex: this.props.route.params.venueIndex,
       // ticketDetails: this.props.navigation.getParam('ticketPrice'),
-      ticketPrice:[],
+      ticketPrice: [],
       total_amount: 0,
       cartData: [],
       userData: {},
@@ -25,7 +25,7 @@ export default class extends React.Component {
     }
   }
   componentDidMount() {
-    
+
     var ticketPrice = this.props.route.params.ticketPrice;
     var ticketNewArr = [];
     var totalTicket = this.state.totalTicket;
@@ -33,16 +33,16 @@ export default class extends React.Component {
     for (i = 0; i < ticketPrice.length; i++) {
       if (ticketPrice[i].quantity != 0) {
         ticketNewArr.push(ticketPrice[i]);
-        totalTicket = totalTicket+ticketPrice[i].prices_pax;
-        ticketTotalPrice = ticketTotalPrice + ((parseFloat(ticketPrice[i].prices_price)+parseFloat(ticketPrice[i].prices_booking)) * parseInt(ticketPrice[i].quantity))
+        totalTicket = totalTicket + ticketPrice[i].prices_pax;
+        ticketTotalPrice = ticketTotalPrice + ((parseFloat(ticketPrice[i].prices_price) + parseFloat(ticketPrice[i].prices_booking)) * parseInt(ticketPrice[i].quantity))
 
       }
     }
-  
+
     this.setState({ ticketTotalPrice: ticketTotalPrice });
     this.setState({ totalTicket: totalTicket });
     this.setState({ ticketPrice: ticketNewArr });
-    
+
 
     for (i = 0; i < this.state.item.venue.length; i++) {
       if (this.state.item.venue[i].id == this.state.venueIndex.venue_id) {
@@ -92,8 +92,8 @@ export default class extends React.Component {
           }
 
         }
-        
-        var new_total_amount = total_amount+ this.state.ticketTotalPrice;
+
+        var new_total_amount = total_amount + this.state.ticketTotalPrice;
         this.setState({ new_total_amount: new_total_amount.toFixed(2) });
 
         this.setState({ total_amount: total_amount.toFixed(2) });
@@ -142,7 +142,7 @@ export default class extends React.Component {
 
   }
 
-  render() {    
+  render() {
     const { navigation } = this.props;
     const total = this.props.route.params.ticket + this.props.route.params.bite
     return <Container>
@@ -152,7 +152,7 @@ export default class extends React.Component {
           <View style={Style.navLeft}>
             <Button
               transparent onPress={() => {
-                navigation.navigate('PublicBooking')
+                navigation.navigate('Home')
               }}
             >
               <Icon name='arrow-left' type='MaterialCommunityIcons' style={Style.navLeftIcon} />
@@ -167,7 +167,7 @@ export default class extends React.Component {
 
       <Content contentContainerStyle={Style.layoutDefault}>
 
-        <View style={Styles.paymentDetail}>          
+        <View style={Styles.paymentDetail}>
           <View style={Styles.modalRowNew}>
             <Text style={Styles.modalDesc}>Event Details</Text>
           </View>
@@ -258,7 +258,7 @@ export default class extends React.Component {
           <Text style={Styles.paymentTotal}>€ {this.state.new_total_amount}</Text>
         </View>
           <View style={{ display: 'none' }}>
-            <TouchableOpacity style={Styles.reserveForm} onPress={() => { navigation.navigate('PublicPaymentDetail', { venueIndex: this.state.venueIndex,item:this.state.item,ticketPrice:this.state.ticketPrice }) }}>
+            <TouchableOpacity style={Styles.reserveForm} onPress={() => { navigation.navigate('PublicPaymentDetail', { venueIndex: this.state.venueIndex, item: this.state.item, ticketPrice: this.state.ticketPrice }) }}>
               <View style={Styles.cardPayment}>
                 <Icon name='credit-card' type='FontAwesome' style={Styles.cardIcon} />
                 <Text style={Styles.paymentMode}>Debit/Credit Card</Text>
@@ -289,7 +289,7 @@ export default class extends React.Component {
           </View>
         </View>
       </Content>
-      <TouchableOpacity style={Styles.payBtn} onPress={() => { navigation.navigate('PublicPayment', { totalAmt: this.state.total_amount, ticketTotalPrice: this.state.ticketTotalPrice, venueIndex: this.state.venueIndex,item:this.state.item,ticketPrice:this.state.ticketPrice }) }}>
+      <TouchableOpacity style={Styles.payBtn} onPress={() => { navigation.navigate('PublicPayment', { totalAmt: this.state.total_amount, ticketTotalPrice: this.state.ticketTotalPrice, venueIndex: this.state.venueIndex, item: this.state.item, ticketPrice: this.state.ticketPrice }) }}>
         <Text style={Styles.payBtnText}>€ {this.state.new_total_amount} <Icon name='arrow-right' style={Styles.payBtnText} type='FontAwesome' /></Text>
       </TouchableOpacity>
     </Container>

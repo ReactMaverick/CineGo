@@ -358,6 +358,14 @@ export default class extends React.Component {
     str = str + " - €" + list.price;
     return str;
   }
+  _customText2(list) {
+    //console.log(list.price);
+    var str = '';
+    for (i = 0; i < list.options.length; i++) {
+      str = str + list.options[i].value + ' ';
+    }
+    return str;
+  }
   _addProductTocart = async (product) => {
 
 
@@ -452,7 +460,6 @@ export default class extends React.Component {
       this.refs.modal1.open();
     } else {
       if (venueIndex.seating == "N") {
-        //this.refs.modalBite.open()     
         this.refs.selectTicketModal.open()
 
       } else {
@@ -626,6 +633,7 @@ export default class extends React.Component {
       }
     });
   };
+
   render() {
     const { navigation } = this.props;
     return <Container>
@@ -847,7 +855,7 @@ export default class extends React.Component {
                   </View>
 
                   <View style={{ flex: 1, flexDirection: 'row', marginBottom: 5, marginTop: -5 }}>
-                    <View style={{ borderColor: '#000', borderWidth: 1, flex: 2, height: 30, margin: 10, backgroundColor: '#f1f1f1', color: '#000' }}>
+                    <View style={{ borderColor: '#000', borderWidth: 1, flex: 2, height: 25, margin: 10, backgroundColor: '#f1f1f1', color: '#000' }}>
                       <View>
                         <TouchableOpacity onPress={() => {
                           this.openModal();
@@ -856,7 +864,9 @@ export default class extends React.Component {
                           this.setState({ addIndex: index })
                         }}>
                           {
-                            this.state.selectedVariantOptions[item.title.replace(" ", "_")] != undefined ? <Text>{this.state.selectedVariantOptions[item.title.replace(" ", "_")]}</Text> : <Text>Choose {item.title}</Text>
+                            this.state.selectedVariantOptions[item.title.replace(" ", "_")] != undefined ? <Text>{this.state.selectedVariantOptions[item.title.replace(" ", "_")]}</Text> : <View>{item.variants.map((list, key) => (
+                              <View>{key === 0 ? <Text key={key}>{this._customText2(list)}</Text> : <></>}</View>
+                            ))}</View>
                           }
                         </TouchableOpacity>
                       </View>
