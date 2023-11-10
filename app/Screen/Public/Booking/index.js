@@ -1,5 +1,5 @@
 import React from 'react'
-import { StatusBar, TouchableOpacity, TextInput, Image, FlatList, ImageBackground, ScrollView, Dimensions, Alert, Modal as RNModal } from 'react-native'
+import { StatusBar, TouchableOpacity, TextInput, Image, FlatList, ImageBackground, ScrollView, Dimensions, Alert } from 'react-native'
 import { Container, Header, Content, Icon, Text, View, Button, Card, Picker, Tab, Tabs, ScrollableTab, closeIcon } from 'native-base'
 
 import NavigationService from '@Service/Navigation'
@@ -44,27 +44,25 @@ export default class extends React.Component {
       mycode: '',
       showTheThing: true,
       isModalOpen: false,
-      isModalOpen2: false,
       addFunds: [],
       addIndex: '',
       searchText: [],
       tempData: [],
+      selected: '',
+      selectedIndex: '',
       selectedVariantOptions: {}
+
     }
   }
   openModal = () => {
     this.setState({ isModalOpen: true });
+    this.setState({
+      isOpen: false
+    })
+    console.log("click");
   };
-  openModal2 = () => {
-    this.setState({ isModalOpen2: true });
-  };
-
   closeModal = () => {
     this.setState({ isModalOpen: false });
-    this.setState({ isModalOpen2: true });
-  };
-  closeModal2 = () => {
-    this.setState({ isModalOpen2: false });
   };
 
   componentDidMount() {
@@ -96,7 +94,6 @@ export default class extends React.Component {
   _setSelectedVariantOptions = (variant, variant_option) => {
     var tempSelectedVariantOptions = this.state.selectedVariantOptions;
     tempSelectedVariantOptions[variant] = variant_option;
-    console.log(tempSelectedVariantOptions);
     this.setState({ selectedVariantOptions: tempSelectedVariantOptions });
   }
   _getPriceByEvent = async (venueIndex) => {
@@ -321,7 +318,6 @@ export default class extends React.Component {
     products[this.state.addIndex].variants_id = list.options[0].variant_id;
     this.setState({ products: products });
     this.setState({ isModalOpen: false });
-    this.setState({ isModalOpen2: true });
   }
   _add(index) {
     var products = this.state.products;
@@ -364,6 +360,8 @@ export default class extends React.Component {
     return str;
   }
   _addProductTocart = async (product) => {
+
+
     await this.setState({ isLoading: true });
 
     let details = {
@@ -455,6 +453,7 @@ export default class extends React.Component {
       this.refs.modal1.open();
     } else {
       if (venueIndex.seating == "N") {
+        //this.refs.modalBite.open()     
         this.refs.selectTicketModal.open()
 
       } else {
@@ -628,7 +627,6 @@ export default class extends React.Component {
       }
     });
   };
-
   render() {
     const { navigation } = this.props;
     return <Container>
@@ -796,7 +794,7 @@ export default class extends React.Component {
         </View> */}
           <TouchableOpacity onPress={() => {
             if (this.state.isSelectNo != 0) {
-              navigation.navigate('PublicSelectSeat', { data: this.state.name, seats: this.state.ticketPrice, item: this.state.item, venueIndex: this.state.venueIndex, ticketPrice: this.state.ticketPrice })
+              navigation.navigate('PublicSelectSeat', { data: this.state.name, seat: this.state.isSelectNo, item: this.state.item, venueIndex: this.state.venueIndex, ticketPrice: this.state.ticketPrice })
             }
           }}
           >
@@ -806,13 +804,19 @@ export default class extends React.Component {
 
       </Modal>
 
-      <RNModal
-        visible={this.state.isModalOpen2}
-        onRequestClose={this.closeModal2}
+      <Modal
+        ref='modalBite'
+        isOpen={this.state.isOpen}
+        onClosed={() =>
+          this.setState({
+            isOpen: false
+          })}
+        isDisabled={this.state.isDisabled}
+        style={Styles.modalFormNew}
       >
 
 
-        <Icon name='close' type='MaterialIcons' style={Styles.closeIcon} onPress={this.closeModal2} />
+        <Icon name='close' type='MaterialIcons' style={Styles.closeIcon} onPress={() => this.refs.modalBite.close()} />
         <View style={Styles.paymentDetails}>
           <Text style={Styles.paymentMethods}>Extras @ {this.state.item.name} in {this.state.venueName}</Text>
         </View>
@@ -852,12 +856,7 @@ export default class extends React.Component {
                   <View style={{ flex: 1, flexDirection: 'row', marginBottom: 5, marginTop: -5 }}>
                     <View style={{ borderColor: '#000', borderWidth: 1, flex: 2, height: 25, margin: 10, backgroundColor: '#f1f1f1', color: '#000' }}>
                       <View>
-                        <TouchableOpacity onPress={() => {
-                          this.openModal();
-                          this.setState({ addFunds: item.variants });
-                          this.setState({ tempData: item.variants });
-                          this.setState({ addIndex: index })
-                        }}>
+                        <TouchableOpacity onPress={() => { this.openModal(); this.setState({ addFunds: item.variants }); this.setState({ tempData: item.variants }); this.setState({ addIndex: index }) }}>
                           {
                             this.state.selectedVariantOptions[item.title.replace(" ", "_")] != undefined ? <Text>{this.state.selectedVariantOptions[item.title.replace(" ", "_")]}</Text> :
                               <View>{item.variants.map((list, key) => (
@@ -899,37 +898,34 @@ export default class extends React.Component {
         }>
           <Text style={Styles.doneBtn}>€ {this.extraAndTicketAmount()} <Icon name='arrow-right' style={Styles.doneBtn} type='FontAwesome' /></Text>
         </TouchableOpacity>
-      </RNModal>
+      </Modal>
 
 
       {/* add ons modal */}
 
-      <RNModal
-        visible={this.state.isModalOpen}
-        onRequestClose={this.closeModal}
+      <Modal
+        isOpen={this.state.isModalOpen}
+        onClosed={this.closeModal}
       >
-        <View style={{ flex: 1, marginVertical: hp('2%'), marginHorizontal: wp('3%'), backgroundColor: '#fff' }}>
-          <ScrollView keyboardShouldPersistTaps='handled'>
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-              <TextInput
-                placeholder='Search...'
-                placeholderTextColor='#00462d'
-                style={{ borderWidth: 1, borderColor: '#3a3a3a', borderRadius: 6, marginBottom: hp('2%'), width: wp('82%'), paddingHorizontal: wp('2%'), fontSize: 15 }}
-                value={this.state.searchText}
-                onChangeText={searchText => this._customSearch(searchText)}
-              />
-              <View style={{ width: wp('12%'), }}>
-                <Button title="Close Modal" onPress={this.closeModal} style={{ width: wp('100%'), backgroundColor: 'transparent', elevation: 0 }}>
-                  <Icon name='close' type='MaterialIcons' style={{ fontSize: 28, color: '#000' }} />
-                </Button>
-              </View>
+        <View style={{ flex: 1, marginVertical: hp('2%'), marginHorizontal: wp('3%') }}>
+          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
+            <TextInput ref="mycode" placeholder='Search...' placeholderTextColor='#00462d' style={{ borderWidth: 1, borderColor: '#3a3a3a', borderRadius: 6, marginBottom: hp('2%'), width: wp('82%'), paddingHorizontal: wp('2%'), fontSize: 15 }}
+              value={this.state.searchText}
+              onChangeText={searchText => this._customSearch(searchText)} />
+            <View style={{ width: wp('12%'), }}>
+              <Button title="Close Modal" onPress={this.closeModal} style={{ width: wp('100%'), backgroundColor: 'transparent', elevation: 0 }}>
+                <Icon name='close' type='MaterialIcons' style={{ fontSize: 28, color: '#000' }} />
+              </Button>
             </View>
-
+          </View>
+          <ScrollView keyboardShouldPersistTaps='handled'>
             {/* Your modal content here */}
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
               <View style={{ width: wp('100%') }}>
                 {this.state.addFunds.map((list, key) => (
+
                   <TouchableOpacity key={key} onPress={() => {
+                    // this.onValueChange(key + '_' + this.state.addIndex)
                     this.onValueChange(list);
                   }}>
                     <Text style={{ fontSize: 20, borderBottomWidth: 1, borderColor: '#e2e2e2', paddingBottom: hp('2%'), marginBottom: hp('2%') }}>{this._customText(list)}</Text>
@@ -941,7 +937,7 @@ export default class extends React.Component {
             </View>
           </ScrollView>
         </View>
-      </RNModal>
+      </Modal>
 
 
       <Modal
@@ -1041,8 +1037,7 @@ export default class extends React.Component {
           <TouchableOpacity onPress={() => {
             if (this.state.isSelectNo != 0) {
               this.refs.selectTicketModal.close();
-              // this.refs.modalBite.open();
-              this.openModal2();
+              this.refs.modalBite.open();
               if (this.extraAndTicketAmount() == 0.00) {
                 this._getPriceByEvent(this.state.venueIndex);
                 this.state.mycode = '';

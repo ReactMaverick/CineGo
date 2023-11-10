@@ -17,7 +17,7 @@ export default {
     movieName: {
         color: '#FFF',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 20,
+        fontSize: 12,
     },
     moviePlace: {
         color: '#FFF',
@@ -31,7 +31,7 @@ export default {
     },
     rightDesc: {
         color: '#FFF',
-        fontSize: 16,
+        fontSize: 12,
         fontFamily: 'Montserrat-SemiBold',
         marginHorizontal: 10
     },
@@ -40,62 +40,28 @@ export default {
         justifyContent: 'space-between',
         backgroundColor: "#FFF"
     },
-    dateView: {
-        flexDirection: 'row',
-        justifyContent: 'space-between',
-        backgroundColor: "#FFF"
-    },
     calenderDesc: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 22,
-        padding: 15,        
-        alignSelf: 'center',
+        fontSize: 12,
+        padding: 15
     },
     bookingTime: {
         flexDirection: 'row',
-        marginBottom: 10,
-        backgroundColor: '#FFF',
-        backgroundColor: '#000',       
-        color: '#FFF',
-        alignSelf: 'center',
-        borderRadius: 16,
+        marginHorizontal: 15,
+        marginBottom: 10
     },
     showTime: {
-        color: '#FFF',
+        color: '#4A90E2',
         fontFamily: 'Montserrat-SemiBold',
-        fontSize: 18,
+        fontSize: 11,
+        borderColor: '#4A90E2',
+        borderWidth: 1,
         paddingVertical: 5,
         paddingHorizontal: 10,
-        marginRight: 10,        
-        alignSelf: 'center',
-        borderRadius: 16
-    },
-    
-    modalRowNew: {
-        flexDirection: 'row',
-        borderBottomWidth: 1,
-        borderTopWidth: 1,
-        borderColor: '#000',
-        marginTop: 20,
-        paddingTop: 10,
-        paddingBottom: 10,
-    },
-    modalDescNew: {
-        flexDirection: 'row',
-        borderColor: '#000',
-        marginTop: 20,
-        padding: 10,
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        backgroundColor: '#FFF',
-        backgroundColor: '#f9f9f9',       
-        color: 'rgba(0,0,0,0.7)',
-        marginBottom: -20,
-    },
-    modalVenues: {
-        flexDirection: 'row',
-        borderColor: '#000',
-        marginTop: 20,
+        marginRight: 10,
+        marginBottom: 20,
+        borderRadius: 3
     },
     bookSeat: {
         marginHorizontal: 15,
@@ -118,7 +84,7 @@ export default {
     bitePrice: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 16,
+        fontSize: 12,
         marginTop: 5,
         marginBottom: 5
     },
@@ -133,10 +99,10 @@ export default {
     biteAdd: {
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 16,
+        fontSize: 12,
         paddingHorizontal: 10,
         paddingVertical: 5,
-        borderColor: '#000',
+        borderColor: '#4A90E2',
         borderWidth: 1,
         borderRadius: 3
     },
@@ -155,25 +121,14 @@ export default {
         borderColor: '#000',
         borderWidth: 1
     },
-    paymentMethods: {
-        color: '#000',
-        fontFamily: 'Montserrat-SemiBold',
-        fontSize: 18,
-        alignSelf: 'center',
-    },
     addBtn: {
-        color: '#FFF',
-        fontFamily: 'Montserrat-Regular',
-        fontSize: 16,
-        paddingHorizontal: 10,
-        paddingVertical: 5,
-        borderColor: '#000',
-        borderWidth: 1,
-        backgroundColor: '#00462d',        
-        borderRadius: 16
+        position: 'absolute',
+        fontSize: 18,
+        fontFamily: 'Montserrat-SemiBold',
+        color: '#000',
     },
     cartText: {
-        fontSize: 16,
+        fontSize: 12,
         fontFamily: 'Montserrat-SemiBold',
         color: '#000',
         alignSelf: 'center',
@@ -196,82 +151,30 @@ export default {
         textAlign: 'center',
         color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 16,
+        fontSize: 12,
         paddingHorizontal: 10,
         alignSelf: 'center'
     },
-    venueDesc: {
-        flex: 1,
-        textAlign: 'center',
-        fontSize: 22,
-        paddingTop: 5,   
-        alignSelf: 'center'
-    },
-    dateDesc: {
-        flex: 1,
-        textAlign: 'center',
-        color: 'rgba(0,0,0,0.7)',
-        fontFamily: 'Montserrat-Regular',
-        fontSize: 20,
-        padding: 5,   
-        alignSelf: 'center'
-    },
-    seatingPlan: {
-        flex: 1,
-        textAlign: 'center',        
-        borderWidth: 1,        
-        backgroundColor: '#fff',     
-        borderRadius: 16,
-        borderBottomWidth: 1,
-        borderTopWidth: 1,
-        borderColor: '#00462d',
-        margin: 5,
-        marginTop: 0,
-    },
-    seatingPlanDesc:{
-        flex: 4,
-        padding: 10,
-        alignSelf: 'center',
-		textTransform: 'uppercase',
-        fontSize: 22,
-    },
-    paymentMethods: {
-        color: '#000',
-        fontFamily: 'Montserrat-SemiBold',
-        fontSize: 18,
-        alignSelf: 'center',
-    },
-    paymentDetails: {
-        backgroundColor: 'rgba(0,0,0,0.1)',
-        paddingVertical: 10,
-        paddingHorizontal: 15,
-        borderColor: '#00462d',
-        borderTopWidth: 2,
-        borderBottomWidth: 1,
-        color: '#FFF',
-        marginTop: 2,
-    },    
     closeIcon: {
         color: 'rgba(0,0,0,0.7)',
-        fontSize: 28,
-        alignSelf: 'center',
+        fontSize: 24
     },
     inputDesc: {
         borderBottomWidth: 1,
         borderColor: 'rgba(0,0,0,0.1)',
         paddingTop: 20,
         paddingHorizontal: 5
-    },    
+    },
     doneBtn: {
-        color: '#fff',
+        backgroundColor: 'rgba(0,0,0,0.1)',
+        color: 'rgba(0,0,0,0.7)',
         fontFamily: 'Montserrat-Regular',
-        fontSize: 22,
+        fontSize: 12,
         padding: 10,
         textAlign: 'center',
         marginVertical: 20,
-        borderWidth: 1,        
-        backgroundColor: '#000',     
-        borderRadius: 16,
+        borderColor: 'rgba(0,0,0,0.1)',
+        borderWidth: 1
     },
     /* Footer */
     ftrTab: {
@@ -279,10 +182,9 @@ export default {
         alignItems: 'center'
     },
     ftrDesc: {
-        color: '#fff',
+        fontSize: 14,
         fontFamily: 'Montserrat-Regular',
-        fontSize: 22,
-        fontFamily: 'Montserrat-Regular',
+        color: '#4A90E2',
         marginHorizontal: 10
     },
 }

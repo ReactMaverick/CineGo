@@ -1,31 +1,28 @@
 import React from 'react'
 import { StatusBar, TouchableOpacity, TextInput, Image, ScrollView, ImageBackground, FlatList, Dimensions, Alert } from 'react-native'
-import { Container, Header, Content, Footer, Icon, Text, View, Button, Card } from 'native-base'
+import { Container, Header, Content, Footer, Icon, Text, View, Card, Picker } from 'native-base'
+import NavigationService from '@Service/Navigation'
 
 import Modal from 'react-native-modalbox'
 
 import Style from '@Theme/Style'
 import Styles from '@Screen/Public/SelectSeat/Style'
-//import SeatLayout from './SeatLayout'
-//import BITE from './Bite'
-import { LIST_PRODUCT,CART_ADD,CART_VIEW } from '../../../api/ApiConfig';
+import SeatLayout from './SeatLayout'
+import BITE from './Bite'
+import { LIST_PRODUCT } from '../../../api/ApiConfig';
 const { width: WIDTH } = Dimensions.get('window')
 import Spinner from "react-native-loading-spinner-overlay";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import {  widthPercentageToDP as wp,  heightPercentageToDP as hp,} from 'react-native-responsive-screen';
-
 export default class extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       isDisabled: false,
       isOpen: false,
+      data: BITE,
       isSelect: false,
       amount: 1,
       grandTotal: '',
-      user_data: {},
       total: '',
-      category: '',
       counter: {
         0: 1,
         1: 1,
@@ -37,96 +34,26 @@ export default class extends React.Component {
       },
       isLoading: false,
       products: [],
-      total_amount:0,
       item: this.props.route.params.item,
-      venueIndex: this.props.route.params.venueIndex, 
-      seatNo: this.props.route.params.item.quantity,  
-      ticketDetails: this.props.route.params.ticketPrice,
-      ticketPrice:[],
-      cartData: [],
-      userData: {},
-      venueName: '',
-      ticketTotalPrice: 0,
-      totalTicket: 0,
-      isModalOpen: false,
-      addFunds: [],
-      addIndex: '',
-      searchText: [],
-      tempData: [],
-      selected: '',
-      selectedIndex: '',
-      selectedVariantOptions: {}
     }
-  } 
+  }
 
+  // componentDidMount() {
+  //   // const seatNo = this.props.navigation.getParam('seat')
+  //   const seatNo: this.props.route.params.seat,
+  //   this.setState({ grandTotal: seatNo * 150 })
+  //   this._getProducts();
+  // }
   componentDidMount() {
-    var ticketPrice = this.props.route.params.ticketPrice;
-    var ticketNewArr = [];
-    var totalTicket = this.state.totalTicket;
-    var ticketTotalPrice = this.state.ticketTotalPrice;
-    for (i = 0; i < ticketPrice.length; i++) {
-      if (ticketPrice[i].quantity != 0) {
-        ticketNewArr.push(ticketPrice[i]);
-        totalTicket = totalTicket+ticketPrice[i].quantity;
-        ticketTotalPrice = ticketTotalPrice + ((parseFloat(ticketPrice[i].prices_price)+parseFloat(ticketPrice[i].prices_booking)) * parseInt(ticketPrice[i].quantity))
-
-      }
+    const seatNo = this.props.route.params.seat;
+    if (!isNaN(seatNo)) {
+      const grandTotal = seatNo * 150;
+      this.setState({ grandTotal });
+    } else {
+      console.error('Invalid seat number');
     }
-  
-    this.setState({ ticketTotalPrice: ticketTotalPrice });
-    this.setState({ totalTicket: totalTicket });
-    this.setState({ ticketPrice: ticketNewArr });
-    
-
-    for (i = 0; i < this.state.item.venue.length; i++) {
-      if (this.state.item.venue[i].id == this.state.venueIndex.venue_id) {
-        this.setState({ venueName: this.state.item.venue[i].name });
-      }
-    }
-    AsyncStorage.getItem('userData').then((value) => {
-      var user_data = JSON.parse(value);
-      this.setState({ user_data: user_data });
-      this._getCart(this.state.venueIndex, user_data);
-
-    })
     this._getProducts();
-    this.setState({ total_amount: ticketTotalPrice });
   }
-
-  
-  _setSelectedVariantOptions = (variant, variant_option) => {
-    var tempSelectedVariantOptions = this.state.selectedVariantOptions;
-    tempSelectedVariantOptions[variant] = variant_option;
-    this.setState({ selectedVariantOptions: tempSelectedVariantOptions });
-  }
-  onValueChange(value) {
-    var products = this.state.products;
-    // console.log("pro1==>>",products);
-    var arr = value.split('_');
-    this._setSelectedVariantOptions(products[arr[1]].title.replace(" ", "_"), products[arr[1]].variants[arr[0]].options[0].value)
-    products[arr[1]].price = products[arr[1]].variants[arr[0]].price;
-    products[arr[1]].variants_id = products[arr[1]].variants[arr[0]].options[0].variant_id;
-    this.setState({
-      selected: products[arr[1]].variants[arr[0]].options[0].value
-    });
-    this.setState({
-      selectedIndex: products[arr[1]].variants[arr[0]].options[0].variant_id
-    });
-    // console.log("products[arr[1]].price", products[arr[1]].variants[arr[0]].options[0].value);
-    this.setState({ products: products });
-    this.setState({ isModalOpen: false });
-  }
-  openModal = () => {
-    this.setState({ isModalOpen: true });
-    this.setState({
-      isOpen: false
-    })
-    console.log("click");
-  };
-
-  closeModal = () => {
-    this.setState({ isModalOpen: false });
-  };
 
   _getProducts = async () => {
     await this.setState({ isLoading: true });
@@ -144,7 +71,6 @@ export default class extends React.Component {
         for (i = 0; i < responseJson.products.length; i++) {
           product[i].initial_quantity = 1;
         }
-       // console.log("products",product);
         this.setState({ products: product });
 
       })
@@ -159,17 +85,12 @@ export default class extends React.Component {
     this.setState({ events: this.state.eventCategory[item] });
     this.setState({ selectedItem: item });
   }
- 
   onValueChange(value) {
-    this.setState({
-      selected: value
-    });
     var products = this.state.products;
-   // console.log("pro1==>>",products);
+    // console.log(products);
     var arr = value.split('_');
     products[arr[1]].price = products[arr[1]].variants[arr[0]].price;
-    products[arr[1]].variants_id = products[arr[1]].variants[arr[0]].options[0].variant_id;
-    
+
     this.setState({ products: products });
   }
   _add(index) {
@@ -201,173 +122,71 @@ export default class extends React.Component {
     }
     str = str.trim();
     str = str.slice(0, - 1);
-    str = str + " - €" + list.price;
+    str = str + " - $" + list.price;
     return str;
   }
 
-  _customSearch = search => {
-    this.setState({ searchText: search }, () => {
-      let data = this.state.tempData;
-      let newData = [];
-      if (this.state.searchText.length > 0) {
-        newData = data.filter(function (item) {
-          var str = '';
-          for (i = 0; i < item.options.length; i++) {
-            str = str + item.options[i].value
-          }
-          str = str.trim();
-          str = str.slice(0, - 1);
-          const itemData = str.toUpperCase();
-          const textData = search.toUpperCase();
-          return itemData.includes(textData);
-        });
-        this.setState({ addFunds: [...newData] });
-      } else {
-        this.setState({ addFunds: this.state.tempData });
-      }
-    });
-  };
-  _addProductTocart = async (product) => {
-
-
-    await this.setState({ isLoading: true });
-
-    let details = {
-      'productId': product.variants_id,
-      'venueId': this.state.venueIndex.venue_id,
-      'quantity': product.initial_quantity
-    };
-
-
-    let formBody = [];
-    for (let property in details) {
-      let encodedKey = encodeURIComponent(property);
-      let encodedValue = encodeURIComponent(details[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-
-    fetch(CART_ADD, {
-      method: "POST",
-      headers: {
-        'Authorization': 'Bearer ' + this.state.user_data.token,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: formBody
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        this._getCart(this.state.venueIndex);
-      })
-      .catch((error) => console.log(error))
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
-  }
-
-  
-  _getCart = async (venueIndex) => {
-
-    let details = {
-      'userId': this.state.user_data.id,
-      'venueId': venueIndex.venue_id,
-    };
-
-
-    let formBody = [];
-    for (let property in details) {
-      let encodedKey = encodeURIComponent(property);
-      let encodedValue = encodeURIComponent(details[property]);
-      formBody.push(encodedKey + "=" + encodedValue);
-    }
-    formBody = formBody.join("&");
-
-    fetch(CART_VIEW, {
-      method: "POST",
-      headers: {
-        'Authorization': 'Bearer ' + this.state.user_data.token,
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: formBody
-    })
-      .then((response) => response.json())
-      .then((responseJson) => {
-        // console.log("responseJson", responseJson);
-        var total_amount = 0;
-        if (responseJson['Items in Cart'] != undefined) {
-          for (i = 0; i < responseJson['Items in Cart'].length; i++) {
-            total_amount = total_amount + (parseFloat(responseJson['Items in Cart'][i].price) * parseInt(responseJson['Items in Cart'][i].Quantity));
-          }
-
-        }
-        var new_total_amount = total_amount+ this.state.ticketTotalPrice;
-        this.setState({ new_total_amount: new_total_amount.toFixed(2) });
-
-        this.setState({ total_amount: total_amount.toFixed(2) });
-        
-      })
-      .catch((error) => console.log(error))
-      .finally(() => {
-        this.setState({ isLoading: false });
-      });
-
-  }
-  
   render() {
     const { navigation } = this.props;
-    let layoutType = 0;
+    // const name = this.props.navigation.getParam('data')
+    const name = this.props.route.params.data;
+    let layoutType = 0
+    if (name === 'AGS Cinemas OMR: New York') {
+      layoutType = 1
+    } else if (name === 'AGS Cinemas OMR: New York') {
+      layoutType = 2
+    } else if (name === 'Carnival Cinemas EVP: New York') {
+      layoutType = 3
+    } else if (name === 'Inox National: New York') {
+      layoutType = 4
+    }
+
     return <Container>
-    <Header style={Style.navigation}>
-      <StatusBar backgroundColor='#00462d' animated barStyle='light-content' />
-      <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
-        <TouchableOpacity
-          style={Styles.navLeft} onPress={() => {
-            navigation.navigate('Booking')
-          }}
-        >
-          <Icon name='arrow-left' type='MaterialCommunityIcons' style={Styles.navLeftIcon} />
-          <View style={Styles.movieList}>
-            <Text style={Styles.movieName}>{this.state.item.name}</Text>
-          </View>
-        </TouchableOpacity>
-        <TouchableOpacity
-          style={Styles.navRight} onPress={() => {
-            navigation.navigate('PublicHome')
-          }}
-        >
-          <Text style={Styles.rightDesc}>{this.state.totalTicket} {this.state.totalTicket>1 ? 'Tickets' : 'Ticket' }</Text>
-        </TouchableOpacity>
-      </ImageBackground>
-    </Header>
+      <Header style={Style.navigation}>
+        <StatusBar backgroundColor='#9013FE' animated barStyle='light-content' />
+        <ImageBackground source={require('@Asset/images/menubg.png')} style={Style.navigationBar}>
+          <TouchableOpacity
+            style={Styles.navLeft} onPress={() => {
+              navigation.navigate('PublicBooking')
+            }}
+          >
+            <Icon name='arrow-left' type='MaterialCommunityIcons' style={Styles.navLeftIcon} />
+            <View style={Styles.movieList}>
+              <Text style={Styles.movieName}>Captain Marvel</Text>
+              <Text style={Styles.moviePlace}>AGS Cinemas: New York</Text>
+            </View>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={Styles.navRight} onPress={() => {
+              navigation.navigate('PublicHome')
+            }}
+          >
+            <Text style={Styles.rightDesc}>4 Tickets</Text>
+          </TouchableOpacity>
+        </ImageBackground>
+      </Header>
 
-    <Content contentContainerStyle={Style.layoutDefault}>
-      <View style={Styles.calender}>
-        <Text style={Styles.venueDesc}>{this.state.venueName}</Text>
-      </View>
-      <View style={Styles.dateView}>
-        <Text style={Styles.dateDesc}><DateFormat startDate={this.state.venueIndex.date} /></Text>
-      </View>
-
-      <View style={Styles.bookingTime}>
-        <Text style={Styles.showTime}>{this.state.venueIndex.start_time+"-"+this.state.venueIndex.end_time}</Text>
-      </View>
-
-      <View style={Styles.seatingPlan}>
-      <Text style={Styles.seatingPlanDesc}>Seating plan here</Text>
-      </View>
-      {
-      /*<View style={Styles.bookSeat}>
-        <ScrollView horizontal>
-          <SeatLayout layoutType={layoutType} navigation={this.props.navigation} />
-        </ScrollView>
+      <Content contentContainerStyle={Style.layoutDefault}>
+        <View style={Styles.calender}>
+          <Text style={Styles.calenderDesc}>Tomorrow,10Mar</Text>
+          <Text style={Styles.calenderDesc}>Tamil 2D</Text>
         </View>
-      */
-      }
-    
 
-    </Content>
-    
-    <Modal
+        <View style={Styles.bookingTime}>
+          <Text style={Styles.showTime}>01:15PM</Text>
+          <Text style={Styles.showTime}>04:05PM</Text>
+          <Text style={Styles.showTime}>07:30PM</Text>
+          <Text style={Styles.showTime}>10:25PM</Text>
+        </View>
+
+        <View style={Styles.bookSeat}>
+          <ScrollView horizontal>
+            {<SeatLayout layoutType={layoutType} navigation={this.props.navigation} />}
+          </ScrollView>
+        </View>
+
+      </Content>
+      <Modal
         ref='modalBite'
         isOpen={this.state.isOpen}
         onClosed={() =>
@@ -375,71 +194,125 @@ export default class extends React.Component {
             isOpen: false
           })}
         isDisabled={this.state.isDisabled}
-        style={Styles.modalFormNew}
+        style={Styles.modalForm}
       >
-
-
-        <Icon name='close' type='MaterialIcons' style={Styles.closeIcon} onPress={() => this.refs.modalBite.close()} />
-        <View style={Styles.paymentDetails}>
-          <Text style={Styles.paymentMethods}>Extras @ {this.state.item.name} in {this.state.venueName}</Text>
+        <View style={Styles.modalRow}>
+          <Icon name='keyboard-arrow-left' type='MaterialIcons' style={Styles.closeIcon} onPress={() => this.refs.modalBite.close()} />
+          <Text style={Styles.modalDesc}>Go to a Bite</Text>
         </View>
         <ScrollView>
 
 
+          {/* <FlatList
+            data={this.state.data}
+            extraData={
+              {
+                counter: this.state.counter,
+                amount: this.state.amount,
+                total: this.state.total
+              }
+            }
+            showsHorizontalScrollIndicator={false}
+            renderItem={({ item, separators, index }) => {
+              return <View style={Styles.modalRow}>
+                <Image source={{ uri: item.image }} style={Styles.biteImg} />
+                <View style={Styles.biteDesc}>
+                  <Text style={Styles.biteName}>{item.name}</Text>
+                  <Text style={Styles.bitePrice}>${item.price}</Text>
+                  <View>
+                    <View style={Styles.cartcolSpace}>
+                      <View style={Styles.priceView}>
+                        <TouchableOpacity
+                          transparent style={Styles.cartBtn} onPress={() =>
+                            this.setState({ counter: { ...this.state.counter, [index]: this.state.counter[index] + 1 } })}
+                        >
+                          <Icon name='plus' type='Entypo' style={Styles.addBtn} />
+                        </TouchableOpacity>
+                        <Text style={Styles.cartText}>{this.state.counter[index]}</Text>
+                        <TouchableOpacity transparent style={Styles.cartBtn}>
+                          <Icon name='minus' type='Entypo' style={Styles.addBtn} />
+                        </TouchableOpacity>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                <TouchableOpacity
+                  style={Styles.biteBtn} onPress={() => {
+                    this.setState({ amount: item.price * this.state.counter[index], total: item.price * this.state.counter[index] + this.state.amount })
+                    console.log('amt', this.state.total)
+                  }}
+                >
+                  <Text style={Styles.biteAdd}>Add</Text>
+                </TouchableOpacity>
+              </View>
+            }}
+          /> */}
+
           {this.state.products.map((item, index) => (
             <Card style={{ margin: 10, width: WIDTH - 20 }}>
-              <View style={{ flexDirection: "row", padding: 0, backgroundColor: '#f9f9f9' }}>
+              <View style={{ flexDirection: "row", padding: 5 }}>
                 <View style={{ flex: 1 }}>
-                  <Image source={{ uri: item.img }} style={{ width: 120, height: 132, marginLeft: 5, marginTop: 15 }} />
+                  <Image source={{ uri: "https://demo.ticketstake.com/img/default.jpg" }} style={{ width: 120, height: 132 }} />
                 </View>
                 <View style={{ flex: 2 }}>
-                  <View style={{ flexDirection: 'row', flex: 1, margin: 10 }}>
-                    <Text style={{ fontSize: 18, color: '#000' }}>{item.title}</Text>
+                  <View style={{ flexDirection: 'row', flex: 1, marginBottom: 10 }}>
+                    <Text style={{ fontSize: 15, color: 'gray' }}>{item.title}</Text>
                     <View style={{ alignItems: 'flex-end', flex: 1 }}>
-                      <Text style={{ marginRight: 10, fontSize: 18, color: '#000', fontWeight: 'bold' }}>€{item.price.toFixed(2)}</Text>
+                      <Text style={{ marginRight: 10, fontSize: 15, color: 'gray', fontWeight: 'bold' }}>${item.price}</Text>
                     </View>
 
                   </View>
 
-                  <View style={{ flexDirection: 'row', flex: 1, marginBottom: 5 }}>
+                  <View style={{ flexDirection: 'row', flex: 1, marginBottom: 10 }}>
                     <View style={{ flex: 1 }}>
-                      <Text style={{ fontSize: 18, color: '#000', margin: 10, marginTop: 20 }}>Quantity</Text>
+                      <Text style={{ fontSize: 15 }}>Options</Text>
                     </View>
-                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginRight: 10, marginTop: 20 }}>
+                    <View style={{ flex: 1, flexDirection: 'row', justifyContent: 'flex-end', marginRight: 10 }}>
                       <TouchableOpacity onPress={() => { this._remove(index) }}>
                         <Icon name="minuscircleo" type='AntDesign' style={{ fontSize: 25 }} />
                       </TouchableOpacity>
-                      <Text style={{ fontSize: 18, marginLeft: 10, marginRight: 10 }}>{item.initial_quantity}</Text>
+                      <Text style={{ fontSize: 15, marginLeft: 10, marginRight: 10 }}>{item.initial_quantity}</Text>
                       <TouchableOpacity onPress={() => { this._add(index) }}>
                         <Icon name="pluscircleo" type='AntDesign' style={{ fontSize: 25 }} />
                       </TouchableOpacity>
                     </View>
                   </View>
 
-                  <View style={{ flex: 1, flexDirection: 'row', marginBottom: 5, marginTop: -5 }}>
-                    <View style={{ borderColor: '#000', borderWidth: 1, flex: 2, height: 30, margin: 10, backgroundColor: '#f1f1f1', color: '#000' }}>
-                      <View>
-                        <TouchableOpacity onPress={() => { this.openModal(); this.setState({ addFunds: item.variants }); this.setState({ tempData: item.variants }); this.setState({ addIndex: index }) }}>
-                          {
-                            this.state.selectedVariantOptions[item.title.replace(" ", "_")] != undefined ? <Text>{this.state.selectedVariantOptions[item.title.replace(" ", "_")]}</Text> : <Text>Choose {item.title}</Text>
-                          }
-                        </TouchableOpacity>
-                      </View>
+                  <View style={{ flex: 1, flexDirection: 'row', marginBottom: 10 }}>
+
+
+                    <View style={{ borderColor: '#f2f2f2', borderWidth: 2, flex: 2, height: 50 }}>
+                      <Picker
+                        note
+                        // mode="dropdown"
+                        style={{ width: 170, }}
+                        selectedValue={this.state.selected}
+                        onValueChange={this.onValueChange.bind(this)}
+                      >
+                        {item.variants.map((list, key) => (
+
+                          <Picker.Item label={this._customText(list)} value={key + '_' + index} />
+                        ))}
+
+                      </Picker>
                     </View>
 
-                    <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end', color: '#000', marginBottom: 10, top: 5 }}>
+                    <View style={{ flexDirection: 'row', flex: 1, justifyContent: 'flex-end', marginBottom: 10, top: 5 }}>
 
-                      <TouchableOpacity
-
-                        onPress={() => {
-                          this._addProductTocart(item)
-                        }}
-
-                        style={{
-                          justifyContent: 'center',
-                          margin: 10
-                        }} >
-                        <Text style={Styles.addBtn}>Add</Text>
+                      <TouchableOpacity style={{
+                        justifyContent: 'center',
+                        margin: 10
+                      }} >
+                        <Text style={{
+                          color: 'rgba(0,0,0,0.7)',
+                          fontFamily: 'Montserrat-Regular',
+                          fontSize: 12,
+                          paddingHorizontal: 10,
+                          paddingVertical: 5,
+                          borderColor: '#4A90E2',
+                          borderWidth: 1,
+                          borderRadius: 3
+                        }}>Add</Text>
                       </TouchableOpacity>
                     </View>
                   </View>
@@ -449,105 +322,46 @@ export default class extends React.Component {
           ))}
 
         </ScrollView>
-        <TouchableOpacity onPress={() =>
-          //this.refs.modal2.open()
-
-          navigation.navigate('PublicReserve', { item: this.state.item, venueIndex: this.state.venueIndex, ticketPrice: this.state.ticketPrice })
-        }>
-          <Text style={Styles.doneBtn}>€ {this.state.new_total_amount} <Icon name='arrow-right' style={Styles.doneBtn} type='FontAwesome' /></Text>
+        <TouchableOpacity onPress={() => this.refs.modal1.open()}>
+          <Text style={Styles.doneBtn}>Pay $ {this.state.total}</Text>
         </TouchableOpacity>
-    </Modal>
-    {/* add ons modal */}
-
-    <Modal
-        style={{ zIndex: 9999 }} // Set a high zIndex to make it appear on top
-        isOpen={this.state.isModalOpen}
-        onClosed={this.closeModal}
+      </Modal>
+      <Modal
+        ref='modal1'
+        isOpen={this.state.isOpen}
+        onClosed={() =>
+          this.setState({
+            isOpen: false
+          })}
+        isDisabled={this.state.isDisabled}
+        style={Styles.modalForm}
       >
-        <View style={{ flex: 1, marginVertical: hp('2%'), marginHorizontal: wp('3%') }}>
-          <View style={{ flexDirection: 'row', justifyContent: 'space-between' }}>
-            <TextInput ref="mycode" placeholder='Search...' placeholderTextColor='#00462d' style={{ borderWidth: 1, borderColor: '#3a3a3a', borderRadius: 6, marginBottom: hp('2%'), width: wp('82%'), paddingHorizontal: wp('2%'), fontSize: 15 }}
-              value={this.state.searchText}
-              onChangeText={searchText => this._customSearch(searchText)} />
-            <View style={{ width: wp('12%'), }}>
-              <Button title="Close Modal" onPress={this.closeModal} style={{ width: wp('100%'), backgroundColor: 'transparent', elevation: 0 }}>
-                <Icon name='close' type='MaterialIcons' style={{ fontSize: 28, color: '#000' }} />
-              </Button>
-            </View>
-          </View>
-          <ScrollView>
-            {/* Your modal content here */}
-            <View style={{ flexDirection: 'row', justifyContent: 'space-between', }}>
-              <View style={{ width: wp('100%') }}>
-                {this.state.addFunds.map((list, key) => (
-
-                  <TouchableOpacity key={key} onPress={() => { this.onValueChange(key + '_' + this.state.addIndex) }}>
-                    <Text style={{ fontSize: 20, borderBottomWidth: 1, borderColor: '#e2e2e2', paddingBottom: hp('2%'), marginBottom: hp('2%') }}>{this._customText(list)}</Text>
-                  </TouchableOpacity>
-                ))}
-
-              </View>
-
-            </View>
-          </ScrollView>
+        <View style={Styles.modalRow}>
+          <Icon name='keyboard-arrow-left' type='MaterialIcons' style={Styles.closeIcon} onPress={() => this.refs.modal1.close()} />
+          <Text style={Styles.modalDesc}>Confirm Details</Text>
         </View>
-    </Modal>
-    <Modal
-      ref='modal1'
-      isOpen={this.state.isOpen}
-      onClosed={() =>
-        this.setState({
-          isOpen: false
-        })}
-      isDisabled={this.state.isDisabled}
-      style={Styles.modalForm}
-    >
-      <View style={Styles.modalRow}>
-        <Icon name='keyboard-arrow-left' type='MaterialIcons' style={Styles.closeIcon} onPress={() => this.refs.modal1.close()} />
-        <Text style={Styles.modalDesc}>Confirm Details</Text>
-      </View>
-      <View>
-        <TextInput placeholder='Email Address' style={Styles.inputDesc} />
-        <TextInput placeholder='Phone' style={Styles.inputDesc} />
-      </View>
-      <TouchableOpacity onPress={() => {
-        navigation.navigate('PublicReserve', { item: this.state.item, venueIndex: this.state.venueIndex, ticketPrice: this.state.ticketPrice })
-      }}
-      >
-        <Text style={Styles.doneBtn}>Done</Text>
+        <View>
+          <TextInput placeholder='Email Address' style={Styles.inputDesc} />
+          <TextInput placeholder='Phone' style={Styles.inputDesc} />
+        </View>
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('PublicReserve', { ticketPrice: this.state.grandTotal, bite: this.state.total, item: this.state.item })
+        }}
+        >
+          <Text style={Styles.doneBtn}>Done</Text>
+        </TouchableOpacity>
+      </Modal>
+      <TouchableOpacity onPress={() => this.refs.modalBite.open()}>
+        <Footer style={Styles.ftrTab}>
+          <Text style={Styles.ftrDesc}>Pay ${this.state.grandTotal}</Text>
+        </Footer>
       </TouchableOpacity>
-    </Modal>
-    <TouchableOpacity onPress={() => this.refs.modalBite.open()}>
-      <Footer style={Styles.ftrTab}>
-        <Text style={Styles.ftrDesc}>€ {this.state.new_total_amount} <Icon name='arrow-right' style={Styles.doneBtn} type='FontAwesome' /></Text>
-      </Footer>
-    </TouchableOpacity>
 
-    {/* <TouchableOpacity onPress={() => { NavigationService.navigate('PublicAddons') }}>
-      <Footer style={Styles.ftrTab}>
-        <Text style={Styles.ftrDesc}>Pay ${this.state.grandTotal}</Text>
-      </Footer>
-    </TouchableOpacity> */}
-  </Container>
+      {/* <TouchableOpacity onPress={() => { NavigationService.navigate('PublicAddons') }}>
+        <Footer style={Styles.ftrTab}>
+          <Text style={Styles.ftrDesc}>Pay ${this.state.grandTotal}</Text>
+        </Footer>
+      </TouchableOpacity> */}
+    </Container>
   }
-}
-
-class DateFormat extends React.Component {
-
-  render() {
-    var startDate = this.props.startDate;
-    var newDate = startDate.split("-");
-
-    var monthArr = { '01': 'Jan', '02': 'Feb', '03': 'Mar', '04': 'Apr', '05': 'May', '06': 'June', '07': 'July', '08': 'Aug', '09': 'Sept', '10': 'Oct', '11': 'Nov', '12': 'Dec' };
-    var Day = newDate[2];
-    var Month = monthArr[newDate[1]];
-    var Year = newDate[0];
-    return (
-      <View>
-        <Text style={Styles.eventDate}>{Day} {Month} {Year}</Text>
-      </View>
-    )
-
-  }
-
 }

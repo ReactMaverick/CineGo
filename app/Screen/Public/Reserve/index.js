@@ -44,11 +44,11 @@ export default class extends React.Component {
     this.setState({ ticketPrice: ticketNewArr });
 
 
-    for (i = 0; i < this.state.item.venue.length; i++) {
-      if (this.state.item.venue[i].id == this.state.venueIndex.venue_id) {
-        this.setState({ venueName: this.state.item.venue[i].name });
-      }
-    }
+    // for (i = 0; i < this.state.item.venue.length; i++) {
+    //   if (this.state.item.venue[i].id == this.state.venueIndex.venue_id) {
+    //     this.setState({ venueName: this.state.item.venue[i].name });
+    //   }
+    // }
     AsyncStorage.getItem('userData').then((value) => {
       var user_data = JSON.parse(value);
       this.setState({ user_data: user_data });
@@ -152,7 +152,7 @@ export default class extends React.Component {
           <View style={Style.navLeft}>
             <Button
               transparent onPress={() => {
-                navigation.navigate('Home')
+                navigation.navigate('PublicBooking')
               }}
             >
               <Icon name='arrow-left' type='MaterialCommunityIcons' style={Style.navLeftIcon} />
