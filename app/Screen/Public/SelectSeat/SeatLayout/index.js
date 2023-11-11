@@ -4,7 +4,7 @@ import { ActivityIndicator, FlatList, ScrollView } from 'react-native'
 import Row from './Row'
 
 export default class extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
     this.state = {
       loading: true,
@@ -19,20 +19,15 @@ export default class extends React.Component {
         '9-1': 2,
         '10-3': 1,
         '6-1': 2
-      }
-    }
+      },
+    };
 
-    this.didFocus = this.didFocus.bind(this)
     this.onSelectSeat = this.onSelectSeat.bind(this)
     this.renderItem = this.renderItem.bind(this)
     this.renderSeatLayout = this.renderSeatLayout.bind(this)
   }
 
-  componentDidMount () {
-    this.didFocusSubscription = this.props.navigation.addListener(
-      'didFocus',
-      this.didFocus
-    )
+  componentDidMount() {
     const seatList = []
     for (let rowIndex = 0; rowIndex < 12; rowIndex++) {
       const cols = []
@@ -42,20 +37,12 @@ export default class extends React.Component {
       seatList.push(cols)
     }
     this.setState({
-      seatList
-    })
-  }
-  componentWillUnmount () {
-    this.didFocusSubscription.remove()
-  }
-
-  didFocus () {
-    this.setState({
+      seatList,
       loading: false
     })
   }
-  onSelectSeat (rowIndex, colIndex) {
-    const seatList = [ ...this.state.seatList ]
+  onSelectSeat(rowIndex, colIndex) {
+    const seatList = [...this.state.seatList]
     if (seatList[rowIndex][colIndex] === 2) {
       return
     }
@@ -63,7 +50,7 @@ export default class extends React.Component {
     this.setState({ seatList })
   }
 
-  renderItem ({ item, index }) {
+  renderItem({ item, index }) {
     return <Row
       rowIndex={index}
       cols={item}
@@ -71,14 +58,14 @@ export default class extends React.Component {
       onSelectSeat={this.onSelectSeat}
     />
   }
-  renderSeatLayout () {
+  renderSeatLayout() {
     return <FlatList
       keyExtractor={(item, index) => index.toString()}
       data={this.state.seatList}
       renderItem={this.renderItem}
     />
   }
-  render () {
+  render() {
     return <ScrollView
     >
       {this.state.loading ? <ActivityIndicator /> : this.renderSeatLayout()}

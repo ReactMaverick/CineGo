@@ -400,7 +400,6 @@ export default class extends React.Component {
 
 
   _getCart = async (venueIndex) => {
-
     let details = {
       'userId': this.state.user_data.id,
       'venueId': venueIndex.venue_id,
@@ -853,7 +852,7 @@ export default class extends React.Component {
                     </View>
                   </View>
 
-                  <View style={{ flex: 1, flexDirection: 'row', marginBottom: 5, marginTop: -5 }}>
+                  <View style={{ flex: 1, flexDirection: 'row', alignItems: 'center', marginBottom: 5, marginTop: -5 }}>
                     <View style={{ borderColor: '#000', borderWidth: 1, flex: 2, height: 25, margin: 10, backgroundColor: '#f1f1f1', color: '#000' }}>
                       <View>
                         <TouchableOpacity onPress={() => { this.openModal(); this.setState({ addFunds: item.variants }); this.setState({ tempData: item.variants }); this.setState({ addIndex: index }) }}>

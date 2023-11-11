@@ -88,11 +88,11 @@ export default {
         marginTop: 5,
         marginBottom: 5
     },
-    biteDesc:{
+    biteDesc: {
         flex: 4,
         padding: 10
     },
-    biteBtn:{
+    biteBtn: {
         justifyContent: 'center',
         margin: 10
     },
@@ -121,12 +121,12 @@ export default {
         borderColor: '#000',
         borderWidth: 1
     },
-    addBtn: {
-        position: 'absolute',
-        fontSize: 18,
-        fontFamily: 'Montserrat-SemiBold',
-        color: '#000',
-    },
+    // addBtn: {
+    //     position: 'absolute',
+    //     fontSize: 18,
+    //     fontFamily: 'Montserrat-SemiBold',
+    //     color: '#000',
+    // },
     cartText: {
         fontSize: 12,
         fontFamily: 'Montserrat-SemiBold',
@@ -186,5 +186,16 @@ export default {
         fontFamily: 'Montserrat-Regular',
         color: '#4A90E2',
         marginHorizontal: 10
+    },
+    addBtn: {
+        color: '#FFF',
+        fontFamily: 'Montserrat-Regular',
+        fontSize: 16,
+        paddingHorizontal: 10,
+        paddingVertical: 5,
+        borderColor: '#000',
+        borderWidth: 1,
+        backgroundColor: '#00462d',
+        borderRadius: 16
     },
 }
