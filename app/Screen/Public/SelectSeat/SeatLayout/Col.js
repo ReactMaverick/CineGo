@@ -3,20 +3,19 @@ import { TouchableOpacity } from 'react-native'
 import { Icon, Text, View } from 'native-base'
 
 class Col extends React.Component {
-  constructor (props) {
+  constructor(props) {
     super(props)
 
     this.isEmptyCol = this.isEmptyCol.bind(this)
     this.onSelectSeat = this.onSelectSeat.bind(this)
   }
-
-  shouldComponentUpdate (nextProps) {
+  shouldComponentUpdate(nextProps) {
     return nextProps.item !== this.props.item
   }
 
-  isEmptyCol () {
+  isEmptyCol() {
     const { layoutType, rowIndex, colIndex } = this.props
-    console.log(layoutType, rowIndex, colIndex)
+    // console.log(layoutType, rowIndex, colIndex)
     if (layoutType === 1) {
       return rowIndex > 1 && (colIndex === 5 || colIndex === 6)
     } else if (layoutType === 2) {
@@ -27,11 +26,10 @@ class Col extends React.Component {
       return rowIndex > 1 && ((colIndex === 6 || colIndex === 1 || colIndex === 10) || (rowIndex === 5))
     }
   }
-  onSelectSeat () {
+  onSelectSeat() {
     this.props.onSelectSeat(this.props.rowIndex, this.props.colIndex)
   }
-
-  render () {
+  render() {
     if (this.isEmptyCol()) {
       return <View style={{ borderWidth: 0, borderColor: '#000' }}>
         <Text style={{ color: '#FFF' }}>IDLE</Text>

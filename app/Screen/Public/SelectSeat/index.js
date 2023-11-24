@@ -17,7 +17,9 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen';
-export default class extends React.Component {
+import { useDispatch, useSelector, connect } from 'react-redux';
+import { isSeatList } from '../../../redux/reducers/SeatReducer'
+class SelectSeat extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
@@ -77,6 +79,7 @@ export default class extends React.Component {
     if (!isNaN(seatNo)) {
       const grandTotal = seatNo * 13;
       this.setState({ grandTotal });
+      this.setState({ seatNo });
     } else {
       console.error('Invalid seat number');
     }
@@ -607,6 +610,7 @@ export default class extends React.Component {
 
   render() {
     const { navigation } = this.props;
+    const { isState } = this.props;
     // const name = this.props.navigation.getParam('data')
     const name = this.props.route.params.data;
     let layoutType = 0
@@ -640,7 +644,7 @@ export default class extends React.Component {
               navigation.navigate('PublicHome')
             }}
           >
-            <Text style={Styles.rightDesc}>4 Tickets</Text>
+            <Text style={Styles.rightDesc}>{this.state.seatNo} Tickets</Text>
           </TouchableOpacity>
         </ImageBackground>
       </Header>
@@ -660,7 +664,7 @@ export default class extends React.Component {
 
         <View style={Styles.bookSeat}>
           <ScrollView horizontal>
-            {<SeatLayout layoutType={layoutType} navigation={this.props.navigation} />}
+            <SeatLayout layoutType={layoutType} seatNo={this.state.seatNo} navigation={this.props.navigation} />
           </ScrollView>
         </View>
 
@@ -817,12 +821,14 @@ export default class extends React.Component {
           </ScrollView>
         </View>
       </Modal>
-      <TouchableOpacity onPress={() => this.refs.modalBite.open()}>
+      {isState ? <TouchableOpacity onPress={() => {
+        this.refs.modalBite.open();
+        this.props.isSeatList(false);
+      }}>
         <Footer style={Styles.ftrTab}>
           <Text style={Styles.ftrDesc}>Pay ${this.extraAndTicketAmount()}</Text>
         </Footer>
-      </TouchableOpacity>
-
+      </TouchableOpacity> : null}
       {/* <TouchableOpacity onPress={() => { NavigationService.navigate('PublicAddons') }}>
         <Footer style={Styles.ftrTab}>
           <Text style={Styles.ftrDesc}>Pay ${this.state.grandTotal}</Text>
@@ -831,3 +837,11 @@ export default class extends React.Component {
     </Container>
   }
 }
+
+const mapStateToProps = state => {
+  return {
+    isState: state.seatReducer.value,
+  };
+};
+// Connect the component to Redux store
+export default connect(mapStateToProps, { isSeatList })(SelectSeat);
